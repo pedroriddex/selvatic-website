@@ -1,0 +1,11 @@
+.DS_Store
+node_modules
+
+apps/*/node_modules
+apps/*/.svelte-kit
+apps/*/build
+apps/*/dist
+apps/*/.env
+apps/*/.env.local
+apps/cms/.tmp
+apps/web/stripe-products.generated.json

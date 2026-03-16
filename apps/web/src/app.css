@@ -1,0 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+@import 'tailwindcss';
+
+@import './lib/styles/tokens.css';
+@import './lib/styles/base.css';
+@import './lib/styles/layout.css';
+@import './lib/styles/motion.css';

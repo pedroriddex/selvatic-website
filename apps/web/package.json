@@ -1,0 +1,39 @@
+{
+	"name": "web",
+	"private": true,
+	"version": "0.0.1",
+	"type": "module",
+	"scripts": {
+		"dev": "vite dev",
+		"build": "vite build",
+		"preview": "vite preview",
+		"prepare": "svelte-kit sync || echo ''",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"test": "npm run test:unit",
+		"test:unit": "vitest run",
+		"test:e2e": "playwright test",
+		"stripe:seed-products": "node ./scripts/seed-stripe-products.mjs",
+		"sanity:seed-content": "node ./scripts/seed-sanity-content.mjs"
+	},
+	"devDependencies": {
+		"@playwright/test": "^1.58.2",
+		"@sveltejs/adapter-auto": "^7.0.0",
+		"@sveltejs/kit": "^2.50.2",
+		"@sveltejs/vite-plugin-svelte": "^6.2.4",
+		"@tailwindcss/vite": "^4.2.0",
+		"jsdom": "^28.1.0",
+		"svelte": "^5.51.0",
+		"svelte-check": "^4.3.6",
+		"tailwindcss": "^4.2.0",
+		"typescript": "^5.9.3",
+		"vite": "^7.3.1",
+		"vitest": "^4.0.18"
+	},
+	"dependencies": {
+		"@stripe/stripe-js": "^8.8.0",
+		"remixicon": "^4.9.1",
+		"stripe": "^20.3.1",
+		"zod": "^4.3.6"
+	}
+}

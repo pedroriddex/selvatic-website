@@ -1,0 +1,55 @@
+@keyframes reveal-up {
+	0% {
+		opacity: 0;
+		transform: translateY(6px);
+	}
+	100% {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+@media (max-width: 767px) {
+	.hero-stage,
+	.hero-stage-content,
+	.hero-stage-grid {
+		min-height: 72vh;
+	}
+
+	.hero-morph-banner {
+		margin-inline: calc(-1 * var(--frame-gutter-x));
+		min-height: 72vh;
+		border-radius: 0.8rem;
+		transform: none;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.reveal,
+	.reveal-delay,
+	.reveal-delay-2 {
+		animation: none !important;
+	}
+
+	.site-header,
+	.header-link,
+	.header-cta,
+	.mobile-menu-trigger,
+	.mobile-menu-link,
+	.mobile-menu-close,
+	.product-media-button,
+	.product-media-icon,
+	.product-lightbox-close,
+	.btn-dark,
+	.btn-lime,
+	.btn-outline,
+	.icon-cta,
+	.input-minimal,
+	.input-embedded,
+	.product-home-media,
+	.product-catalog-media,
+	.product-home-actions,
+	.product-catalog-actions {
+		transition: none !important;
+	}
+}

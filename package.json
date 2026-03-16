@@ -1,0 +1,20 @@
+{
+  "name": "selvatic",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Selvatic workspace (Sanity + SvelteKit)",
+  "scripts": {
+    "dev": "concurrently -n cms,web -c green,cyan \"npm run dev --prefix apps/cms\" \"npm run dev --prefix apps/web\"",
+    "dev:cms": "npm run dev --prefix apps/cms",
+    "dev:web": "npm run dev --prefix apps/web",
+    "build": "npm run build --prefix apps/cms && npm run build --prefix apps/web",
+    "check": "npm run check --prefix apps/web",
+    "test": "npm run test --prefix apps/web",
+    "test:unit": "npm run test:unit --prefix apps/web",
+    "test:e2e": "npm run test:e2e --prefix apps/web",
+    "stripe:seed-products": "npm run stripe:seed-products --prefix apps/web"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
