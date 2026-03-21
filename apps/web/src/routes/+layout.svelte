@@ -2,10 +2,11 @@
 	import { afterNavigate } from '$app/navigation';
 	import { setupHeroScroll } from '$lib/client/hero-scroll';
 	import { primaryNavigation } from '$lib/config/navigation';
+	import { ONLINE_STORE_ENABLED, STORE_LOCK_TITLE } from '$lib/config/store';
 	import ProductLightbox from '$lib/components/ui/ProductLightbox.svelte';
 	import Icon from '$lib/components/ui/Icon.svelte';
-	import { cartStore, hydrateCart } from '$lib/state/cart';
-	import { cartNoticeStore } from '$lib/state/cart-notice';
+	import { cartStore, clearCart, hydrateCart } from '$lib/state/cart';
+	import { cartNoticeStore, showNotice } from '$lib/state/cart-notice';
 	import type { CartNoticeState } from '$lib/state/cart-notice';
 	import type { CartSnapshot } from '$lib/types';
 	import '../app.css';
@@ -33,6 +34,9 @@
 	const year = new Date().getFullYear();
 	const closeMobileMenu = () => {
 		mobileMenuOpen = false;
+	};
+	const showStoreLockMessage = () => {
+		showNotice(STORE_LOCK_TITLE, 2400);
 	};
 
 	$effect(() => {
@@ -68,7 +72,11 @@
 	});
 
 	onMount(() => {
-		hydrateCart();
+		if (ONLINE_STORE_ENABLED) {
+			hydrateCart();
+		} else {
+			clearCart();
+		}
 
 		const root = document.documentElement;
 		const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -104,7 +112,7 @@
 	<title>Selvatic · Floristería</title>
 	<meta
 		name="description"
-		content="Floristería boutique de flores secas: venta online, ramos personalizados y decoración floral elegante."
+		content="Diseño floral natural con flor seca, preservada y planta natural. Ramos a medida, cerámica decorativa y propuestas personalizadas."
 	/>
 </svelte:head>
 
@@ -123,12 +131,23 @@
 						</a>
 					{/each}
 					<div class="header-cart-slot">
-						<a href="/checkout" class="header-cart" aria-label={`Carrito con ${cart.count} productos`}>
-							<Icon name="shopping-bag-3-line" class="text-base" />
-							{#if cart.count > 0}
-								<span class="header-cart-badge">{cart.count > 99 ? '99+' : cart.count}</span>
-							{/if}
-						</a>
+						{#if ONLINE_STORE_ENABLED}
+							<a href="/checkout" class="header-cart" aria-label={`Carrito con ${cart.count} productos`}>
+								<Icon name="shopping-bag-3-line" class="text-base" />
+								{#if cart.count > 0}
+									<span class="header-cart-badge">{cart.count > 99 ? '99+' : cart.count}</span>
+								{/if}
+							</a>
+						{:else}
+							<button
+								type="button"
+								class="header-cart"
+								aria-label={STORE_LOCK_TITLE}
+								onclick={showStoreLockMessage}
+							>
+								<Icon name="shopping-bag-3-line" class="text-base" />
+							</button>
+						{/if}
 						{#if cartNotice.visible}
 							<p
 								class="header-cart-notice"
@@ -189,9 +208,22 @@
 					{/each}
 				</div>
 				<div class="mobile-menu-footer">
-					<a href="/checkout" class="btn-outline mb-2 w-full justify-center" onclick={closeMobileMenu}>
-						Carrito ({cart.count})
-					</a>
+					{#if ONLINE_STORE_ENABLED}
+						<a href="/checkout" class="btn-outline mb-2 w-full justify-center" onclick={closeMobileMenu}>
+							Carrito ({cart.count})
+						</a>
+					{:else}
+						<button
+							type="button"
+							class="btn-outline mb-2 w-full justify-center"
+							onclick={() => {
+								closeMobileMenu();
+								showStoreLockMessage();
+							}}
+						>
+							Tienda online próximamente
+						</button>
+					{/if}
 					<a href="/contacto" class="btn-lime w-full justify-center" onclick={closeMobileMenu}>
 						Encargar ramo
 					</a>
@@ -212,11 +244,12 @@
 				<div>
 					<p class="section-kicker">Selvatic</p>
 					<p class="mt-3 max-w-md text-sm leading-relaxed text-white/72">
-						Floristería especializada en flores secas, ramos a medida y decoración floral para espacios, eventos y marcas.
+						Proyecto de diseño floral natural con raíces familiares, hecho con tiempo, conocimiento y sensibilidad.
 					</p>
 				</div>
 				<div class="flex flex-wrap items-end justify-start gap-x-5 gap-y-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-white/66 lg:justify-end">
 					<a href="/tienda" class="hover:text-white">Tienda</a>
+					<a href="/sobre-nosotros" class="hover:text-white">Sobre nosotros</a>
 					<a href="/servicios" class="hover:text-white">Servicios</a>
 					<a href="/contacto" class="hover:text-white">Contacto</a>
 					<span class="text-white/44">© {year}</span>

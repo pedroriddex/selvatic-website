@@ -1,0 +1,131 @@
+- generic [active] [ref=e1]:
+  - link "Saltar al contenido principal" [ref=e2] [cursor=pointer]:
+    - /url: "#brx-content"
+  - link "Saltar al pie de página" [ref=e3] [cursor=pointer]:
+    - /url: "#brx-footer"
+  - banner [ref=e4]:
+    - generic [ref=e7]:
+      - link "SELVATIC" [ref=e9] [cursor=pointer]:
+        - /url: http://localhost:8883/
+      - navigation [ref=e11]:
+        - list [ref=e12]:
+          - listitem [ref=e13]:
+            - link "Inicio" [ref=e14] [cursor=pointer]:
+              - /url: http://localhost:8883/
+          - listitem [ref=e15]:
+            - link "Tienda" [ref=e16] [cursor=pointer]:
+              - /url: http://localhost:8883/tienda/
+          - listitem [ref=e17]:
+            - link "Servicios" [ref=e18] [cursor=pointer]:
+              - /url: http://localhost:8883/servicios/
+          - listitem [ref=e19]:
+            - link "Contacto" [ref=e20] [cursor=pointer]:
+              - /url: http://localhost:8883/contacto/
+      - generic [ref=e21]:
+        - button "Open cart" [ref=e24] [cursor=pointer]:
+          - img [ref=e26]
+        - link "Encargar ramo" [ref=e29] [cursor=pointer]:
+          - /url: http://localhost:8883/contacto/
+  - main [ref=e30]:
+    - generic [ref=e32]:
+      - generic [ref=e33]:
+        - paragraph [ref=e35]: Producto
+        - heading "Ramo Bruma Lima" [level=1] [ref=e36]
+        - paragraph [ref=e38]: Composicion editorial de producto con imagen protagonista y una ficha clara para consultar precio y disponibilidad.
+      - generic [ref=e39]:
+        - generic [ref=e40]:
+          - img "Ramo Bruma Lima" [ref=e42]
+          - generic [ref=e44]:
+            - paragraph [ref=e45]: Un ramo concebido como pieza editorial para recibidores, estanterias y regalos con presencia serena.
+            - paragraph [ref=e46]: Trabajamos una paleta contenida con acento lima, volumen aireado y una silueta limpia que encaja en espacios contemporaneos.
+        - generic [ref=e47]:
+          - paragraph [ref=e49]: Resumen
+          - generic [ref=e50]:
+            - paragraph [ref=e52]: Precio
+            - paragraph [ref=e54]: 64,00 €
+            - paragraph [ref=e56]: Stock 16
+          - button [ref=e59] [cursor=pointer]
+          - link "Ir al carrito" [ref=e60] [cursor=pointer]:
+            - /url: http://localhost:8883/checkout/
+          - link "Volver a tienda" [ref=e61] [cursor=pointer]:
+            - /url: http://localhost:8883/tienda/
+    - generic [ref=e64]:
+      - generic [ref=e66]:
+        - paragraph [ref=e68]: Relacionados
+        - heading "Mas productos" [level=2] [ref=e69]
+        - heading "Otras piezas dentro de la coleccion editorial" [level=3] [ref=e70]
+      - generic [ref=e71]:
+        - generic [ref=e73]:
+          - link " Centro Nordico Musgo" [ref=e75] [cursor=pointer]:
+            - /url: http://localhost:8883/wp-content/uploads/codex-import/assets/feey-thistle-scaled.webp
+            - generic: 
+            - img "Centro Nordico Musgo" [ref=e76]
+          - generic [ref=e77]:
+            - heading "Centro Nordico Musgo" [level=4] [ref=e78]
+            - paragraph [ref=e80]: Centro de mesa de perfil bajo, pensado para comedor y recibidor con estetica editorial.
+            - generic [ref=e81]:
+              - paragraph [ref=e83]: 52,00 €
+              - generic [ref=e84]:
+                - link "Anadir" [ref=e86] [cursor=pointer]:
+                  - /url: http://localhost:8883/tienda/centro-nordico-musgo/
+                - link "" [ref=e87] [cursor=pointer]:
+                  - /url: http://localhost:8883/tienda/centro-nordico-musgo/
+                  - generic [ref=e88]: 
+        - generic [ref=e90]:
+          - link " Mini Bouquet Atelier" [ref=e92] [cursor=pointer]:
+            - /url: http://localhost:8883/wp-content/uploads/codex-import/assets/feey-rose-scaled.webp
+            - generic: 
+            - img "Mini Bouquet Atelier" [ref=e93]
+          - generic [ref=e94]:
+            - heading "Mini Bouquet Atelier" [level=4] [ref=e95]
+            - paragraph [ref=e97]: Formato pequeno ideal para regalo o detalle de mesa auxiliar.
+            - generic [ref=e98]:
+              - paragraph [ref=e100]: 29,00 €
+              - generic [ref=e101]:
+                - link "Anadir" [ref=e103] [cursor=pointer]:
+                  - /url: http://localhost:8883/tienda/mini-bouquet-atelier/
+                - link "" [ref=e104] [cursor=pointer]:
+                  - /url: http://localhost:8883/tienda/mini-bouquet-atelier/
+                  - generic [ref=e105]: 
+        - generic [ref=e107]:
+          - link " Pack Duo Esencias" [ref=e109] [cursor=pointer]:
+            - /url: http://localhost:8883/wp-content/uploads/codex-import/assets/yellow-cactus-scaled.webp
+            - generic: 
+            - img "Pack Duo Esencias" [ref=e110]
+          - generic [ref=e111]:
+            - heading "Pack Duo Esencias" [level=4] [ref=e112]
+            - paragraph [ref=e114]: Dos mini composiciones combinadas para estanteria, mueble bajo o mesita.
+            - generic [ref=e115]:
+              - paragraph [ref=e117]: 45,00 €
+              - generic [ref=e118]:
+                - link "Anadir" [ref=e120] [cursor=pointer]:
+                  - /url: http://localhost:8883/tienda/pack-duo-esencias/
+                - link "" [ref=e121] [cursor=pointer]:
+                  - /url: http://localhost:8883/tienda/pack-duo-esencias/
+                  - generic [ref=e122]: 
+  - contentinfo [ref=e123]:
+    - generic [ref=e126]:
+      - generic [ref=e127]:
+        - paragraph [ref=e129]: Selvatic
+        - heading "Flores secas, ramos a medida y direccion floral para espacios y eventos." [level=3] [ref=e130]
+        - paragraph [ref=e132]: Flores secas, direccion floral y composiciones botanicas con sensibilidad editorial para espacios contemporaneos.
+      - generic [ref=e133]:
+        - paragraph [ref=e135]:
+          - link "Tienda" [ref=e136] [cursor=pointer]:
+            - /url: http://localhost:8883/tienda/
+          - text: /
+          - link "Servicios" [ref=e137] [cursor=pointer]:
+            - /url: http://localhost:8883/servicios/
+          - text: /
+          - link "Contacto" [ref=e138] [cursor=pointer]:
+            - /url: http://localhost:8883/contacto/
+        - paragraph [ref=e140]:
+          - link "Privacidad" [ref=e141] [cursor=pointer]:
+            - /url: http://localhost:8883/politica-de-privacidad/
+          - text: /
+          - link "Aviso legal" [ref=e142] [cursor=pointer]:
+            - /url: http://localhost:8883/aviso-legal/
+          - text: /
+          - link "Cookies" [ref=e143] [cursor=pointer]:
+            - /url: http://localhost:8883/politica-de-cookies/
+        - paragraph [ref=e145]: 2026 · Selvatic

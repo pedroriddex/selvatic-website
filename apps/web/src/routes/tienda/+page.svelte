@@ -7,10 +7,12 @@
 		type ProductCategoryFilter
 	} from '$lib/config/product-categories';
 	import ProductCard from '$lib/components/products/ProductCard.svelte';
+	import { ONLINE_STORE_ENABLED } from '$lib/config/store';
 	import DataHealthNotice from '$lib/components/ui/DataHealthNotice.svelte';
 	import EmptyState from '$lib/components/ui/EmptyState.svelte';
 	import SectionHeader from '$lib/components/ui/SectionHeader.svelte';
 	import SectionIntro from '$lib/components/ui/SectionIntro.svelte';
+	import StoreStatusNotice from '$lib/components/ui/StoreStatusNotice.svelte';
 	import { getCatalogProductSpan } from '$lib/utils/product-grid';
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
@@ -34,20 +36,22 @@
 			: data.products.filter((product) => product.category === activeCategory)
 	);
 	const collectionDescription = $derived(
-		data.products.length === 0
-			? 'Aún no hay productos activos publicados en Sanity.'
+		!ONLINE_STORE_ENABLED
+			? 'Explora la colección mientras terminamos la apertura de la tienda online.'
+			: data.products.length === 0
+			? 'Aún no hay piezas disponibles en la colección.'
 			: visibleProducts.length === 0
 					? `No hay productos activos en ${activeCategoryLabel}.`
 					: hasActiveCategoryFilter
-						? `${visibleProducts.length} piezas en ${activeCategoryLabel}. Stock y precio sincronizados desde Sanity.`
-						: `${data.products.length} piezas disponibles. Stock y precio sincronizados desde Sanity.`
+						? `${visibleProducts.length} piezas en ${activeCategoryLabel}. Precio y disponibilidad actualizados.`
+						: `${data.products.length} piezas disponibles. Precio y disponibilidad actualizados.`
 	);
 	const emptyStateTitle = $derived(
 		data.products.length === 0 ? 'No hay productos publicados' : `Sin resultados en ${activeCategoryLabel}`
 	);
 	const emptyStateDescription = $derived(
 		data.products.length === 0
-			? 'Publica productos en Sanity para que se muestren en la tienda.'
+			? 'La tienda irá incorporando nuevas piezas próximamente.'
 			: 'Prueba otra categoría o vuelve a ver toda la colección.'
 	);
 
@@ -103,6 +107,10 @@
 />
 
 <DataHealthNotice health={data.dataHealth} class="mb-6" />
+
+{#if !ONLINE_STORE_ENABLED}
+	<StoreStatusNotice class="mb-6" />
+{/if}
 
 <section class="section-integrated reveal reveal-delay">
 	<SectionHeader

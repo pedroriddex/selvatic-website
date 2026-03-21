@@ -24,20 +24,23 @@ export const cartNoticeStore = {
 	subscribe
 };
 
-export const showCartNotice = (productName: string, qty = 1): void => {
-	const normalizedName = productName.trim() || 'Producto';
-	const normalizedQty = Number.isFinite(qty) ? Math.max(1, Math.trunc(qty)) : 1;
-
+export const showNotice = (message: string, duration = 1800): void => {
 	clearHideTimer();
 	set({
 		visible: true,
-		message: `+${normalizedQty} ${normalizedName}`
+		message
 	});
 
 	hideTimer = setTimeout(() => {
 		set(initialState);
 		hideTimer = undefined;
-	}, 1800);
+	}, duration);
+};
+
+export const showCartNotice = (productName: string, qty = 1): void => {
+	const normalizedName = productName.trim() || 'Producto';
+	const normalizedQty = Number.isFinite(qty) ? Math.max(1, Math.trunc(qty)) : 1;
+	showNotice(`+${normalizedQty} ${normalizedName}`);
 };
 
 export const clearCartNotice = (): void => {

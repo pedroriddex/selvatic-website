@@ -1,0 +1,58 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e6]:
+      - link "SELVATIC" [ref=e7] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e8]: SELVATIC
+      - navigation [ref=e9]:
+        - link "Inicio" [ref=e10] [cursor=pointer]:
+          - /url: /
+        - link "Tienda" [ref=e11] [cursor=pointer]:
+          - /url: /tienda
+        - link "Sobre nosotros" [ref=e12] [cursor=pointer]:
+          - /url: /sobre-nosotros
+        - link "Servicios" [ref=e13] [cursor=pointer]:
+          - /url: /servicios
+        - link "Contacto" [ref=e14] [cursor=pointer]:
+          - /url: /contacto
+        - button "Estamos trabajando en nuestra tienda online" [ref=e16]:
+          - img [ref=e18]
+        - link "Encargar ramo" [ref=e20] [cursor=pointer]:
+          - /url: /contacto
+  - main [ref=e21]:
+    - generic [ref=e22]:
+      - generic [ref=e23]:
+        - paragraph [ref=e24]: Tienda online
+        - heading "Estamos trabajando en nuestra tienda online" [level=1] [ref=e25]
+        - paragraph [ref=e26]: Muy pronto podrás comprar directamente desde la web. Mientras tanto, si necesitas una pieza o un encargo floral, escríbenos y te ayudaremos personalmente.
+      - generic [ref=e28]:
+        - img "Selección floral de Selvatic" [ref=e31]
+        - generic [ref=e32]:
+          - status [ref=e33]:
+            - generic [ref=e34]:
+              - img [ref=e37]
+              - generic [ref=e39]:
+                - paragraph [ref=e40]: Tienda online
+                - heading "Estamos trabajando en nuestra tienda online" [level=3] [ref=e41]
+                - paragraph [ref=e42]: Muy pronto podrás comprar directamente desde la web. Mientras tanto, si necesitas una pieza o un encargo floral, escríbenos y te ayudaremos personalmente.
+          - paragraph [ref=e43]: Si necesitas una pieza o un encargo floral, podemos ayudarte por vía directa mientras terminamos la apertura de la tienda.
+          - generic [ref=e44]:
+            - link "Solicitar presupuesto" [ref=e45] [cursor=pointer]:
+              - /url: /contacto
+            - link "Seguir viendo piezas" [ref=e46] [cursor=pointer]:
+              - /url: /tienda
+  - contentinfo [ref=e47]:
+    - generic [ref=e49]:
+      - generic [ref=e50]:
+        - paragraph [ref=e51]: Selvatic
+        - paragraph [ref=e52]: Proyecto de diseño floral natural con raíces familiares, hecho con tiempo, conocimiento y sensibilidad.
+      - generic [ref=e53]:
+        - link "Tienda" [ref=e54] [cursor=pointer]:
+          - /url: /tienda
+        - link "Sobre nosotros" [ref=e55] [cursor=pointer]:
+          - /url: /sobre-nosotros
+        - link "Servicios" [ref=e56] [cursor=pointer]:
+          - /url: /servicios
+        - link "Contacto" [ref=e57] [cursor=pointer]:
+          - /url: /contacto
+        - generic [ref=e58]: © 2026

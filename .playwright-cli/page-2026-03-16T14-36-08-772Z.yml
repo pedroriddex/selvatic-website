@@ -1,0 +1,61 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e6]:
+      - link "SELVATIC" [ref=e7] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e8]: SELVATIC
+      - navigation [ref=e9]:
+        - link "Inicio" [ref=e10] [cursor=pointer]:
+          - /url: /
+        - link "Tienda" [ref=e11] [cursor=pointer]:
+          - /url: /tienda
+        - link "Servicios" [ref=e12] [cursor=pointer]:
+          - /url: /servicios
+        - link "Contacto" [ref=e13] [cursor=pointer]:
+          - /url: /contacto
+        - link "Carrito con 0 productos" [ref=e15] [cursor=pointer]:
+          - /url: /checkout
+          - img [ref=e17]
+        - link "Encargar ramo" [ref=e19] [cursor=pointer]:
+          - /url: /contacto
+  - main [ref=e20]:
+    - generic [ref=e21]:
+      - generic [ref=e22]:
+        - paragraph [ref=e23]: Tienda
+        - heading "Flores secas y piezas florales para regalar, habitar y conservar." [level=1] [ref=e24]
+        - paragraph [ref=e25]: "Colecciones de unidades limitadas con edición continua: textura, volumen y paleta neutra en equilibrio."
+      - status [ref=e26]: "Configura SANITY_PROJECT_ID/PUBLIC_SANITY_PROJECT_ID y SANITY_DATASET/PUBLIC_SANITY_DATASET. Ref: 8b3b547d-8a90-4d3e-a5ee-64939205b693"
+      - generic [ref=e27]:
+        - generic [ref=e29]:
+          - paragraph [ref=e30]: Colección completa
+          - heading "Productos" [level=2] [ref=e31]
+          - heading "Mosaico editorial" [level=3] [ref=e32]
+          - paragraph [ref=e33]: Aún no hay productos activos publicados en Sanity.
+        - generic [ref=e34]:
+          - link "Todas" [ref=e35] [cursor=pointer]:
+            - /url: /tienda
+          - link "Ramos secos" [ref=e36] [cursor=pointer]:
+            - /url: /tienda?categoria=ramos-secos
+          - link "Centros secos" [ref=e37] [cursor=pointer]:
+            - /url: /tienda?categoria=centros-secos
+          - link "Letras secas" [ref=e38] [cursor=pointer]:
+            - /url: /tienda?categoria=letras-secas
+          - link "Plantas" [ref=e39] [cursor=pointer]:
+            - /url: /tienda?categoria=plantas
+        - generic [ref=e42]:
+          - paragraph [ref=e43]: Contenido pendiente
+          - heading "No hay productos publicados" [level=4] [ref=e44]
+          - paragraph [ref=e45]: Publica productos en Sanity para que se muestren en la tienda.
+  - contentinfo [ref=e46]:
+    - generic [ref=e48]:
+      - generic [ref=e49]:
+        - paragraph [ref=e50]: Selvatic
+        - paragraph [ref=e51]: Floristería especializada en flores secas, ramos a medida y decoración floral para espacios, eventos y marcas.
+      - generic [ref=e52]:
+        - link "Tienda" [ref=e53] [cursor=pointer]:
+          - /url: /tienda
+        - link "Servicios" [ref=e54] [cursor=pointer]:
+          - /url: /servicios
+        - link "Contacto" [ref=e55] [cursor=pointer]:
+          - /url: /contacto
+        - generic [ref=e56]: © 2026

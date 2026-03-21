@@ -1,4 +1,5 @@
 import { getProductBySlug } from '$lib/server/sanity';
+import { ONLINE_STORE_ENABLED, STORE_LOCK_TITLE } from '$lib/config/store';
 import { toAppError } from '$lib/server/errors';
 import { createRequestId, logger } from '$lib/server/logger';
 import { getStripeClient } from '$lib/server/stripe';
@@ -33,6 +34,12 @@ export const load = (async ({ url }) => {
 
 export const actions = {
 	default: async ({ request, fetch, url }) => {
+		if (!ONLINE_STORE_ENABLED) {
+			return fail(503, {
+				error: STORE_LOCK_TITLE
+			});
+		}
+
 		const requestId = createRequestId();
 		const formData = await request.formData();
 		const rawItems = formData.get('items');
@@ -75,7 +82,7 @@ export const actions = {
 			const normalized = toAppError(error, {
 				scope: 'checkout.action.loadProducts',
 				requestId,
-				message: 'No se pudo validar el carrito contra Sanity.'
+				message: 'No se pudo validar el carrito en este momento.'
 			});
 
 			logger.error(normalized, {

@@ -189,7 +189,7 @@ export async function sanityMutate(
 			code: 'CONFIG',
 			scope: context.scope,
 			requestId: context.requestId,
-			message: 'Define SANITY_WRITE_TOKEN para poder escribir en Sanity.'
+			message: 'La configuración necesaria para guardar contenido no está disponible.'
 		});
 	}
 

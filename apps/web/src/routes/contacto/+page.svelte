@@ -21,16 +21,16 @@
 
 	const state = $derived((form ?? {}) as ContactFormState);
 	const processSteps = [
-		'1. Validamos objetivo, fecha y estilo.',
-		'2. Enviamos propuesta visual y presupuesto.',
-		'3. Producimos, entregamos y ajustamos detalles finales.'
+		'1. Escuchamos la idea, el uso del espacio y el timing del proyecto.',
+		'2. Preparamos una propuesta floral y un presupuesto personalizado.',
+		'3. Seleccionamos producto, producimos y acompañamos hasta la entrega final.'
 	];
 </script>
 
 <SectionIntro
 	kicker="Contacto"
-	title="Cuéntanos tu idea floral y la convertimos en una propuesta realista."
-	description="Solicita ramos personalizados, decoración para eventos o intervenciones para espacios. Te respondemos con alcance, tiempos y presupuesto."
+	title="Tienes una idea o necesitas un trabajo floral a medida?"
+	description="En Selvatic realizo presupuestos personalizados y creaciones adaptadas a cada proyecto. Cuéntame qué necesitas y te responderé con una propuesta clara, sensible y realista."
 />
 
 <DataHealthNotice health={data.dataHealth} class="mb-6" />
@@ -51,14 +51,17 @@
 <section class="section-integrated reveal">
 	<div class="swiss-grid items-start gap-y-10">
 		<aside class="col-span-4 md:col-span-3 xl:col-span-4">
-			<p class="section-kicker text-white/72">Cómo trabajamos</p>
+			<p class="section-kicker text-white/72">Servicio cercano</p>
 			<h2 class="mt-2 text-lg font-semibold uppercase tracking-[0.12em] text-white/88">Proceso</h2>
-			<h3 class="section-subtitle mt-3 text-2xl sm:text-3xl">Flujo claro y sin fricción.</h3>
+			<h3 class="section-subtitle mt-3 text-2xl sm:text-3xl">Cada encargo se acompaña de principio a fin.</h3>
 			<ol class="mt-5 divide-y divide-white/12 border-y border-white/12 text-sm leading-relaxed text-white/74">
 				{#each processSteps as step}
 					<li class="py-4">{step}</li>
 				{/each}
 			</ol>
+			<p class="section-note mt-5 text-sm">
+				Trabajamos desde la experiencia, el criterio y el respeto por lo natural, cuidando cada detalle desde la selección del producto hasta la entrega final.
+			</p>
 		</aside>
 
 		<form method="POST" class="col-span-4 md:col-span-5 xl:col-span-8 grid-rail-left">
@@ -90,7 +93,7 @@
 					</select>
 					{#if data.services.length === 0}
 						<span class="text-[10px] uppercase tracking-[0.1em] text-white/56">
-							Añade servicios en Sanity para habilitar este selector.
+							Si aún no ves opciones, cuéntanos tu idea en el mensaje y te orientaremos personalmente.
 						</span>
 					{/if}
 				</label>
@@ -111,7 +114,7 @@
 
 			<button type="submit" class="btn-dark mt-7">
 				<Icon name="send-plane-line" />
-				Enviar solicitud
+				Solicitar presupuesto
 			</button>
 		</form>
 	</div>

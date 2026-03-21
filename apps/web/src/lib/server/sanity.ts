@@ -1,6 +1,7 @@
 import type { ContactRequestInput, DataHealth, Product, Service } from '$lib/types';
 import type Stripe from 'stripe';
 import { dev } from '$app/environment';
+import { resolveProductImageUrl } from '$lib/config/product-images';
 import { combineDataHealth, DATA_HEALTH_OK, dataHealthFromError } from './data-health';
 import { isCriticalDataError, toAppError } from './errors';
 import { createRequestId, logger } from './logger';
@@ -17,6 +18,16 @@ type ServicesResult = {
 	services: Service[];
 	dataHealth: DataHealth;
 };
+
+const withLaunchProductImage = (product: Product): Product => ({
+	...product,
+	imageUrl: resolveProductImageUrl(product.slug, product.imageUrl)
+});
+
+// Sanity is an external API. Using the request-scoped SvelteKit fetch here forwards
+// origin metadata from the incoming page request, which can trip Sanity CORS rules
+// in local development. The server-global fetch avoids that issue cleanly.
+const externalFetch: typeof fetch = (...args) => globalThis.fetch(...args);
 
 const sanitize = (value: string): string => value.replace(/[^a-zA-Z0-9_.-]/g, '-');
 
@@ -39,22 +50,25 @@ export async function getProductsResult(fetchFn: typeof fetch, requestId = creat
 	const scope = 'sanity.getProducts';
 
 	try {
-		const result = await sanityQuery<Record<string, unknown>[]>(fetchFn, productListQuery, {}, { scope, requestId });
+		const result = await sanityQuery<Record<string, unknown>[]>(externalFetch, productListQuery, {}, { scope, requestId });
 		return {
-			products: result.map(mapProduct).filter((product): product is Product => product !== null),
+			products: result
+				.map(mapProduct)
+				.filter((product): product is Product => product !== null)
+				.map(withLaunchProductImage),
 			dataHealth: DATA_HEALTH_OK
 		};
 	} catch (error) {
 		const normalized = toAppError(error, {
 			scope,
 			requestId,
-			message: 'No se pudieron cargar productos de Sanity.'
+			message: 'No se pudieron cargar los productos.'
 		});
 
 		logger.error(normalized, {
 			scope,
 			requestId,
-			message: 'No se pudieron cargar productos de Sanity.'
+			message: 'No se pudieron cargar los productos.'
 		});
 
 		if (!dev && isCriticalDataError(normalized)) {
@@ -76,7 +90,7 @@ export async function getServicesResult(fetchFn: typeof fetch, requestId = creat
 	const scope = 'sanity.getServices';
 
 	try {
-		const result = await sanityQuery<Record<string, unknown>[]>(fetchFn, serviceListQuery, {}, { scope, requestId });
+		const result = await sanityQuery<Record<string, unknown>[]>(externalFetch, serviceListQuery, {}, { scope, requestId });
 		return {
 			services: result.map(mapService).filter((service): service is Service => service !== null),
 			dataHealth: DATA_HEALTH_OK
@@ -85,13 +99,13 @@ export async function getServicesResult(fetchFn: typeof fetch, requestId = creat
 		const normalized = toAppError(error, {
 			scope,
 			requestId,
-			message: 'No se pudieron cargar servicios de Sanity.'
+			message: 'No se pudieron cargar los servicios.'
 		});
 
 		logger.error(normalized, {
 			scope,
 			requestId,
-			message: 'No se pudieron cargar servicios de Sanity.'
+			message: 'No se pudieron cargar los servicios.'
 		});
 
 		if (!dev && isCriticalDataError(normalized)) {
@@ -126,7 +140,7 @@ export async function getProductBySlug(
 ): Promise<Product | null> {
 	const scope = 'sanity.getProductBySlug';
 	const result = await sanityQuery<Record<string, unknown> | null>(
-		fetchFn,
+		externalFetch,
 		productBySlugQuery,
 		{ slug },
 		{ scope, requestId }
@@ -136,7 +150,8 @@ export async function getProductBySlug(
 		return null;
 	}
 
-	return mapProduct(result);
+	const product = mapProduct(result);
+	return product ? withLaunchProductImage(product) : null;
 }
 
 export async function createContactRequest(
@@ -157,7 +172,7 @@ export async function createContactRequest(
 		receivedAt: new Date().toISOString()
 	};
 
-	await sanityMutate(fetchFn, [{ create: contactDoc }], { scope, requestId });
+	await sanityMutate(externalFetch, [{ create: contactDoc }], { scope, requestId });
 }
 
 export async function createOrderFromCheckoutSession(
@@ -211,7 +226,7 @@ export async function createOrderFromCheckoutSession(
 		receivedAt: new Date().toISOString()
 	};
 
-	await sanityMutate(fetchFn, [{ createIfNotExists: orderDoc }], { scope, requestId });
+	await sanityMutate(externalFetch, [{ createIfNotExists: orderDoc }], { scope, requestId });
 }
 
 export const mergeDataHealth = (...items: DataHealth[]): DataHealth => combineDataHealth(...items);

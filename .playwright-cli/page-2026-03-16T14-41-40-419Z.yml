@@ -1,0 +1,107 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e6]:
+      - link "SELVATIC" [ref=e7] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e8]: SELVATIC
+      - navigation [ref=e9]:
+        - link "Inicio" [ref=e10] [cursor=pointer]:
+          - /url: /
+        - link "Tienda" [ref=e11] [cursor=pointer]:
+          - /url: /tienda
+        - link "Servicios" [ref=e12] [cursor=pointer]:
+          - /url: /servicios
+        - link "Contacto" [ref=e13] [cursor=pointer]:
+          - /url: /contacto
+        - link "Carrito con 0 productos" [ref=e15] [cursor=pointer]:
+          - /url: /checkout
+          - img [ref=e17]
+        - link "Encargar ramo" [ref=e19] [cursor=pointer]:
+          - /url: /contacto
+  - main [ref=e20]:
+    - generic [ref=e21]:
+      - generic [ref=e22]:
+        - article [ref=e23]
+        - generic [ref=e28]:
+          - generic [ref=e29]:
+            - paragraph [ref=e30]: Selvatic Studio / Floristería
+            - heading "Flores secas con dirección estética para espacios contemporáneos." [level=1] [ref=e31]
+            - paragraph [ref=e32]: Colecciones botánicas, ramos a medida e intervenciones florales con composición limpia, ritmo editorial y sensibilidad natural.
+            - generic [ref=e33]:
+              - link "Shop now" [ref=e34] [cursor=pointer]:
+                - /url: /tienda
+                - img [ref=e36]
+                - text: Shop now
+              - link "Ver servicios" [ref=e38] [cursor=pointer]:
+                - /url: /servicios
+                - img [ref=e40]
+                - text: Ver servicios
+          - generic [ref=e42]:
+            - paragraph [ref=e43]: Atelier
+            - generic [ref=e44]:
+              - generic [ref=e45]:
+                - term [ref=e46]: Materialidad
+                - definition [ref=e47]: Flores secas
+              - generic [ref=e48]:
+                - term [ref=e49]: Servicio
+                - definition [ref=e50]: Personalizado
+              - generic [ref=e51]:
+                - term [ref=e52]: Respuesta
+                - definition [ref=e53]: 24h laborales
+      - status [ref=e54]: "Configura SANITY_PROJECT_ID/PUBLIC_SANITY_PROJECT_ID y SANITY_DATASET/PUBLIC_SANITY_DATASET. Ref: e0a19b62-a9d3-45bb-b543-5e481c7cbc10"
+      - generic [ref=e55]:
+        - generic [ref=e56]:
+          - generic [ref=e57]:
+            - paragraph [ref=e58]: Colecciones
+            - heading "Catálogo" [level=2] [ref=e59]
+            - heading "Selección botánica con prioridad visual" [level=3] [ref=e60]
+            - paragraph [ref=e61]: Piezas editadas para regalo, interiorismo residencial y producciones de marca.
+          - link "Ver todo" [ref=e63] [cursor=pointer]:
+            - /url: /tienda
+        - generic [ref=e65]:
+          - paragraph [ref=e66]: Contenido pendiente
+          - heading "No hay productos publicados todavía" [level=4] [ref=e67]
+          - paragraph [ref=e68]: Cuando publiques productos en Sanity aparecerán aquí automáticamente.
+      - generic [ref=e69]:
+        - generic [ref=e71]:
+          - paragraph [ref=e72]: Best sellers
+          - heading "Selección" [level=2] [ref=e73]
+          - heading "Piezas con mayor salida esta temporada" [level=3] [ref=e74]
+        - generic [ref=e76]:
+          - paragraph [ref=e77]: Best sellers
+          - heading "Aún no hay selección destacada" [level=4] [ref=e78]
+          - paragraph [ref=e79]: Publica productos en Sanity y empezaremos a mostrar los más vendidos en esta sección.
+      - generic [ref=e81]:
+        - generic [ref=e82]:
+          - paragraph [ref=e83]: Dirección floral
+          - heading "Espacios" [level=2] [ref=e84]
+          - heading "Transforma tu espacio con composiciones botánicas vivas." [level=3] [ref=e85]
+          - paragraph [ref=e86]: Diseñamos atmósferas florales para viviendas, hospitality y activaciones de marca con ejecución integral.
+          - link "Pedir propuesta" [ref=e87] [cursor=pointer]:
+            - /url: /contacto
+        - img [ref=e92]
+      - generic [ref=e94]:
+        - generic [ref=e95]:
+          - generic [ref=e96]:
+            - paragraph [ref=e97]: Servicios
+            - heading "Atelier" [level=2] [ref=e98]
+            - heading "Diseño floral a medida" [level=3] [ref=e99]
+          - link "Todos los servicios" [ref=e101] [cursor=pointer]:
+            - /url: /servicios
+        - generic [ref=e103]:
+          - paragraph [ref=e104]: Servicios
+          - heading "No hay servicios publicados todavía" [level=4] [ref=e105]
+          - paragraph [ref=e106]: Añade servicios en Sanity para mostrarlos en la home.
+  - contentinfo [ref=e107]:
+    - generic [ref=e109]:
+      - generic [ref=e110]:
+        - paragraph [ref=e111]: Selvatic
+        - paragraph [ref=e112]: Floristería especializada en flores secas, ramos a medida y decoración floral para espacios, eventos y marcas.
+      - generic [ref=e113]:
+        - link "Tienda" [ref=e114] [cursor=pointer]:
+          - /url: /tienda
+        - link "Servicios" [ref=e115] [cursor=pointer]:
+          - /url: /servicios
+        - link "Contacto" [ref=e116] [cursor=pointer]:
+          - /url: /contacto
+        - generic [ref=e117]: © 2026

@@ -1,0 +1,173 @@
+- generic [active] [ref=e1]:
+  - link "Saltar al contenido principal" [ref=e2] [cursor=pointer]:
+    - /url: "#brx-content"
+  - link "Saltar al pie de página" [ref=e3] [cursor=pointer]:
+    - /url: "#brx-footer"
+  - banner [ref=e4]:
+    - generic [ref=e7]:
+      - link "SELVATIC" [ref=e9] [cursor=pointer]:
+        - /url: http://localhost:8883/
+      - navigation [ref=e11]:
+        - list [ref=e12]:
+          - listitem [ref=e13]:
+            - link "Inicio" [ref=e14] [cursor=pointer]:
+              - /url: http://localhost:8883/
+          - listitem [ref=e15]:
+            - link "Tienda" [ref=e16] [cursor=pointer]:
+              - /url: http://localhost:8883/tienda/
+          - listitem [ref=e17]:
+            - link "Servicios" [ref=e18] [cursor=pointer]:
+              - /url: http://localhost:8883/servicios/
+          - listitem [ref=e19]:
+            - link "Contacto" [ref=e20] [cursor=pointer]:
+              - /url: http://localhost:8883/contacto/
+      - generic [ref=e21]:
+        - button "Open cart" [ref=e24] [cursor=pointer]:
+          - img [ref=e26]
+        - link "Encargar ramo" [ref=e29] [cursor=pointer]:
+          - /url: http://localhost:8883/contacto/
+  - main [ref=e30]:
+    - generic [ref=e33]:
+      - paragraph [ref=e35]: Tienda
+      - heading "Flores secas y piezas florales para regalar, habitar y conservar." [level=1] [ref=e36]
+      - paragraph [ref=e38]: "Colecciones de unidades limitadas con edicion continua: textura, volumen y paleta neutra en equilibrio."
+    - generic [ref=e41]:
+      - generic [ref=e43]:
+        - paragraph [ref=e45]: Coleccion completa
+        - heading "Productos" [level=2] [ref=e46]
+        - heading "Mosaico editorial" [level=3] [ref=e47]
+        - paragraph [ref=e49]: Explora la coleccion completa y filtra por familia botanica.
+      - list [ref=e50]:
+        - listitem [ref=e51]:
+          - generic [ref=e53] [cursor=pointer]: Todas
+        - listitem [ref=e54]:
+          - generic [ref=e56] [cursor=pointer]: Ramos secos
+        - listitem [ref=e57]:
+          - generic [ref=e59] [cursor=pointer]: Centros secos
+        - listitem [ref=e60]:
+          - generic [ref=e62] [cursor=pointer]: Letras secas
+        - listitem [ref=e63]:
+          - generic [ref=e65] [cursor=pointer]: Plantas
+      - generic [ref=e66]:
+        - generic [ref=e68]:
+          - link " Ramo Bruma Lima" [ref=e70] [cursor=pointer]:
+            - /url: http://localhost:8883/wp-content/uploads/codex-import/assets/insung-bouquet-scaled.webp
+            - generic: 
+            - img "Ramo Bruma Lima" [ref=e71]
+          - generic [ref=e72]:
+            - heading "Ramo Bruma Lima" [level=4] [ref=e73]
+            - paragraph [ref=e75]: Ramo de flores secas en paleta neutra con acento verde lima para interiores contemporaneos.
+            - generic [ref=e76]:
+              - paragraph [ref=e78]: 64,00 €
+              - generic [ref=e79]:
+                - link "Anadir" [ref=e81] [cursor=pointer]:
+                  - /url: http://localhost:8883/tienda/ramo-bruma-lima/
+                - link "" [ref=e82] [cursor=pointer]:
+                  - /url: http://localhost:8883/tienda/ramo-bruma-lima/
+                  - generic [ref=e83]: 
+        - generic [ref=e85]:
+          - link " Centro Nordico Musgo" [ref=e87] [cursor=pointer]:
+            - /url: http://localhost:8883/wp-content/uploads/codex-import/assets/feey-thistle-scaled.webp
+            - generic: 
+            - img "Centro Nordico Musgo" [ref=e88]
+          - generic [ref=e89]:
+            - heading "Centro Nordico Musgo" [level=4] [ref=e90]
+            - paragraph [ref=e92]: Centro de mesa de perfil bajo, pensado para comedor y recibidor con estetica editorial.
+            - generic [ref=e93]:
+              - paragraph [ref=e95]: 52,00 €
+              - generic [ref=e96]:
+                - link "Anadir" [ref=e98] [cursor=pointer]:
+                  - /url: http://localhost:8883/tienda/centro-nordico-musgo/
+                - link "" [ref=e99] [cursor=pointer]:
+                  - /url: http://localhost:8883/tienda/centro-nordico-musgo/
+                  - generic [ref=e100]: 
+        - generic [ref=e102]:
+          - link " Mini Bouquet Atelier" [ref=e104] [cursor=pointer]:
+            - /url: http://localhost:8883/wp-content/uploads/codex-import/assets/feey-rose-scaled.webp
+            - generic: 
+            - img "Mini Bouquet Atelier" [ref=e105]
+          - generic [ref=e106]:
+            - heading "Mini Bouquet Atelier" [level=4] [ref=e107]
+            - paragraph [ref=e109]: Formato pequeno ideal para regalo o detalle de mesa auxiliar.
+            - generic [ref=e110]:
+              - paragraph [ref=e112]: 29,00 €
+              - generic [ref=e113]:
+                - link "Anadir" [ref=e115] [cursor=pointer]:
+                  - /url: http://localhost:8883/tienda/mini-bouquet-atelier/
+                - link "" [ref=e116] [cursor=pointer]:
+                  - /url: http://localhost:8883/tienda/mini-bouquet-atelier/
+                  - generic [ref=e117]: 
+        - generic [ref=e119]:
+          - link " Pack Duo Esencias" [ref=e121] [cursor=pointer]:
+            - /url: http://localhost:8883/wp-content/uploads/codex-import/assets/yellow-cactus-scaled.webp
+            - generic: 
+            - img "Pack Duo Esencias" [ref=e122]
+          - generic [ref=e123]:
+            - heading "Pack Duo Esencias" [level=4] [ref=e124]
+            - paragraph [ref=e126]: Dos mini composiciones combinadas para estanteria, mueble bajo o mesita.
+            - generic [ref=e127]:
+              - paragraph [ref=e129]: 45,00 €
+              - generic [ref=e130]:
+                - link "Anadir" [ref=e132] [cursor=pointer]:
+                  - /url: http://localhost:8883/tienda/pack-duo-esencias/
+                - link "" [ref=e133] [cursor=pointer]:
+                  - /url: http://localhost:8883/tienda/pack-duo-esencias/
+                  - generic [ref=e134]: 
+        - generic [ref=e136]:
+          - link " Composicion Botanica Vertical" [ref=e138] [cursor=pointer]:
+            - /url: http://localhost:8883/wp-content/uploads/codex-import/assets/feey-purple-scaled.webp
+            - generic: 
+            - img "Composicion Botanica Vertical" [ref=e139]
+          - generic [ref=e140]:
+            - heading "Composicion Botanica Vertical" [level=4] [ref=e141]
+            - paragraph [ref=e143]: Pieza de gran formato con lectura arquitectonica para espacios amplios.
+            - generic [ref=e144]:
+              - paragraph [ref=e146]: 98,00 €
+              - generic [ref=e147]:
+                - link "Anadir" [ref=e149] [cursor=pointer]:
+                  - /url: http://localhost:8883/tienda/composicion-botanica-vertical/
+                - link "" [ref=e150] [cursor=pointer]:
+                  - /url: http://localhost:8883/tienda/composicion-botanica-vertical/
+                  - generic [ref=e151]: 
+        - generic [ref=e153]:
+          - link " Centro Mesa Editorial" [ref=e155] [cursor=pointer]:
+            - /url: http://localhost:8883/wp-content/uploads/codex-import/assets/evie-dried-scaled.webp
+            - generic: 
+            - img "Centro Mesa Editorial" [ref=e156]
+          - generic [ref=e157]:
+            - heading "Centro Mesa Editorial" [level=4] [ref=e158]
+            - paragraph [ref=e160]: Centro lineal para mesas largas, con volumen controlado y paleta equilibrada.
+            - generic [ref=e161]:
+              - paragraph [ref=e163]: 67,00 €
+              - generic [ref=e164]:
+                - link "Anadir" [ref=e166] [cursor=pointer]:
+                  - /url: http://localhost:8883/tienda/centro-mesa-editorial/
+                - link "" [ref=e167] [cursor=pointer]:
+                  - /url: http://localhost:8883/tienda/centro-mesa-editorial/
+                  - generic [ref=e168]: 
+  - contentinfo [ref=e169]:
+    - generic [ref=e172]:
+      - generic [ref=e173]:
+        - paragraph [ref=e175]: Selvatic
+        - heading "Flores secas, ramos a medida y direccion floral para espacios y eventos." [level=3] [ref=e176]
+        - paragraph [ref=e178]: Flores secas, direccion floral y composiciones botanicas con sensibilidad editorial para espacios contemporaneos.
+      - generic [ref=e179]:
+        - paragraph [ref=e181]:
+          - link "Tienda" [ref=e182] [cursor=pointer]:
+            - /url: http://localhost:8883/tienda/
+          - text: /
+          - link "Servicios" [ref=e183] [cursor=pointer]:
+            - /url: http://localhost:8883/servicios/
+          - text: /
+          - link "Contacto" [ref=e184] [cursor=pointer]:
+            - /url: http://localhost:8883/contacto/
+        - paragraph [ref=e186]:
+          - link "Privacidad" [ref=e187] [cursor=pointer]:
+            - /url: http://localhost:8883/politica-de-privacidad/
+          - text: /
+          - link "Aviso legal" [ref=e188] [cursor=pointer]:
+            - /url: http://localhost:8883/aviso-legal/
+          - text: /
+          - link "Cookies" [ref=e189] [cursor=pointer]:
+            - /url: http://localhost:8883/politica-de-cookies/
+        - paragraph [ref=e191]: 2026 · Selvatic

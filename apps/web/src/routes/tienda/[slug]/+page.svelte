@@ -1,12 +1,14 @@
 <script lang="ts">
 	import ProductCard from '$lib/components/products/ProductCard.svelte';
+	import { ONLINE_STORE_ENABLED, STORE_LOCK_TITLE } from '$lib/config/store';
 	import DataHealthNotice from '$lib/components/ui/DataHealthNotice.svelte';
 	import Icon from '$lib/components/ui/Icon.svelte';
 	import ProductImage from '$lib/components/ui/ProductImage.svelte';
 	import SectionHeader from '$lib/components/ui/SectionHeader.svelte';
 	import SectionIntro from '$lib/components/ui/SectionIntro.svelte';
+	import StoreStatusNotice from '$lib/components/ui/StoreStatusNotice.svelte';
 	import { addItemToCart } from '$lib/state/cart';
-	import { showCartNotice } from '$lib/state/cart-notice';
+	import { showCartNotice, showNotice } from '$lib/state/cart-notice';
 	import { getRelatedProductSpan } from '$lib/utils/product-grid';
 	import { formatCurrency } from '$lib/utils/currency';
 	import { onDestroy } from 'svelte';
@@ -37,6 +39,11 @@
 	});
 
 	const addToCart = () => {
+		if (!ONLINE_STORE_ENABLED) {
+			showNotice(STORE_LOCK_TITLE, 2400);
+			return;
+		}
+
 		const result = addItemToCart({
 			slug: data.product.slug,
 			name: data.product.name,
@@ -59,9 +66,15 @@
 <SectionIntro
 	kicker="Producto"
 	title={data.product.name}
-	description="Composición editorial de producto con imagen protagonista y compra directa mediante Stripe Checkout."
+	description={ONLINE_STORE_ENABLED
+		? 'Composición editorial de producto con imagen protagonista y compra directa mediante Stripe Checkout.'
+		: 'La pieza sigue visible a modo de catálogo mientras terminamos la apertura de la tienda online.'}
 	class="section-intro mb-12 reveal"
 />
+
+{#if !ONLINE_STORE_ENABLED}
+	<StoreStatusNotice class="mb-6" compact />
+{/if}
 
 <section class="section-integrated reveal reveal-delay">
 	<div class="swiss-grid items-start gap-y-10">
@@ -90,13 +103,20 @@
 				</div>
 			</div>
 
-			<button type="button" class="btn-lime mt-7 w-full sm:w-auto" onclick={addToCart}>
-				<Icon name="shopping-bag-3-line" />
-				Añadir al carrito
-			</button>
-			<a href="/checkout" class="btn-outline mt-3 w-full justify-center sm:w-auto">
-				Ir al carrito
-			</a>
+			{#if ONLINE_STORE_ENABLED}
+				<button type="button" class="btn-lime mt-7 w-full sm:w-auto" onclick={addToCart}>
+					<Icon name="shopping-bag-3-line" />
+					Añadir al carrito
+				</button>
+				<a href="/checkout" class="btn-outline mt-3 w-full justify-center sm:w-auto">
+					Ir al carrito
+				</a>
+			{:else}
+				<button type="button" class="btn-outline mt-7 w-full justify-center sm:w-auto" onclick={addToCart}>
+					<Icon name="shopping-bag-3-line" />
+					Tienda online próximamente
+				</button>
+			{/if}
 			<a href="/tienda" class="btn-dark mt-3 w-full justify-center sm:w-auto">Volver a tienda</a>
 
 			{#if cartFeedback}

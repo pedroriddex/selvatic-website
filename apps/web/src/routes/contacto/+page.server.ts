@@ -69,7 +69,7 @@ export const actions = {
 				success: false,
 				message:
 					normalized.code === 'CONFIG'
-						? 'Falta configuración de Sanity para guardar mensajes.'
+						? 'El formulario no está disponible temporalmente.'
 						: 'No se pudo guardar el mensaje en este momento. Inténtalo de nuevo.',
 				requestId
 			});

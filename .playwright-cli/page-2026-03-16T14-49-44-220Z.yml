@@ -1,0 +1,127 @@
+- generic [active] [ref=e1]:
+  - link "Saltar al contenido principal" [ref=e2] [cursor=pointer]:
+    - /url: "#brx-content"
+  - link "Saltar al pie de página" [ref=e3] [cursor=pointer]:
+    - /url: "#brx-footer"
+  - banner [ref=e4]:
+    - generic [ref=e7]:
+      - link "SELVATIC" [ref=e9] [cursor=pointer]:
+        - /url: http://localhost:8883/
+      - navigation [ref=e11]:
+        - list [ref=e12]:
+          - listitem [ref=e13]:
+            - link "Inicio" [ref=e14] [cursor=pointer]:
+              - /url: http://localhost:8883/
+          - listitem [ref=e15]:
+            - link "Tienda" [ref=e16] [cursor=pointer]:
+              - /url: http://localhost:8883/tienda/
+          - listitem [ref=e17]:
+            - link "Servicios" [ref=e18] [cursor=pointer]:
+              - /url: http://localhost:8883/servicios/
+          - listitem [ref=e19]:
+            - link "Contacto" [ref=e20] [cursor=pointer]:
+              - /url: http://localhost:8883/contacto/
+      - generic [ref=e21]:
+        - button "Open cart" [ref=e24] [cursor=pointer]:
+          - img [ref=e26]
+        - link "Encargar ramo" [ref=e29] [cursor=pointer]:
+          - /url: http://localhost:8883/contacto/
+  - main [ref=e30]:
+    - generic [ref=e33]:
+      - paragraph [ref=e35]: Servicios
+      - heading "Decoracion floral y direccion estetica para espacios y eventos." [level=1] [ref=e36]
+      - paragraph [ref=e38]: "Desde concepto hasta instalacion final: ejecuciones refinadas, naturales y coherentes con el tono de cada proyecto."
+    - generic [ref=e41]:
+      - generic [ref=e42]:
+        - paragraph [ref=e44]: Metodologia
+        - heading "Proceso" [level=2] [ref=e45]
+        - heading "Direccion clara, produccion precisa y montaje final impecable." [level=3] [ref=e46]
+        - list [ref=e48]:
+          - listitem [ref=e49]: 1. Escucha y direccion visual.
+          - listitem [ref=e50]: 2. Propuesta estetica y presupuesto.
+          - listitem [ref=e51]: 3. Produccion, montaje y seguimiento.
+        - link "Pedir propuesta" [ref=e52] [cursor=pointer]:
+          - /url: http://localhost:8883/contacto/
+      - img "Direccion floral Selvatic" [ref=e55]
+    - generic [ref=e58]:
+      - generic [ref=e60]:
+        - paragraph [ref=e62]: Servicios
+        - heading "Intervenciones y ramos a medida" [level=2] [ref=e63]
+        - heading "Seleccion de servicios disponibles" [level=3] [ref=e64]
+      - generic [ref=e65]:
+        - generic [ref=e66]:
+          - paragraph [ref=e68]: "01"
+          - generic [ref=e69]:
+            - heading "Decoracion Floral para Eventos" [level=4] [ref=e70]
+            - paragraph [ref=e72]: Diseno floral integral para bodas, cenas privadas y eventos de marca.
+          - generic [ref=e73]:
+            - paragraph [ref=e75]: Desde 450,00 €
+            - link "" [ref=e76] [cursor=pointer]:
+              - /url: http://localhost:8883/contacto/
+              - generic [ref=e77]: 
+        - generic [ref=e78]:
+          - paragraph [ref=e80]: "02"
+          - generic [ref=e81]:
+            - heading "Ramos Personalizados" [level=4] [ref=e82]
+            - paragraph [ref=e84]: Ramos a medida para regalo, hogar o produccion visual.
+          - generic [ref=e85]:
+            - paragraph [ref=e87]: Desde 55,00 €
+            - link "" [ref=e88] [cursor=pointer]:
+              - /url: http://localhost:8883/contacto/
+              - generic [ref=e89]: 
+        - generic [ref=e90]:
+          - paragraph [ref=e92]: "03"
+          - generic [ref=e93]:
+            - heading "Styling Botanico para Espacios" [level=4] [ref=e94]
+            - paragraph [ref=e96]: Intervenciones florales para retail, hospitality y residencias.
+          - generic [ref=e97]:
+            - paragraph [ref=e99]: Desde 320,00 €
+            - link "" [ref=e100] [cursor=pointer]:
+              - /url: http://localhost:8883/contacto/
+              - generic [ref=e101]: 
+        - generic [ref=e102]:
+          - paragraph [ref=e104]: "04"
+          - generic [ref=e105]:
+            - heading "Suscripcion Floral Mensual" [level=4] [ref=e106]
+            - paragraph [ref=e108]: Renovacion mensual de composiciones florales secas.
+          - generic [ref=e109]:
+            - paragraph [ref=e111]: Desde 95,00 €
+            - link "" [ref=e112] [cursor=pointer]:
+              - /url: http://localhost:8883/contacto/
+              - generic [ref=e113]: 
+        - generic [ref=e114]:
+          - paragraph [ref=e116]: "05"
+          - generic [ref=e117]:
+            - heading "Direccion Floral para Shooting" [level=4] [ref=e118]
+            - paragraph [ref=e120]: Soporte creativo para campanas, editoriales y contenido de marca.
+          - generic [ref=e121]:
+            - paragraph [ref=e123]: Desde 280,00 €
+            - link "" [ref=e124] [cursor=pointer]:
+              - /url: http://localhost:8883/contacto/
+              - generic [ref=e125]: 
+  - contentinfo [ref=e126]:
+    - generic [ref=e129]:
+      - generic [ref=e130]:
+        - paragraph [ref=e132]: Selvatic
+        - heading "Flores secas, ramos a medida y direccion floral para espacios y eventos." [level=3] [ref=e133]
+        - paragraph [ref=e135]: Flores secas, direccion floral y composiciones botanicas con sensibilidad editorial para espacios contemporaneos.
+      - generic [ref=e136]:
+        - paragraph [ref=e138]:
+          - link "Tienda" [ref=e139] [cursor=pointer]:
+            - /url: http://localhost:8883/tienda/
+          - text: /
+          - link "Servicios" [ref=e140] [cursor=pointer]:
+            - /url: http://localhost:8883/servicios/
+          - text: /
+          - link "Contacto" [ref=e141] [cursor=pointer]:
+            - /url: http://localhost:8883/contacto/
+        - paragraph [ref=e143]:
+          - link "Privacidad" [ref=e144] [cursor=pointer]:
+            - /url: http://localhost:8883/politica-de-privacidad/
+          - text: /
+          - link "Aviso legal" [ref=e145] [cursor=pointer]:
+            - /url: http://localhost:8883/aviso-legal/
+          - text: /
+          - link "Cookies" [ref=e146] [cursor=pointer]:
+            - /url: http://localhost:8883/politica-de-cookies/
+        - paragraph [ref=e148]: 2026 · Selvatic

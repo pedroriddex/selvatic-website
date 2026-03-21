@@ -46,39 +46,39 @@
 	<div class="hero-stage-content">
 		<div class="swiss-grid hero-stage-grid items-end py-12 sm:py-14 lg:py-16">
 			<div class="col-span-4 md:col-span-6 xl:col-span-8">
-				<p class="section-kicker text-white/78">Selvatic Studio / Floristería</p>
+				<p class="section-kicker text-white/78">Selvatic / Diseño floral natural</p>
 				<h1 class="mt-4 max-w-5xl text-balance text-5xl leading-[0.88] text-white sm:text-6xl lg:text-7xl">
-					Flores secas con dirección estética para espacios contemporáneos.
+					Diseño floral natural con memoria, tiempo y sensibilidad.
 				</h1>
 				<p class="mt-6 max-w-3xl text-sm leading-relaxed text-white/82 sm:text-base">
-					Colecciones botánicas, ramos a medida e intervenciones florales con composición limpia, ritmo editorial y sensibilidad natural.
+					Proyecto floral liderado por Noelia Pérez, especializado en flor seca y preservada, con una mirada serena, honesta y atemporal para hogares, espacios y encargos a medida.
 				</p>
 				<div class="mt-9 flex flex-wrap gap-3">
 					<a href="/tienda" class="btn-lime">
 						<Icon name="shopping-bag-3-line" />
-						Shop now
+						Ver tienda
 					</a>
-					<a href="/servicios" class="btn-outline">
-						<Icon name="layout-grid-line" />
-						Ver servicios
+					<a href="/sobre-nosotros" class="btn-outline">
+						<Icon name="arrow-right-line" />
+						Conocer el estudio
 					</a>
 				</div>
 			</div>
 
 			<div class="col-span-4 grid-rail-left md:col-span-2 md:self-end xl:col-span-4">
-				<p class="section-kicker text-white/66">Atelier</p>
+				<p class="section-kicker text-white/66">Oficio</p>
 				<dl class="mt-4 space-y-2 text-xs uppercase tracking-[0.12em] text-white/78 sm:text-[11px]">
 					<div class="flex items-center justify-between border-b border-white/12 pb-2">
-						<dt>Materialidad</dt>
-						<dd class="text-white">Flores secas</dd>
+						<dt>Origen</dt>
+						<dd class="text-white">Desde los 70</dd>
 					</div>
 					<div class="flex items-center justify-between border-b border-white/12 pb-2">
-						<dt>Servicio</dt>
-						<dd class="text-white">Personalizado</dd>
+						<dt>Especialidad</dt>
+						<dd class="text-white">Flor seca</dd>
 					</div>
 					<div class="flex items-center justify-between">
-						<dt>Respuesta</dt>
-						<dd class="text-white">24h laborales</dd>
+						<dt>Servicio</dt>
+						<dd class="text-white">A medida</dd>
 					</div>
 				</dl>
 			</div>
@@ -87,6 +87,31 @@
 </section>
 
 <DataHealthNotice health={data.dataHealth.overall} class="mt-8" />
+
+<section class="section-integrated mt-12 reveal reveal-delay">
+	<div class="swiss-grid items-start gap-y-10">
+		<div class="grid-span-copy">
+			<p class="section-kicker">Sobre Selvatic</p>
+			<h2 class="mt-2 text-lg font-semibold uppercase tracking-[0.12em] text-white/88">Estudio</h2>
+			<h3 class="section-subtitle mt-3">
+				Un proyecto de diseño floral natural con raíces familiares y una mirada contemporánea.
+			</h3>
+			<p class="section-note mt-5">
+				Detrás de Selvatic hay una larga tradición ligada al mundo de la planta y la flor, hoy reinterpretada por Noelia Pérez desde la sencillez, el equilibrio y la naturalidad.
+			</p>
+		</div>
+		<div class="grid-span-image grid-rail-left">
+			<p class="section-kicker text-white/72">Lectura rápida</p>
+			<h3 class="section-subtitle mt-3 max-w-3xl">
+				Flor seca, cerámica y un servicio cercano pensado para acompañar cada encargo con criterio.
+			</h3>
+			<p class="section-note mt-5">
+				Si quieres entender mejor el origen del proyecto, la forma de trabajar y la materialidad que define el estudio, hemos reunido todo en una página específica.
+			</p>
+			<a href="/sobre-nosotros" class="btn-outline mt-7">Ir a Sobre nosotros</a>
+		</div>
+	</div>
+</section>
 
 <section class="section-integrated mt-12 reveal reveal-delay">
 	<SectionHeader
@@ -114,7 +139,7 @@
 		<div class="swiss-grid mt-10">
 			<EmptyState
 				title="No hay productos publicados todavía"
-				description="Cuando publiques productos en Sanity aparecerán aquí automáticamente."
+				description="La colección se irá completando con nuevas piezas muy pronto."
 				class="col-span-4 md:col-span-8 xl:col-span-12"
 			/>
 		</div>
@@ -135,7 +160,7 @@
 			<EmptyState
 				kicker="Best sellers"
 				title="Aún no hay selección destacada"
-				description="Publica productos en Sanity y empezaremos a mostrar los más vendidos en esta sección."
+				description="Pronto mostraremos aquí una selección de piezas destacadas."
 				class="col-span-4 md:col-span-8 xl:col-span-12"
 			/>
 		</div>
@@ -145,13 +170,16 @@
 <section class="section-integrated mt-14 reveal reveal-delay-2">
 	<div class="swiss-grid items-end gap-y-10">
 		<div class="grid-span-copy">
-			<p class="section-kicker">Dirección floral</p>
-			<h2 class="mt-2 text-lg font-semibold uppercase tracking-[0.12em] text-white/88">Espacios</h2>
-			<h3 class="section-subtitle mt-3">Transforma tu espacio con composiciones botánicas vivas.</h3>
+			<p class="section-kicker">Materia natural</p>
+			<h2 class="mt-2 text-lg font-semibold uppercase tracking-[0.12em] text-white/88">Especialidad</h2>
+			<h3 class="section-subtitle mt-3">Flor seca, preservada y cerámica escogida con el mismo criterio.</h3>
 			<p class="section-note mt-5">
-				Diseñamos atmósferas florales para viviendas, hospitality y activaciones de marca con ejecución integral.
+				Selvatic está especializado en creaciones con flor seca y preservada, combinadas con una cuidada selección de planta natural y presentadas en cerámica decorativa.
 			</p>
-			<a href="/contacto" class="btn-lime mt-7">Pedir propuesta</a>
+			<div class="mt-7 flex flex-wrap gap-3">
+				<a href="/contacto" class="btn-lime">Solicitar propuesta</a>
+				<a href="/sobre-nosotros" class="btn-outline">Más sobre el estudio</a>
+			</div>
 		</div>
 		<div class="grid-span-image">
 			<div class="image-panel image-panel-arched">
@@ -171,7 +199,8 @@
 	<SectionHeader
 		kicker="Servicios"
 		label="Atelier"
-		title="Diseño floral a medida"
+		title="Servicio cercano y diseño floral a medida"
+		description="Cuidamos cada detalle desde la selección del producto hasta la entrega final."
 		actionHref="/servicios"
 		actionLabel="Todos los servicios"
 	/>
@@ -182,7 +211,7 @@
 			<EmptyState
 				kicker="Servicios"
 				title="No hay servicios publicados todavía"
-				description="Añade servicios en Sanity para mostrarlos en la home."
+				description="Muy pronto encontrarás aquí todos los servicios disponibles."
 				class="col-span-4 md:col-span-8 xl:col-span-12"
 			/>
 		</div>

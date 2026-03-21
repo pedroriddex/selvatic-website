@@ -34,10 +34,10 @@
 
 <style>
 	.product-image-shell {
-		border-radius: 0.36rem;
+		border-radius: 0.38rem;
 	}
 
 	.product-image-shell-arched {
-		border-radius: 9999px 9999px 0 0;
+		border-radius: 0.38rem;
 	}
 </style>

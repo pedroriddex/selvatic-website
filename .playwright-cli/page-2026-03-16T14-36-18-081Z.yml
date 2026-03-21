@@ -1,0 +1,96 @@
+- generic [active] [ref=e1]:
+  - link "Saltar al contenido principal" [ref=e2] [cursor=pointer]:
+    - /url: "#brx-content"
+  - link "Saltar al pie de página" [ref=e3] [cursor=pointer]:
+    - /url: "#brx-footer"
+  - banner [ref=e4]:
+    - generic [ref=e7]:
+      - link "SELVATIC" [ref=e9] [cursor=pointer]:
+        - /url: http://localhost:8883/
+      - navigation [ref=e11]:
+        - list [ref=e12]:
+          - listitem [ref=e13]:
+            - link "Inicio" [ref=e14] [cursor=pointer]:
+              - /url: http://localhost:8883/
+          - listitem [ref=e15]:
+            - link "Tienda" [ref=e16] [cursor=pointer]:
+              - /url: http://localhost:8883/tienda/
+          - listitem [ref=e17]:
+            - link "Servicios" [ref=e18] [cursor=pointer]:
+              - /url: http://localhost:8883/servicios/
+          - listitem [ref=e19]:
+            - link "Contacto" [ref=e20] [cursor=pointer]:
+              - /url: http://localhost:8883/contacto/
+      - generic [ref=e21]:
+        - button "Open cart" [ref=e24] [cursor=pointer]:
+          - img [ref=e26]
+        - link "Encargar ramo" [ref=e29] [cursor=pointer]:
+          - /url: http://localhost:8883/contacto/
+  - main [ref=e30]:
+    - generic [ref=e33]:
+      - paragraph [ref=e35]: Contacto
+      - heading "Cuentanos tu idea floral y la convertimos en una propuesta realista." [level=1] [ref=e36]
+      - paragraph [ref=e38]: Solicita ramos personalizados, decoracion para eventos o intervenciones para espacios. Te respondemos con alcance, tiempos y presupuesto.
+    - generic [ref=e41]:
+      - generic [ref=e42]:
+        - paragraph [ref=e44]: Como trabajamos
+        - heading "Proceso" [level=2] [ref=e45]
+        - heading "Flujo claro y sin friccion." [level=3] [ref=e46]
+        - list [ref=e48]:
+          - listitem [ref=e49]: 1. Validamos objetivo, fecha y estilo.
+          - listitem [ref=e50]: 2. Enviamos propuesta visual y presupuesto.
+          - listitem [ref=e51]: 3. Producimos, entregamos y ajustamos detalles finales.
+      - generic [ref=e53]:
+        - group [ref=e54]:
+          - generic [ref=e55]: Nombre*
+          - textbox "Nombre*" [ref=e56]:
+            - /placeholder: Tu nombre *
+        - group [ref=e57]:
+          - generic [ref=e58]: Email*
+          - textbox "Email*" [ref=e59]:
+            - /placeholder: tu@email.com *
+        - group [ref=e60]:
+          - generic [ref=e61]: Telefono
+          - textbox "Telefono" [ref=e62]:
+            - /placeholder: Opcional
+        - group [ref=e63]:
+          - generic [ref=e64]: Servicio
+          - combobox "Servicio" [ref=e65] [cursor=pointer]:
+            - option "Seleccionar" [selected]
+            - option "Decoracion Floral para Eventos"
+            - option "Ramos Personalizados"
+            - option "Styling Botanico para Espacios"
+            - option "Suscripcion Floral Mensual"
+            - option "Direccion Floral para Shooting"
+        - group [ref=e66]:
+          - generic [ref=e67]: Mensaje*
+          - textbox "Mensaje*" [ref=e68]:
+            - /placeholder: Cuentanos el contexto, fecha, estilo y alcance del proyecto. *
+        - button "Enviar solicitud" [ref=e70] [cursor=pointer]:
+          - generic [ref=e71]: Enviar solicitud
+  - contentinfo [ref=e72]:
+    - generic [ref=e75]:
+      - generic [ref=e76]:
+        - paragraph [ref=e78]: Selvatic
+        - heading "Flores secas, ramos a medida y direccion floral para espacios y eventos." [level=3] [ref=e79]
+        - paragraph [ref=e81]: Flores secas, direccion floral y composiciones botanicas con sensibilidad editorial para espacios contemporaneos.
+      - generic [ref=e82]:
+        - paragraph [ref=e84]:
+          - link "Tienda" [ref=e85] [cursor=pointer]:
+            - /url: http://localhost:8883/tienda/
+          - text: /
+          - link "Servicios" [ref=e86] [cursor=pointer]:
+            - /url: http://localhost:8883/servicios/
+          - text: /
+          - link "Contacto" [ref=e87] [cursor=pointer]:
+            - /url: http://localhost:8883/contacto/
+        - paragraph [ref=e89]:
+          - link "Privacidad" [ref=e90] [cursor=pointer]:
+            - /url: http://localhost:8883/politica-de-privacidad/
+          - text: /
+          - link "Aviso legal" [ref=e91] [cursor=pointer]:
+            - /url: http://localhost:8883/aviso-legal/
+          - text: /
+          - link "Cookies" [ref=e92] [cursor=pointer]:
+            - /url: http://localhost:8883/politica-de-cookies/
+        - paragraph [ref=e94]: 2026 · Selvatic

@@ -35,3 +35,36 @@
 	border-left: 0 !important;
 	border-right: 0 !important;
 }
+
+.header-brand-title {
+	font-family: 'Philosopher', 'Times New Roman', serif;
+	font-size: 1.4rem;
+	font-weight: 700;
+}
+
+.section-kicker + .section-title,
+.section-kicker + .section-subtitle,
+.section-kicker + h2 {
+	margin-top: clamp(0.95rem, 1.8vw, 1.35rem);
+}
+
+h2 + .section-subtitle {
+	margin-top: clamp(0.95rem, 1.8vw, 1.35rem);
+}
+
+.section-title + .section-note,
+.section-subtitle + .section-note {
+	margin-top: clamp(1.1rem, 2vw, 1.55rem);
+}
+
+.section-note + .section-note {
+	margin-top: clamp(0.95rem, 1.7vw, 1.3rem);
+}
+
+.image-panel,
+.image-panel-arched,
+.arched-media-wrap,
+.product-home-media,
+.product-catalog-media {
+	border-radius: 0.38rem !important;
+}
