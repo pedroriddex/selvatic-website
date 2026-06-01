@@ -1,4 +1,4 @@
-import { PUBLIC_APP_URL } from '$env/static/public';
+import { env as publicEnv } from '$env/dynamic/public';
 import { ONLINE_STORE_ENABLED, STORE_LOCK_TITLE } from '$lib/config/store';
 import { toAppError } from '$lib/server/errors';
 import { createRequestId, logger } from '$lib/server/logger';
@@ -160,7 +160,7 @@ export const checkoutPageActions = {
 
 		try {
 			const stripe = getStripeClient();
-			const baseUrl = PUBLIC_APP_URL || url.origin;
+			const baseUrl = publicEnv.PUBLIC_APP_URL || url.origin;
 			const lineItems = resolvedItems.map(({ product, quantity }) => {
 				if (product.stripePriceId) {
 					return {

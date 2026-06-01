@@ -1,5 +1,5 @@
 import { dev } from '$app/environment';
-import { STRIPE_WEBHOOK_SECRET } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 import { toAppError } from '$lib/server/errors';
 import { createRequestId, logger } from '$lib/server/logger';
 import { createOrderFromCheckoutSession } from '$lib/server/sanity';
@@ -9,8 +9,9 @@ import type Stripe from 'stripe';
 
 export const POST = async ({ request, fetch }) => {
 	const requestId = createRequestId();
+	const webhookSecret = env.STRIPE_WEBHOOK_SECRET?.trim();
 
-	if (!STRIPE_WEBHOOK_SECRET) {
+	if (!webhookSecret) {
 		const message = 'Falta STRIPE_WEBHOOK_SECRET para validar el webhook de Stripe.';
 		logger.error(
 			new Error(message),
@@ -33,7 +34,7 @@ export const POST = async ({ request, fetch }) => {
 	let event: Stripe.Event;
 	try {
 		const stripe = getStripeClient();
-		event = stripe.webhooks.constructEvent(rawBody, signature, STRIPE_WEBHOOK_SECRET);
+		event = stripe.webhooks.constructEvent(rawBody, signature, webhookSecret);
 	} catch (error) {
 		logger.error(error, {
 			scope: 'stripe.webhook.signature',
