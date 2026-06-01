@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const appRoot = path.resolve(__dirname, '..');
-const envPath = path.join(appRoot, '.env');
+const envPaths = [path.join(appRoot, '.env'), path.join(appRoot, '.env.local')];
 
 function loadEnv(filePath) {
 	if (!fs.existsSync(filePath)) {
@@ -34,7 +34,7 @@ function loadEnv(filePath) {
 	return values;
 }
 
-const env = loadEnv(envPath);
+const env = envPaths.reduce((entries, filePath) => ({ ...entries, ...loadEnv(filePath) }), {});
 const resolveEnv = (key, fallback = '') => process.env[key] || env[key] || fallback;
 
 const sanityConfig = {
@@ -218,7 +218,7 @@ async function main() {
 	}
 
 	if (!sanityConfig.writeToken) {
-		throw new Error('Falta SANITY_WRITE_TOKEN en apps/web/.env para crear contenido.');
+		throw new Error('Falta SANITY_WRITE_TOKEN en apps/web/.env.local para crear contenido.');
 	}
 
 	const existing = await sanityQuery(`

@@ -1,8 +1,10 @@
 import { defineField, defineType } from 'sanity';
+import { ContactRequestIcon } from '../shared/icons';
 
 export const contactRequestType = defineType({
 	name: 'contactRequest',
 	title: 'Solicitudes de contacto',
+	icon: ContactRequestIcon,
 	type: 'document',
 	fields: [
 		defineField({ name: 'name', title: 'Nombre', type: 'string', validation: (rule) => rule.required().min(2) }),

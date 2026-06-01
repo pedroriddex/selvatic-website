@@ -1,79 +1,14 @@
-import type { ProductCategory } from '$lib/config/product-categories';
-
-export type EntityId = number | string;
-export type AppErrorCode = 'CONFIG' | 'AUTH' | 'NETWORK' | 'UPSTREAM' | 'VALIDATION' | 'UNKNOWN';
-export type DataHealthStatus = 'ok' | 'degraded' | 'error';
-
-export interface AppError {
-	name: string;
-	message: string;
-	code: AppErrorCode;
-	scope: string;
-	status?: number;
-	requestId?: string;
-	details?: unknown;
-}
-
-export interface DataHealth {
-	status: DataHealthStatus;
-	message?: string;
-	code?: AppErrorCode;
-	requestId?: string;
-}
-
-export interface Product {
-	id: EntityId;
-	documentId?: string;
-	name: string;
-	slug: string;
-	category?: ProductCategory | null;
-	description?: string;
-	imageUrl?: string;
-	price: number;
-	currency: string;
-	stock: number;
-	stripePriceId?: string | null;
-	isActive: boolean;
-}
-
-export interface CartItem {
-	slug: string;
-	name: string;
-	imageUrl?: string;
-	price: number;
-	currency: string;
-	stock: number;
-	quantity: number;
-}
-
-export interface CartTotals {
-	count: number;
-	subtotal: number;
-	shipping: number;
-	total: number;
-	currency: string | null;
-}
-
-export interface CartSnapshot extends CartTotals {
-	items: CartItem[];
-}
-
-export interface Service {
-	id: EntityId;
-	documentId?: string;
-	title: string;
-	slug: string;
-	summary?: string;
-	content?: string;
-	startingPrice?: number;
-	featured?: boolean;
-}
-
-export interface ContactRequestInput {
-	name: string;
-	email: string;
-	phone?: string;
-	service?: string;
-	message: string;
-	sourcePage?: string;
-}
+export type { AppError, AppErrorCode } from '$lib/domain/app/error';
+export type { DataHealth, DataHealthStatus } from '$lib/domain/app/data-health';
+export type { CartItem, CartSnapshot, CartTotals } from '$lib/domain/cart/types';
+export type { ContactRequestInput } from '$lib/domain/contact-request/types';
+export type { DesignSettings } from '$lib/domain/design-settings/types';
+export type { PageContent, PageContentMap, PageKey, PageTextEntry } from '$lib/domain/page-content/types';
+export type {
+	ProductCategory,
+	ProductCategoryFilter,
+	ProductCategoryOption
+} from '$lib/domain/product/categories';
+export type { EntityId, Product, ProductImage } from '$lib/domain/product/types';
+export type { Service } from '$lib/domain/service/types';
+export type { SiteSettings } from '$lib/domain/site-settings/types';

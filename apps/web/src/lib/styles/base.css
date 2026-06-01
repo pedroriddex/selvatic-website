@@ -10,14 +10,24 @@ body {
 	line-height: 1.5;
 	color: var(--text-body);
 	background:
-		radial-gradient(circle at 100% 0%, rgba(186, 219, 141, 0.1), transparent 38%),
+		radial-gradient(circle at 100% 0%, rgb(var(--design-dark-rgb) / 0.08), transparent 38%),
 		linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 52%, var(--bg-0) 100%);
 }
 
-h1,
+h1 {
+	margin: 0;
+	font-family: 'Philosopher', 'Times New Roman', serif;
+	font-weight: 700;
+	line-height: 0.98;
+	letter-spacing: -0.02em;
+	color: var(--text-strong);
+}
+
 h2,
 h3,
-h4 {
+h4,
+h5,
+h6 {
 	margin: 0;
 	font-family: 'Manrope', ui-sans-serif, system-ui, sans-serif;
 	font-weight: 700;
@@ -43,15 +53,15 @@ button {
 }
 
 select option {
-	color: #111a14;
+	color: var(--text-strong);
 }
 
 ::selection {
-	background: #b9d98a52;
-	color: #0c170f;
+	background: rgb(var(--design-dark-rgb) / 0.2);
+	color: var(--design-light);
 }
 
 :focus-visible {
-	outline: 2px solid #b9d98aeb;
+	outline: 2px solid rgb(var(--design-dark-rgb) / 0.85);
 	outline-offset: 2px;
 }

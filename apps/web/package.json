@@ -5,7 +5,8 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
-		"build": "vite build",
+		"build": "npm run build:admin && vite build",
+		"build:admin": "node ./scripts/build-admin.mjs",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -14,11 +15,13 @@
 		"test:unit": "vitest run",
 		"test:e2e": "playwright test",
 		"stripe:seed-products": "node ./scripts/seed-stripe-products.mjs",
-		"sanity:seed-content": "node ./scripts/seed-sanity-content.mjs"
+		"sanity:seed-content": "node ./scripts/seed-sanity-content.mjs",
+		"sanity:seed-settings": "node ./scripts/seed-sanity-settings.mjs"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.58.2",
 		"@sveltejs/adapter-auto": "^7.0.0",
+		"@sveltejs/adapter-vercel": "^6.3.3",
 		"@sveltejs/kit": "^2.50.2",
 		"@sveltejs/vite-plugin-svelte": "^6.2.4",
 		"@tailwindcss/vite": "^4.2.0",
@@ -33,6 +36,7 @@
 	},
 	"dependencies": {
 		"@stripe/stripe-js": "^8.8.0",
+		"lenis": "^1.3.21",
 		"remixicon": "^4.9.1",
 		"stripe": "^20.3.1",
 		"zod": "^4.3.6"

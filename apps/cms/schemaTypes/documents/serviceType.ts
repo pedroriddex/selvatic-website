@@ -1,8 +1,10 @@
 import { defineField, defineType } from 'sanity';
+import { ServiceIcon } from '../shared/icons';
 
 export const serviceType = defineType({
 	name: 'service',
 	title: 'Servicios',
+	icon: ServiceIcon,
 	type: 'document',
 	fields: [
 		defineField({ name: 'title', title: 'Título', type: 'string', validation: (rule) => rule.required().min(2) }),

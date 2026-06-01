@@ -11,7 +11,7 @@
 	const normalizedLabel = $derived(label.trim());
 </script>
 
-<div class={`flex h-full w-full flex-col items-center justify-center gap-2 text-white/56 ${className}`}>
+<div class={`flex h-full w-full flex-col items-center justify-center gap-2 text-[#222D228F] ${className}`}>
 	<Icon name="image-line" class="text-3xl opacity-80" />
 	{#if normalizedLabel}
 		<span class="text-[10px] font-semibold uppercase tracking-[0.16em]">{normalizedLabel}</span>

@@ -1,14 +1,18 @@
 import { expect, test } from '@playwright/test';
 
+// Los textos visibles se editan desde el CMS (Sanity), por lo que estas pruebas
+// se apoyan en estructura estable (roles, atributos name, href) y no en la copia.
+
 test('home renders hero content', async ({ page }) => {
 	await page.goto('/');
 	await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
-	await expect(page.getByRole('link', { name: 'Shop now' })).toBeVisible();
+	// El CTA principal del hero enlaza a la tienda.
+	await expect(page.locator('a[href="/tienda"]').first()).toBeVisible();
 });
 
-test('shop route renders section heading', async ({ page }) => {
+test('shop route renders product catalog', async ({ page }) => {
 	await page.goto('/tienda');
-	await expect(page.getByRole('heading', { name: 'Productos' })).toBeVisible();
+	await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
 });
 
 test('checkout renders cart summary from localStorage', async ({ page }) => {
@@ -30,15 +34,19 @@ test('checkout renders cart summary from localStorage', async ({ page }) => {
 	});
 
 	await page.goto('/checkout');
-	await expect(page.getByRole('heading', { name: 'Carrito' })).toBeVisible();
-	await expect(page.getByRole('button', { name: 'Ir a Stripe' })).toBeVisible();
+	// El artículo del carrito (cliente) se renderiza desde localStorage...
+	await expect(page.getByRole('heading', { name: 'Producto Demo' })).toBeVisible();
+	// ...y el botón de pago queda habilitado al haber artículos.
+	await expect(page.locator('form button[type="submit"]')).toBeEnabled();
 });
 
-test('contact form validates required fields', async ({ page }) => {
+test('contact form rejects invalid input server-side', async ({ page }) => {
 	await page.goto('/contacto');
-	await page.getByLabel('Nombre').fill('Pe');
-	await page.getByLabel('Email').fill('test@selvatic.com');
-	await page.getByLabel('Mensaje').fill('Hola');
-	await page.getByRole('button', { name: 'Enviar solicitud' }).click();
+	// "P" supera el required de HTML5 pero falla la validación de servidor (min 2),
+	// ejercitando el camino de error sin persistir nada en Sanity.
+	await page.locator('input[name="name"]').fill('P');
+	await page.locator('input[name="email"]').fill('test@selvatic.com');
+	await page.locator('textarea[name="message"]').fill('Hola');
+	await page.locator('form button[type="submit"]').click();
 	await expect(page.getByText('Revisa los campos del formulario.')).toBeVisible();
 });

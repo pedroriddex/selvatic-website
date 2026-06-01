@@ -1,8 +1,10 @@
 import { defineField, defineType } from 'sanity';
+import { OrderItemIcon } from '../shared/icons';
 
 export const orderItemType = defineType({
 	name: 'orderItem',
 	title: 'Línea de pedido',
+	icon: OrderItemIcon,
 	type: 'object',
 	fields: [
 		defineField({ name: 'description', title: 'Descripción', type: 'string' }),

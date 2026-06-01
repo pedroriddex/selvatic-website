@@ -24,9 +24,9 @@
 	const shellClass = $derived(mask === 'arched' ? 'product-image-shell product-image-shell-arched' : 'product-image-shell');
 </script>
 
-<div class={`${shellClass} overflow-hidden border border-white/14 bg-white/5 ${className}`}>
+<div class={`${shellClass} relative overflow-hidden border border-[#222D2224] bg-[#FFFFFF73] ${className}`}>
 	{#if src}
-		<img src={src} alt={alt} class={`h-full w-full object-cover ${imageClass}`} loading="lazy" />
+		<img src={src} alt={alt} class={`product-image-media ${imageClass}`} loading="lazy" />
 	{:else}
 		<MediaPlaceholder label={placeholderLabel} class={placeholderClass} />
 	{/if}
@@ -34,10 +34,20 @@
 
 <style>
 	.product-image-shell {
+		min-height: 100%;
 		border-radius: 0.38rem;
 	}
 
 	.product-image-shell-arched {
 		border-radius: 0.38rem;
+	}
+
+	.product-image-media {
+		position: absolute;
+		inset: 0;
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
 	}
 </style>

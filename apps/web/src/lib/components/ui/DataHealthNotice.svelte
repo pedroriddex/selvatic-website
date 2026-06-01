@@ -10,8 +10,8 @@
 
 	const toneClass = $derived(
 		health.status === 'error'
-			? 'border-red-300/50 bg-red-500/10 text-red-100'
-			: 'border-amber-300/45 bg-amber-500/10 text-amber-100'
+			? 'border-[#B7636366] bg-[#B7636314] text-[#7F3838]'
+			: 'border-[#B08B3866] bg-[#B08B3812] text-[#6E571A]'
 	);
 </script>
 

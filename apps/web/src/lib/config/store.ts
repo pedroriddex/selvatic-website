@@ -1,4 +1,4 @@
-export const ONLINE_STORE_ENABLED = false;
+export const ONLINE_STORE_ENABLED = true;
 
 export const STORE_LOCK_TITLE = 'Estamos trabajando en nuestra tienda online';
 

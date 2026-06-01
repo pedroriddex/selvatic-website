@@ -10,6 +10,7 @@ describe('sanity mappers', () => {
 			category: 'ramos-secos',
 			description: 'Descripción',
 			imageUrl: 'https://cdn.test/image.webp',
+			gallery: [],
 			price: 35,
 			currency: 'eur',
 			stock: 7,
@@ -25,12 +26,37 @@ describe('sanity mappers', () => {
 			category: 'ramos-secos',
 			description: 'Descripción',
 			imageUrl: 'https://cdn.test/image.webp',
+			gallery: [],
 			price: 35,
 			currency: 'EUR',
 			stock: 7,
 			stripePriceId: 'price_123',
 			isActive: true
 		});
+	});
+
+
+	it('uses the selected primary product gallery image', () => {
+		const mapped = mapProduct({
+			_id: 'product-gallery',
+			name: 'Producto con galería',
+			slug: 'producto-galeria',
+			category: 'plantas',
+			legacyImageUrl: 'https://cdn.test/legacy.webp',
+			gallery: [
+				{ url: 'https://cdn.test/secondary.webp', alt: 'Secundaria', isPrimary: false },
+				{ url: 'https://cdn.test/main.webp', alt: 'Principal', isPrimary: true }
+			],
+			price: 42,
+			currency: 'eur',
+			stock: 3
+		});
+
+		expect(mapped?.imageUrl).toBe('https://cdn.test/main.webp');
+		expect(mapped?.gallery).toEqual([
+			{ url: 'https://cdn.test/secondary.webp', alt: 'Secundaria', isPrimary: false },
+			{ url: 'https://cdn.test/main.webp', alt: 'Principal', isPrimary: true }
+		]);
 	});
 
 	it('returns null for incomplete entities', () => {

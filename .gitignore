@@ -5,7 +5,24 @@ apps/*/node_modules
 apps/*/.svelte-kit
 apps/*/build
 apps/*/dist
+apps/*/.vercel
 apps/*/.env
 apps/*/.env.local
 apps/cms/.tmp
+apps/cms/.sanity/
 apps/web/stripe-products.generated.json
+apps/web/.data/
+apps/web/static/admin/
+apps/web/static/static/
+apps/web/static/uploads/
+apps/web/test-results/
+apps/web/playwright-report/
+.vercel
+
+# Debug / scratch artifacts (no deben versionarse)
+.playwright-cli/
+output/
+.tmp/
+tmp/
+.tmp-sanity-seed/
+.npm-cache/

@@ -27,7 +27,7 @@
 		leftClass = 'col-span-4 md:col-span-6 xl:col-span-8',
 		rightClass = 'col-span-4 md:col-span-2 xl:col-span-4 md:justify-self-end',
 		kickerClass = 'section-kicker',
-		labelClass = 'mt-2 text-lg font-semibold uppercase tracking-[0.12em] text-white/88',
+		labelClass = 'mt-2 text-lg font-semibold uppercase tracking-[0.12em] text-[#222D22E0]',
 		titleClass = 'section-subtitle mt-3',
 		descriptionClass = 'section-note mt-4',
 		actionClass = 'btn-outline'

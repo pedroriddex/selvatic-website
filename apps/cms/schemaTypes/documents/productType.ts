@@ -1,23 +1,11 @@
 import { defineField, defineType } from 'sanity';
-
-const PRODUCT_CATEGORY_OPTIONS = [
-	{ title: 'Ramos secos', value: 'ramos-secos' },
-	{ title: 'Centros secos', value: 'centros-secos' },
-	{ title: 'Letras secas', value: 'letras-secas' },
-	{ title: 'Plantas', value: 'plantas' }
-] as const;
-
-const PRODUCT_CATEGORY_LABELS = PRODUCT_CATEGORY_OPTIONS.reduce<Record<string, string>>(
-	(labels, option) => {
-		labels[option.value] = option.title;
-		return labels;
-	},
-	{}
-);
+import { ProductIcon } from '../shared/icons';
+import { PRODUCT_CATEGORY_LABELS, PRODUCT_CATEGORY_OPTIONS } from '../shared/productCategories';
 
 export const productType = defineType({
 	name: 'product',
 	title: 'Productos',
+	icon: ProductIcon,
 	type: 'document',
 	fields: [
 		defineField({ name: 'name', title: 'Nombre', type: 'string', validation: (rule) => rule.required().min(2) }),
@@ -39,7 +27,39 @@ export const productType = defineType({
 			},
 			validation: (rule) => rule.required()
 		}),
-		defineField({ name: 'image', title: 'Imagen', type: 'image', options: { hotspot: true } }),
+		defineField({
+			name: 'image',
+			title: 'Imagen principal anterior',
+			type: 'image',
+			options: { hotspot: true },
+			description:
+				'Campo antiguo. Se mantiene como respaldo si todavía no has añadido galería.'
+		}),
+		defineField({
+			name: 'gallery',
+			title: 'Galería de imágenes',
+			type: 'array',
+			of: [{ type: 'productImage' }],
+			description:
+				'Añade una o varias imágenes y marca una de ellas como principal para tarjetas y carrito.',
+			validation: (rule) =>
+				rule.custom((items) => {
+					if (!Array.isArray(items) || items.length === 0) {
+						return true;
+					}
+
+					const primaryCount = items.filter((item) => item?.isPrimary === true).length;
+					if (primaryCount === 0) {
+						return 'Selecciona una imagen como principal.';
+					}
+
+					if (primaryCount > 1) {
+						return 'Solo puede haber una imagen principal.';
+					}
+
+					return true;
+				})
+		}),
 		defineField({
 			name: 'price',
 			title: 'Precio',
@@ -71,16 +91,26 @@ export const productType = defineType({
 			title: 'name',
 			subtitle: 'slug.current',
 			category: 'category',
-			media: 'image'
+			legacyImage: 'image',
+			gallery: 'gallery'
 		},
-		prepare(selection: { title?: string; subtitle?: string; category?: string; media?: unknown }) {
+		prepare(selection: {
+			title?: string;
+			subtitle?: string;
+			category?: string;
+			legacyImage?: unknown;
+			gallery?: { image?: unknown; isPrimary?: boolean }[];
+		}) {
 			const categoryLabel =
 				typeof selection.category === 'string' ? PRODUCT_CATEGORY_LABELS[selection.category] : undefined;
+			const galleryImage = Array.isArray(selection.gallery)
+				? (selection.gallery.find((item) => item?.isPrimary)?.image ?? selection.gallery[0]?.image)
+				: undefined;
 
 			return {
 				title: selection.title,
 				subtitle: [selection.subtitle, categoryLabel].filter(Boolean).join(' · '),
-				media: selection.media
+				media: galleryImage ?? selection.legacyImage
 			};
 		}
 	}

@@ -1,8 +1,12 @@
 import { defineCliConfig } from 'sanity/cli';
+import { getStudioBasePath, getStudioDataset, getStudioProjectId } from './src/studio/env';
 
 export default defineCliConfig({
 	api: {
-		projectId: process.env.SANITY_STUDIO_PROJECT_ID || '',
-		dataset: process.env.SANITY_STUDIO_DATASET || 'production'
+		projectId: getStudioProjectId(),
+		dataset: getStudioDataset()
+	},
+	project: {
+		basePath: getStudioBasePath()
 	}
 });
