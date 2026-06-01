@@ -14,6 +14,14 @@ export const orderType = defineType({
 		defineField({ name: 'amountTotal', title: 'Importe total', type: 'number' }),
 		defineField({ name: 'currency', title: 'Moneda', type: 'string' }),
 		defineField({ name: 'status', title: 'Estado', type: 'string' }),
+		defineField({
+			name: 'inventoryAdjusted',
+			title: 'Stock descontado',
+			type: 'boolean',
+			readOnly: true,
+			initialValue: false,
+			description: 'Marca interna: indica si el stock de los productos ya se descontó por este pedido.'
+		}),
 		defineField({ name: 'items', title: 'Líneas', type: 'array', of: [{ type: 'orderItem' }] }),
 		defineField({ name: 'metadata', title: 'Metadata JSON', type: 'text' }),
 		defineField({ name: 'paidAt', title: 'Pagado en', type: 'datetime' }),

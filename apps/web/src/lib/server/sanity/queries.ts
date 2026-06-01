@@ -26,6 +26,17 @@ export const productBySlugQuery = `
 	}
 `;
 
+export const productIdsBySlugsQuery = `
+	*[
+		_type == "product" &&
+		!(_id in path("drafts.**")) &&
+		slug.current in $slugs
+	] {
+		_id,
+		"slug": slug.current
+	}
+`;
+
 export const serviceListQuery = `
 	*[
 		_type == "service" &&
