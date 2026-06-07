@@ -8,6 +8,17 @@ export interface ProductImage {
 	isPrimary?: boolean;
 }
 
+export interface VariantOption {
+	label: string;
+	priceModifier: number;
+}
+
+export interface VariantGroup {
+	name: string;
+	required: boolean;
+	options: VariantOption[];
+}
+
 export interface Product {
 	id: EntityId;
 	documentId?: string;
@@ -20,6 +31,7 @@ export interface Product {
 	price: number;
 	currency: string;
 	stock: number;
+	variantGroups: VariantGroup[];
 	stripePriceId?: string | null;
 	isActive: boolean;
 }

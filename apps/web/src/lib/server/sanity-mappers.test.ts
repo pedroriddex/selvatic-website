@@ -30,9 +30,47 @@ describe('sanity mappers', () => {
 			price: 35,
 			currency: 'EUR',
 			stock: 7,
+			variantGroups: [],
 			stripePriceId: 'price_123',
 			isActive: true
 		});
+	});
+
+	it('maps product variant groups and drops invalid ones', () => {
+		const mapped = mapProduct({
+			_id: 'product-variants',
+			name: 'Producto con variantes',
+			slug: 'producto-variantes',
+			category: 'ramos-secos',
+			price: 25,
+			currency: 'eur',
+			stock: 4,
+			variantGroups: [
+				{
+					name: 'Tamaño',
+					required: true,
+					options: [
+						{ label: 'Pequeño', priceModifier: 0 },
+						{ label: 'Grande', priceModifier: 8 },
+						{ label: 'Sin nombre', priceModifier: -5 }
+					]
+				},
+				{ name: 'Grupo sin opciones', required: false, options: [] },
+				{ name: '', required: false, options: [{ label: 'X', priceModifier: 1 }] }
+			]
+		});
+
+		expect(mapped?.variantGroups).toEqual([
+			{
+				name: 'Tamaño',
+				required: true,
+				options: [
+					{ label: 'Pequeño', priceModifier: 0 },
+					{ label: 'Grande', priceModifier: 8 },
+					{ label: 'Sin nombre', priceModifier: 0 }
+				]
+			}
+		]);
 	});
 
 

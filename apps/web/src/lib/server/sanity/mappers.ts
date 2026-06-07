@@ -49,6 +49,53 @@ export const mapProduct = (entity: Record<string, unknown>): Product | null => {
 	const primaryImage = gallery.find((image) => image.isPrimary) ?? gallery[0];
 	const imageUrl = primaryImage?.url ?? toText(entity.legacyImageUrl) ?? toText(entity.imageUrl);
 
+	const variantGroups = Array.isArray(entity.variantGroups)
+		? entity.variantGroups
+				.map((group) => {
+					if (!group || typeof group !== 'object') {
+						return null;
+					}
+
+					const groupEntity = group as Record<string, unknown>;
+					const name = toText(groupEntity.name);
+					if (!name) {
+						return null;
+					}
+
+					const options = Array.isArray(groupEntity.options)
+						? groupEntity.options
+								.map((option) => {
+									if (!option || typeof option !== 'object') {
+										return null;
+									}
+
+									const optionEntity = option as Record<string, unknown>;
+									const label = toText(optionEntity.label);
+									if (!label) {
+										return null;
+									}
+
+									return {
+										label,
+										priceModifier: Math.max(0, toFiniteNumber(optionEntity.priceModifier, 0))
+									};
+								})
+								.filter((option): option is NonNullable<typeof option> => option !== null)
+						: [];
+
+					if (options.length === 0) {
+						return null;
+					}
+
+					return {
+						name,
+						required: groupEntity.required === true,
+						options
+					};
+				})
+				.filter((group): group is NonNullable<typeof group> => group !== null)
+		: [];
+
 	return {
 		id,
 		documentId: id,
@@ -61,6 +108,7 @@ export const mapProduct = (entity: Record<string, unknown>): Product | null => {
 		price: Math.max(0, toFiniteNumber(entity.price, 0)),
 		currency: (toText(entity.currency) ?? 'EUR').toUpperCase(),
 		stock: Math.max(0, Math.round(toFiniteNumber(entity.stock, 0))),
+		variantGroups,
 		stripePriceId: toText(entity.stripePriceId) ?? null,
 		isActive: typeof entity.isActive === 'boolean' ? entity.isActive : true
 	};

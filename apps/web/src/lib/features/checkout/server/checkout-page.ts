@@ -1,10 +1,12 @@
 import { env as publicEnv } from '$env/dynamic/public';
 import { ONLINE_STORE_ENABLED, STORE_LOCK_TITLE } from '$lib/config/store';
+import { computeEffectiveUnitAmountCents, describeSelections } from '$lib/domain/cart/variants';
 import { toAppError } from '$lib/server/errors';
 import { createRequestId, logger } from '$lib/server/logger';
 import { getPageContentResult, getProductBySlug } from '$lib/server/sanity';
 import { getStripeClient } from '$lib/server/stripe';
 import { fail, isRedirect, redirect } from '@sveltejs/kit';
+import type Stripe from 'stripe';
 import { z } from 'zod';
 
 const SHIPPING_AMOUNT_CENTS = 490;
@@ -14,7 +16,18 @@ const checkoutSchema = z.object({
 		.array(
 			z.object({
 				slug: z.string().trim().min(1),
-				quantity: z.coerce.number().int().min(1).max(10)
+				quantity: z.coerce.number().int().min(1).max(10),
+				// El cliente solo envía qué opción eligió; NUNCA importes ni suplementos.
+				selections: z
+					.array(
+						z.object({
+							groupName: z.string().trim().min(1).max(120),
+							optionLabel: z.string().trim().min(1).max(120)
+						})
+					)
+					.max(10)
+					.optional()
+					.default([])
 			})
 		)
 		.min(1)
@@ -76,6 +89,8 @@ export const checkoutPageActions = {
 			});
 		}
 
+		// El stock es ÚNICO por producto: se agrega la cantidad por slug aunque haya
+		// varias líneas del mismo producto con distintas opciones.
 		const quantitiesBySlug = new Map<string, number>();
 		for (const item of parsed.data.items) {
 			quantitiesBySlug.set(item.slug, (quantitiesBySlug.get(item.slug) ?? 0) + item.quantity);
@@ -107,11 +122,7 @@ export const checkoutPageActions = {
 			});
 		}
 
-		const resolvedItems: Array<{
-			quantity: number;
-			product: NonNullable<(typeof products)[number]>;
-		}> = [];
-
+		const productBySlug = new Map<string, NonNullable<(typeof products)[number]>>();
 		for (let index = 0; index < slugs.length; index += 1) {
 			const slug = slugs[index];
 			const product = products[index];
@@ -129,7 +140,7 @@ export const checkoutPageActions = {
 				});
 			}
 
-			if (quantity < 1 || quantity > 10) {
+			if (quantity < 1) {
 				return fail(400, {
 					error: `Cantidad inválida para "${product.name}".`
 				});
@@ -141,52 +152,82 @@ export const checkoutPageActions = {
 				});
 			}
 
-			resolvedItems.push({ quantity, product });
+			productBySlug.set(slug, product);
 		}
 
-		const currencies = new Set(resolvedItems.map((item) => item.product.currency.toUpperCase()));
+		const currencies = new Set(
+			[...productBySlug.values()].map((product) => product.currency.toUpperCase())
+		);
 		if (currencies.size !== 1) {
 			return fail(400, {
 				error: 'No se pueden mezclar monedas en un mismo carrito.'
 			});
 		}
 
-		const currency = resolvedItems[0]?.product.currency.toUpperCase() ?? 'EUR';
+		const currency = [...currencies][0] ?? 'EUR';
 		if (currency !== 'EUR') {
 			return fail(400, {
 				error: 'En esta fase, el checkout solo acepta productos en EUR.'
 			});
 		}
 
+		// Líneas de Stripe: UNA por item del carrito (cada combinación de opciones
+		// es una línea con su precio efectivo recalculado en el servidor).
+		const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
+		for (const item of parsed.data.items) {
+			const product = productBySlug.get(item.slug);
+			if (!product) {
+				return fail(404, { error: `Producto no encontrado: ${item.slug}.` });
+			}
+
+			const pricing = computeEffectiveUnitAmountCents(product, item.selections);
+			if (!pricing.ok) {
+				return fail(400, { error: pricing.error });
+			}
+
+			const hasVariants = product.variantGroups.length > 0;
+			// Producto sin variantes y con precio de catálogo en Stripe: respeta ese price.
+			if (!hasVariants && product.stripePriceId && item.selections.length === 0) {
+				lineItems.push({ price: product.stripePriceId, quantity: item.quantity });
+				continue;
+			}
+
+			const optionsText = describeSelections(pricing.resolved);
+			const name = optionsText
+				? `${product.name} (${optionsText})`.slice(0, 250)
+				: product.name;
+			const description =
+				[product.description, optionsText ? `Opciones — ${optionsText}` : null]
+					.filter(Boolean)
+					.join(' · ')
+					.slice(0, 480) || undefined;
+
+			lineItems.push({
+				price_data: {
+					currency: 'eur',
+					product_data: {
+						name,
+						description,
+						images: product.imageUrl ? [product.imageUrl] : undefined
+					},
+					unit_amount: pricing.amountCents
+				},
+				quantity: item.quantity
+			});
+		}
+
 		try {
 			const stripe = getStripeClient();
 			const baseUrl = publicEnv.PUBLIC_APP_URL || url.origin;
-			const lineItems = resolvedItems.map(({ product, quantity }) => {
-				if (product.stripePriceId) {
-					return {
-						price: product.stripePriceId,
-						quantity
-					};
-				}
 
-				return {
-					price_data: {
-						currency: currency.toLowerCase(),
-						product_data: {
-							name: product.name,
-							description: product.description,
-							images: product.imageUrl ? [product.imageUrl] : undefined
-						},
-						unit_amount: Math.round(product.price * 100)
-					},
-					quantity
-				};
-			});
-
-			const metadataItems = resolvedItems
-				.map(({ product, quantity }) => `${product.slug}:${quantity}`)
+			// metadata.cartItems sigue siendo "slug:cantidad" agregado por producto:
+			// es lo que usa el webhook para descontar stock (idempotente, por slug).
+			const metadataItems = [...quantitiesBySlug.entries()]
+				.map(([slug, quantity]) => `${slug}:${quantity}`)
 				.join('|')
 				.slice(0, 500);
+
+			const itemCount = [...quantitiesBySlug.values()].reduce((acc, quantity) => acc + quantity, 0);
 
 			const session = await stripe.checkout.sessions.create({
 				mode: 'payment',
@@ -208,7 +249,7 @@ export const checkoutPageActions = {
 				cancel_url: `${baseUrl}/checkout?status=cancel`,
 				metadata: {
 					cartItems: metadataItems,
-					itemCount: String(resolvedItems.reduce((acc, item) => acc + item.quantity, 0)),
+					itemCount: String(itemCount),
 					currency
 				}
 			});

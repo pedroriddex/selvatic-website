@@ -7,6 +7,14 @@ export const productProjection = `
 	price,
 	currency,
 	stock,
+	"variantGroups": variantGroups[]{
+		name,
+		"required": coalesce(required, false),
+		"options": options[]{
+			label,
+			"priceModifier": coalesce(priceModifier, 0)
+		}
+	},
 	stripePriceId,
 	isActive,
 	"legacyImageUrl": image.asset->url,

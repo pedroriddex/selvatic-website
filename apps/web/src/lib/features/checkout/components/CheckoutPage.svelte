@@ -42,7 +42,13 @@
 	});
 
 	const cartPayload = $derived(
-		JSON.stringify(cart.items.map((item) => ({ slug: item.slug, quantity: item.quantity })))
+		JSON.stringify(
+			cart.items.map((item) => ({
+				slug: item.slug,
+				quantity: item.quantity,
+				selections: item.selections
+			}))
+		)
 	);
 	const hasItems = $derived(cart.items.length > 0);
 	const displayCurrency = $derived(cart.currency ?? 'EUR');
@@ -81,11 +87,11 @@
 	});
 
 	const decreaseQuantity = (item: CartItem) => {
-		setCartItemQuantity(item.slug, item.quantity - 1);
+		setCartItemQuantity(item.lineId, item.quantity - 1);
 	};
 
 	const increaseQuantity = (item: CartItem) => {
-		setCartItemQuantity(item.slug, item.quantity + 1);
+		setCartItemQuantity(item.lineId, item.quantity + 1);
 	};
 </script>
 
@@ -146,13 +152,20 @@
 						<h3 class="section-subtitle mt-3 text-2xl sm:text-3xl">{textFor(pageContent, 'cart.title')}</h3>
 
 						<div class="mt-7 divide-y divide-[#222D221F] border-y border-[#222D221F]">
-							{#each cart.items as item (item.slug)}
+							{#each cart.items as item (item.lineId)}
 								<article class="swiss-grid gap-y-4 py-6">
 									<div class="col-span-4 md:col-span-3 xl:col-span-3">
 										<ProductImage src={item.imageUrl} alt={item.name} mask="arched" class="h-36 w-full sm:h-40" />
 									</div>
 									<div class="col-span-4 md:col-span-3 xl:col-span-4">
 										<h4 class="text-lg leading-[1.08] text-[#222D22] sm:text-xl">{item.name}</h4>
+										{#if item.selections.length > 0}
+											<ul class="mt-1 text-xs leading-relaxed text-[#222D2294]">
+												{#each item.selections as selection}
+													<li>{selection.groupName}: {selection.optionLabel}</li>
+												{/each}
+											</ul>
+										{/if}
 										<p class="mt-2 text-sm font-semibold text-[#222D22D6]">
 											{formatCurrency(item.price, item.currency)}
 										</p>
@@ -185,7 +198,7 @@
 												type="button"
 												class="icon-cta"
 												aria-label={`Eliminar ${item.name} del carrito`}
-												onclick={() => removeItemFromCart(item.slug)}
+												onclick={() => removeItemFromCart(item.lineId)}
 											>
 												<Icon name="delete-bin-line" />
 											</button>

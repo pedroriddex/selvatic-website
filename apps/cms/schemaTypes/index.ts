@@ -8,6 +8,8 @@ import { siteSettingsType } from './documents/siteSettingsType';
 import { orderItemType } from './objects/orderItemType';
 import { pageTextBlockType } from './objects/pageTextBlockType';
 import { productImageType } from './objects/productImageType';
+import { variantGroupType } from './objects/variantGroupType';
+import { variantOptionType } from './objects/variantOptionType';
 
 export const schemaTypes = [
 	siteSettingsType,
@@ -16,6 +18,8 @@ export const schemaTypes = [
 	pageTextBlockType,
 	productType,
 	productImageType,
+	variantGroupType,
+	variantOptionType,
 	serviceType,
 	contactRequestType,
 	orderItemType,

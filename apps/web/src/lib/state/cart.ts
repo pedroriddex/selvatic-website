@@ -1,13 +1,15 @@
 import { browser } from '$app/environment';
-import type { CartItem, CartSnapshot } from '$lib/types';
+import { lineIdFor, normalizeSelections } from '$lib/domain/cart/variants';
+import type { CartItem, CartSelection, CartSnapshot } from '$lib/types';
 import { get, writable } from 'svelte/store';
 
 const CART_STORAGE_KEY = 'selvatic-cart-v1';
 const MAX_QUANTITY = 10;
 export const CART_SHIPPING_AMOUNT = 4.9;
 
-type AddCartItemInput = Omit<CartItem, 'quantity'> & {
+type AddCartItemInput = Omit<CartItem, 'quantity' | 'lineId' | 'selections'> & {
 	quantity?: number;
+	selections?: CartSelection[];
 };
 
 type CartMutationResult =
@@ -53,15 +55,21 @@ const sanitizeCartItem = (item: Partial<CartItem>): CartItem | null => {
 	}
 
 	const quantity = clampQuantity(typeof item.quantity === 'number' ? item.quantity : 1, item.stock);
+	const slug = item.slug.trim();
+	// El lineId SIEMPRE se deriva del slug + opciones; nunca se confía en el persistido.
+	const selections = normalizeSelections(item.selections);
+	const lineId = lineIdFor(slug, selections);
 
 	return {
-		slug: item.slug.trim(),
+		slug,
+		lineId,
 		name: item.name.trim(),
 		imageUrl: typeof item.imageUrl === 'string' ? item.imageUrl : undefined,
 		price: Number(item.price),
 		currency: item.currency.toUpperCase(),
 		stock: Math.max(1, Math.trunc(item.stock)),
-		quantity
+		quantity,
+		selections
 	};
 };
 
@@ -156,7 +164,7 @@ export const addItemToCart = (item: AddCartItemInput): CartMutationResult => {
 		};
 	}
 
-	const existing = current.items.find((entry) => entry.slug === cartItem.slug);
+	const existing = current.items.find((entry) => entry.lineId === cartItem.lineId);
 	if (existing) {
 		const cap = quantityCap(cartItem.stock);
 		if (existing.quantity >= cap) {
@@ -169,7 +177,7 @@ export const addItemToCart = (item: AddCartItemInput): CartMutationResult => {
 		const mergedQuantity = clampQuantity(existing.quantity + cartItem.quantity, cartItem.stock);
 		commit(
 			current.items.map((entry) =>
-				entry.slug === cartItem.slug ? { ...entry, stock: cartItem.stock, quantity: mergedQuantity } : entry
+				entry.lineId === cartItem.lineId ? { ...entry, stock: cartItem.stock, quantity: mergedQuantity } : entry
 			)
 		);
 		return { ok: true };
@@ -179,16 +187,16 @@ export const addItemToCart = (item: AddCartItemInput): CartMutationResult => {
 	return { ok: true };
 };
 
-export const removeItemFromCart = (slug: string): void => {
+export const removeItemFromCart = (lineId: string): void => {
 	const current = getSnapshot();
-	commit(current.items.filter((item) => item.slug !== slug));
+	commit(current.items.filter((item) => item.lineId !== lineId));
 };
 
-export const setCartItemQuantity = (slug: string, quantity: number): void => {
+export const setCartItemQuantity = (lineId: string, quantity: number): void => {
 	const current = getSnapshot();
 	commit(
 		current.items.map((item) =>
-			item.slug === slug ? { ...item, quantity: clampQuantity(quantity, item.stock) } : item
+			item.lineId === lineId ? { ...item, quantity: clampQuantity(quantity, item.stock) } : item
 		)
 	);
 };

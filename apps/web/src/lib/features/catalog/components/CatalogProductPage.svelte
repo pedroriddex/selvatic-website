@@ -42,6 +42,34 @@
 	);
 	const selectedImage = $derived(galleryImages[selectedImageIndex] ?? galleryImages[0]);
 
+	// Variaciones (suplemento de precio): grupo -> opción elegida.
+	let selectedOptions = $state<Record<string, string>>({});
+
+	const selections = $derived(
+		product.variantGroups
+			.map((group) => ({ groupName: group.name, optionLabel: selectedOptions[group.name] }))
+			.filter(
+				(selection): selection is { groupName: string; optionLabel: string } =>
+					Boolean(selection.optionLabel)
+			)
+	);
+
+	const effectivePrice = $derived.by(() => {
+		let total = product.price;
+		for (const group of product.variantGroups) {
+			const chosen = selectedOptions[group.name];
+			if (!chosen) continue;
+			const option = group.options.find((candidate) => candidate.label === chosen);
+			if (option) total += Math.max(0, option.priceModifier);
+		}
+		return total;
+	});
+
+	const missingRequiredGroups = $derived(
+		product.variantGroups.filter((group) => group.required && !selectedOptions[group.name])
+	);
+	const canAddToCart = $derived(missingRequiredGroups.length === 0);
+
 	const setFeedback = (message: string) => {
 		cartFeedback = message;
 
@@ -62,7 +90,14 @@
 	});
 
 	const addToCart = () => {
-		const result = addProductToCartWithFeedback(product);
+		if (!canAddToCart) {
+			setFeedback(
+				`Elige una opción de: ${missingRequiredGroups.map((group) => group.name).join(', ')}.`
+			);
+			return;
+		}
+
+		const result = addProductToCartWithFeedback(product, { price: effectivePrice, selections });
 
 		if (!result.ok && !result.locked) {
 			setFeedback(result.error);
@@ -113,7 +148,7 @@
 				<div class="flex items-center justify-between text-sm text-[#222D22B8]">
 					<span>{textFor(pageContent, 'summary.price')}</span>
 					<span class="text-base font-semibold text-[#222D22]">
-						{formatCurrency(product.price, product.currency)}
+						{formatCurrency(effectivePrice, product.currency)}
 					</span>
 				</div>
 				<div class="flex items-center justify-between text-sm text-[#222D22B8]">
@@ -122,9 +157,52 @@
 				</div>
 			</div>
 
+			{#if product.variantGroups.length > 0}
+				<div class="mt-6 space-y-5">
+					{#each product.variantGroups as group}
+						<fieldset>
+							<legend class="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#222D22C7]">
+								{group.name}{#if group.required}<span class="text-[#9B4B4B]"> *</span>{/if}
+							</legend>
+							<div class="mt-3 flex flex-wrap gap-2">
+								{#each group.options as option}
+									<label
+										class={`cursor-pointer rounded-[0.36rem] border px-3 py-2 text-sm transition ${
+											selectedOptions[group.name] === option.label
+												? 'border-[#222D22] bg-[#222D220D] text-[#222D22]'
+												: 'border-[#222D2224] text-[#222D22B8] hover:border-[#222D2266]'
+										}`}
+									>
+										<input
+											type="radio"
+											name={`variant-${group.name}`}
+											value={option.label}
+											class="sr-only"
+											checked={selectedOptions[group.name] === option.label}
+											onchange={() => {
+												selectedOptions = { ...selectedOptions, [group.name]: option.label };
+											}}
+										/>
+										{option.label}{#if option.priceModifier > 0}
+											<span class="text-[#222D228F]"> +{formatCurrency(option.priceModifier, product.currency)}</span>
+										{/if}
+									</label>
+								{/each}
+							</div>
+						</fieldset>
+					{/each}
+				</div>
+			{/if}
+
 			<div class="mt-7 flex flex-row flex-wrap items-center justify-start gap-3">
 				{#if ONLINE_STORE_ENABLED}
-					<button type="button" class="btn-lime w-full justify-center sm:w-auto" onclick={addToCart}>
+					<button
+						type="button"
+						class="btn-lime w-full justify-center sm:w-auto"
+						onclick={addToCart}
+						disabled={!canAddToCart}
+						aria-disabled={!canAddToCart}
+					>
 						<Icon name="shopping-bag-3-line" />
 						{textFor(pageContent, 'action.addToCart')}
 					</button>

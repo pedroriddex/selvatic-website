@@ -83,5 +83,45 @@ describe('cart store', () => {
 		expect(snapshot.items).toHaveLength(0);
 		expect(snapshot.total).toBe(0);
 	});
+
+	it('treats different option selections as separate lines, same selection merges', () => {
+		addItemToCart({
+			slug: 'ramo-01',
+			name: 'Ramo Test',
+			price: 40,
+			currency: 'EUR',
+			stock: 8,
+			selections: [{ groupName: 'Tamaño', optionLabel: 'Pequeño' }]
+		});
+		addItemToCart({
+			slug: 'ramo-01',
+			name: 'Ramo Test',
+			price: 48,
+			currency: 'EUR',
+			stock: 8,
+			selections: [{ groupName: 'Tamaño', optionLabel: 'Grande' }]
+		});
+
+		let snapshot = get(cartStore);
+		expect(snapshot.items).toHaveLength(2);
+		expect(snapshot.count).toBe(2);
+
+		// Misma selección (con orden distinto) se fusiona en la misma línea.
+		addItemToCart({
+			slug: 'ramo-01',
+			name: 'Ramo Test',
+			price: 48,
+			currency: 'EUR',
+			stock: 8,
+			selections: [{ groupName: 'Tamaño', optionLabel: 'Grande' }]
+		});
+
+		snapshot = get(cartStore);
+		expect(snapshot.items).toHaveLength(2);
+		const grande = snapshot.items.find((item) =>
+			item.selections.some((selection) => selection.optionLabel === 'Grande')
+		);
+		expect(grande?.quantity).toBe(2);
+	});
 });
 

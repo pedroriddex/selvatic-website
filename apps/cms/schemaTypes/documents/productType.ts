@@ -83,6 +83,31 @@ export const productType = defineType({
 			initialValue: 0,
 			validation: (rule) => rule.required().integer().min(0)
 		}),
+		defineField({
+			name: 'variantGroups',
+			title: 'Opciones / variaciones',
+			type: 'array',
+			of: [{ type: 'variantGroup' }],
+			description:
+				'Opcional. Grupos de opciones que el cliente puede elegir (p.ej. Tamaño). Cada opción puede sumar precio sobre el precio base. El stock sigue siendo único del producto.',
+			validation: (rule) =>
+				rule.custom((groups) => {
+					if (!Array.isArray(groups)) {
+						return true;
+					}
+
+					const names = groups
+						.map((group) =>
+							typeof (group as { name?: unknown })?.name === 'string'
+								? ((group as { name: string }).name).trim().toLowerCase()
+								: ''
+						)
+						.filter(Boolean);
+					const hasDuplicate = names.some((name, index) => names.indexOf(name) !== index);
+
+					return hasDuplicate ? 'Cada grupo de opciones debe tener un nombre distinto.' : true;
+				})
+		}),
 		defineField({ name: 'stripePriceId', title: 'Stripe Price ID', type: 'string' }),
 		defineField({ name: 'isActive', title: 'Activo', type: 'boolean', initialValue: true })
 	],
