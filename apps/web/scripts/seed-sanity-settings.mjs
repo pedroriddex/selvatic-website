@@ -234,13 +234,27 @@ async function main() {
 		(Array.isArray(existing?.pages) ? existing.pages : []).map((page) => [page._id, page])
 	);
 	const mutations = [];
+	// Los borrados de migración van en una transacción aparte: el _type es
+	// inmutable, así que borrar y recrear el mismo _id debe hacerse por separado.
+	const migrationDeletes = [];
 
+	let migratedPages = 0;
 	for (const page of pageDefaults) {
 		const id = `page.${page.key}`;
 		const existingPage = existingPages.get(id);
 
 		if (!existingPage) {
 			mutations.push({ createIfNotExists: pageDoc(page) });
+			continue;
+		}
+
+		// Migración: documentos del modelo antiguo (_type "page" con texts[]) se
+		// borran (publicado + borrador) y se recrean con el nuevo tipo por página.
+		if (existingPage._type !== pageTypeName(page.key)) {
+			migrationDeletes.push({ delete: { id } });
+			migrationDeletes.push({ delete: { id: `drafts.${id}` } });
+			mutations.push({ create: pageDoc(page) });
+			migratedPages += 1;
 			continue;
 		}
 
@@ -269,11 +283,15 @@ async function main() {
 		}
 	}
 
-	if (mutations.length === 0) {
+	if (mutations.length === 0 && migrationDeletes.length === 0) {
 		console.log('No hay ajustes nuevos que crear. Páginas y Diseño ya están inicializados.');
 		return;
 	}
 
+	// Primero los borrados de migración, después las creaciones/parches.
+	if (migrationDeletes.length > 0) {
+		await sanityMutate(migrationDeletes);
+	}
 	await sanityMutate(mutations);
 
 	const createdPages = pageDefaults.filter((page) => !existingPages.has(`page.${page.key}`)).length;
@@ -281,6 +299,7 @@ async function main() {
 	const createdDesign = existing?.design?._id ? 0 : 1;
 
 	console.log(`Páginas creadas: ${createdPages}`);
+	console.log(`Páginas migradas al nuevo modelo: ${migratedPages}`);
 	console.log(`Páginas actualizadas con textos nuevos: ${updatedPages}`);
 	console.log(`Documento Diseño creado: ${createdDesign}`);
 	console.log('Listo. Ya puedes editar Páginas y Diseño desde Sanity Studio.');
