@@ -123,34 +123,32 @@ export const mapPageContent = (entity: Record<string, unknown>): PageContent | n
 		return null;
 	}
 
-	const texts = Array.isArray(entity.texts)
-		? entity.texts.reduce(
-				(entries, item) => {
-					if (!item || typeof item !== 'object') {
-						return entries;
-					}
+	// Los textos editables son campos con nombre "a__b" en el documento de página.
+	// Se reconstruye el diccionario con claves punteadas ("a.b").
+	const texts: Record<string, string> = {};
+	for (const [field, rawValue] of Object.entries(entity)) {
+		if (!field.includes('__')) {
+			continue;
+		}
+		const value = toText(rawValue);
+		if (value) {
+			texts[field.replace(/__/g, '.')] = value;
+		}
+	}
 
-					const text = item as Record<string, unknown>;
-					const textKey = toText(text.key);
-					const value = toText(text.value);
-					if (textKey && value) {
-						entries[textKey] = value;
-					}
+	const content: PageContent = { key, texts };
 
-					return entries;
-				},
-				{} as Record<string, string>
-			)
-		: {};
+	const seoTitle = toText(entity.seoTitle);
+	if (seoTitle) {
+		content.seoTitle = seoTitle;
+	}
 
-	return {
-		key,
-		title: toText(entity.title),
-		route: toText(entity.route),
-		seoTitle: toText(entity.seoTitle),
-		seoDescription: toText(entity.seoDescription),
-		texts
-	};
+	const seoDescription = toText(entity.seoDescription);
+	if (seoDescription) {
+		content.seoDescription = seoDescription;
+	}
+
+	return content;
 };
 
 export const mapDesignSettings = (

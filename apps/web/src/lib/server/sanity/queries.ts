@@ -58,7 +58,6 @@ export const siteSettingsQuery = `
 
 export const pageByKeyQuery = `
 	*[
-		_type == "page" &&
 		_id == $id &&
 		!(_id in path("drafts.**"))
 	][0] {
@@ -68,7 +67,7 @@ export const pageByKeyQuery = `
 
 export const pagesQuery = `
 	*[
-		_type == "page" &&
+		_id in path("page.*") &&
 		!(_id in path("drafts.**"))
 	] {
 		${pageProjection}

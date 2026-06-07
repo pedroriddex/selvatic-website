@@ -41,18 +41,9 @@ export const siteSettingsProjection = `
 	maintenanceMessage
 `;
 
-export const pageProjection = `
-	key,
-	title,
-	route,
-	seoTitle,
-	seoDescription,
-	"texts": texts[]{
-		key,
-		label,
-		value
-	}
-`;
+// Cada página es un documento con campos con nombre (a__b). Se proyectan todos
+// los atributos; el mapper reconstruye el diccionario de textos (a__b -> a.b).
+export const pageProjection = `...`;
 
 export const designSettingsProjection = `
 	"light": light.hex,

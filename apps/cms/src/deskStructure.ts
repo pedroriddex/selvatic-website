@@ -9,9 +9,9 @@ import {
 	ServiceIcon,
 	SiteSettingsIcon
 } from '../schemaTypes/shared/icons';
-import { PAGE_OPTIONS, type PageKey } from '../schemaTypes/shared/pages';
+import { PAGE_SPECS } from '../schemaTypes/shared/pageContentSpec';
 
-const PAGE_ICONS: Record<PageKey, typeof PagesIcon> = {
+const PAGE_ICONS: Record<string, typeof PagesIcon> = {
 	global: SiteSettingsIcon,
 	home: HomeIcon,
 	shop: ProductIcon,
@@ -34,11 +34,14 @@ export const deskStructure = (S: StructureBuilder) =>
 					S.list()
 						.title('Páginas')
 						.items(
-							PAGE_OPTIONS.map((page) =>
+							PAGE_SPECS.map((page) =>
 								S.listItem()
+									.id(page.typeName)
 									.title(page.title)
-									.icon(PAGE_ICONS[page.value])
-									.child(S.document().schemaType('page').documentId(`page.${page.value}`))
+									.icon(PAGE_ICONS[page.key] ?? PagesIcon)
+									.child(
+										S.document().schemaType(page.typeName).documentId(`page.${page.key}`)
+									)
 							)
 						)
 				),

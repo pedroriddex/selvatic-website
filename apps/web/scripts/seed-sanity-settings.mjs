@@ -134,34 +134,34 @@ async function importTsModule(sourcePath) {
 	}
 }
 
-function toSanityArrayKey(value) {
+function pascalCase(value) {
 	return value
-		.toLowerCase()
-		.replace(/[^a-z0-9_-]+/g, '-')
-		.replace(/^-+|-+$/g, '')
-		.slice(0, 48);
+		.split(/[^a-zA-Z0-9]+/)
+		.filter(Boolean)
+		.map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+		.join('');
 }
 
-function textBlock(entry) {
-	return {
-		_key: toSanityArrayKey(entry.key),
-		_type: 'pageTextBlock',
-		key: entry.key,
-		label: entry.label,
-		value: entry.value
-	};
+const pageTypeName = (key) => `page${pascalCase(key)}`;
+const fieldNameFor = (key) => key.replace(/\./g, '__');
+
+// Cada página es un documento con campos con nombre (a__b) y su propio _type.
+function pageFields(page) {
+	const fields = {};
+	for (const entry of page.texts) {
+		fields[fieldNameFor(entry.key)] = entry.value;
+	}
+	return fields;
 }
 
 function pageDoc(page) {
 	return {
 		_id: `page.${page.key}`,
-		_type: 'page',
+		_type: pageTypeName(page.key),
 		key: page.key,
-		title: page.title,
-		route: page.route,
 		seoTitle: page.seoTitle,
 		seoDescription: page.seoDescription,
-		texts: page.texts.map(textBlock)
+		...pageFields(page)
 	};
 }
 
@@ -188,27 +188,21 @@ function designDoc(defaults) {
 	};
 }
 
-function existingTextByKey(page) {
-	const entries = new Map();
-	for (const item of Array.isArray(page?.texts) ? page.texts : []) {
-		if (!item || typeof item !== 'object' || typeof item.key !== 'string') {
+// Devuelve los campos (a__b, seo...) que faltan o están vacíos en el documento
+// existente, para añadirlos sin pisar lo que el editor ya haya cambiado.
+function missingPageFields(existingPage, defaults) {
+	const desired = pageDoc(defaults);
+	const setIfMissing = {};
+	for (const [field, value] of Object.entries(desired)) {
+		if (field === '_id' || field === '_type') {
 			continue;
 		}
-		entries.set(item.key, item);
+		const current = existingPage?.[field];
+		if (current === undefined || current === null || current === '') {
+			setIfMissing[field] = value;
+		}
 	}
-	return entries;
-}
-
-function mergePageTexts(existingPage, defaults) {
-	const existingTexts = Array.isArray(existingPage?.texts) ? existingPage.texts : [];
-	const byKey = existingTextByKey(existingPage);
-	const missingDefaults = defaults.texts.filter((entry) => !byKey.has(entry.key));
-
-	if (missingDefaults.length === 0) {
-		return null;
-	}
-
-	return [...existingTexts, ...missingDefaults.map(textBlock)];
+	return setIfMissing;
 }
 
 async function main() {
@@ -229,15 +223,7 @@ async function main() {
 	const pageIds = pageDefaults.map((page) => `"page.${page.key}"`).join(',');
 	const existing = await sanityQuery(`
 		{
-			"pages": *[_id in [${pageIds}] && !(_id in path("drafts.**"))]{
-				_id,
-				key,
-				title,
-				route,
-				seoTitle,
-				seoDescription,
-				texts[]{_key, _type, key, label, value}
-			},
+			"pages": *[_id in [${pageIds}] && !(_id in path("drafts.**"))]{...},
 			"design": *[_id == "designSettings" && !(_id in path("drafts.**"))][0]{
 				_id, light, dark, accent, accentHover, accentInk, surface, success, warning, error
 			}
@@ -258,25 +244,9 @@ async function main() {
 			continue;
 		}
 
-		const mergedTexts = mergePageTexts(existingPage, page);
-		const setIfMissing = {};
-
-		for (const field of ['key', 'title', 'route', 'seoTitle', 'seoDescription']) {
-			if (!existingPage[field]) {
-				setIfMissing[field] = page[field];
-			}
-		}
-
-		const patch = { id };
+		const setIfMissing = missingPageFields(existingPage, page);
 		if (Object.keys(setIfMissing).length > 0) {
-			patch.setIfMissing = setIfMissing;
-		}
-		if (mergedTexts) {
-			patch.set = { texts: mergedTexts };
-		}
-
-		if (patch.setIfMissing || patch.set) {
-			mutations.push({ patch });
+			mutations.push({ patch: { id, setIfMissing } });
 		}
 	}
 

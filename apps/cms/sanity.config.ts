@@ -2,7 +2,7 @@ import { colorInput } from '@sanity/color-input';
 import { visionTool } from '@sanity/vision';
 import { defineConfig } from 'sanity';
 import { structureTool } from 'sanity/structure';
-import { schemaTypes } from './schemaTypes';
+import { PAGE_TYPE_NAMES, schemaTypes } from './schemaTypes';
 import { deskStructure } from './src/deskStructure';
 import { StudioLayout } from './src/studio/StudioLayout';
 import { getStudioDataset, getStudioProjectId, getStudioTitle } from './src/studio/env';
@@ -10,6 +10,9 @@ import { getStudioDataset, getStudioProjectId, getStudioTitle } from './src/stud
 const projectId = getStudioProjectId();
 const dataset = getStudioDataset();
 const title = getStudioTitle();
+
+// Documentos únicos (singletons): no se pueden duplicar, borrar ni crear desde cero.
+const SINGLETON_TYPES = new Set(['siteSettings', 'designSettings', ...PAGE_TYPE_NAMES]);
 
 if (!projectId) {
 	throw new Error(
@@ -32,23 +35,15 @@ export default defineConfig({
 	schema: {
 		types: schemaTypes,
 		templates: (templates) =>
-			templates.filter(
-				(template) =>
-					!['siteSettings', 'designSettings', 'page'].includes(template.schemaType)
-			)
+			templates.filter((template) => !SINGLETON_TYPES.has(template.schemaType))
 	},
 	document: {
 		newDocumentOptions: (prev, context) =>
 			context.creationContext.type === 'global'
-				? prev.filter(
-						(templateItem) =>
-							!['siteSettings', 'designSettings', 'page'].includes(
-								templateItem.templateId
-							)
-					)
+				? prev.filter((templateItem) => !SINGLETON_TYPES.has(templateItem.templateId))
 				: prev,
 		actions: (prev, context) =>
-			['siteSettings', 'designSettings', 'page'].includes(context.schemaType)
+			SINGLETON_TYPES.has(context.schemaType)
 				? prev.filter(({ action }) => action !== 'duplicate' && action !== 'delete')
 				: prev
 	},
