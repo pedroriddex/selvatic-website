@@ -65,9 +65,12 @@ export const pageByKeyQuery = `
 	}
 `;
 
+// Los IDs de página van SIN punto (page-home): los IDs con punto viven en una
+// "ruta" de Sanity y no son visibles para consultas sin token, que es como lee
+// la web pública. $ids llega desde el repositorio (uno por PageKey).
 export const pagesQuery = `
 	*[
-		_id in path("page.*") &&
+		_id in $ids &&
 		!(_id in path("drafts.**"))
 	] {
 		${pageProjection}

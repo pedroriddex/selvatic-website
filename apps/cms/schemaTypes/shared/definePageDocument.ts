@@ -40,7 +40,8 @@ const GROUP_TITLES: Record<string, string> = {
 	form: 'Formulario',
 	disabled: 'Tienda pausada',
 	success: 'Pago correcto',
-	cancel: 'Pago cancelado'
+	cancel: 'Pago cancelado',
+	media: 'Imágenes'
 };
 
 const groupTitle = (group: string): string =>
@@ -71,14 +72,25 @@ export const definePageDocument = (spec: PageSpec) =>
 				initialValue: spec.key
 			}),
 			...spec.fields.map((field) =>
-				defineField({
-					name: field.field,
-					title: field.label,
-					type: field.multiline ? 'text' : 'string',
-					rows: field.multiline ? 3 : undefined,
-					group: field.group,
-					initialValue: field.initialValue
-				})
+				field.kind === 'image'
+					? defineField({
+							name: field.field,
+							title: field.label,
+							type: 'image',
+							options: { hotspot: true },
+							group: field.group,
+							description:
+								field.description ||
+								'Si no subes ninguna imagen, la web usa la imagen de serie.'
+						})
+					: defineField({
+							name: field.field,
+							title: field.label,
+							type: field.multiline ? 'text' : 'string',
+							rows: field.multiline ? 3 : undefined,
+							group: field.group,
+							initialValue: field.initialValue
+						})
 			),
 			defineField({
 				name: 'seoTitle',

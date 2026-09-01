@@ -105,7 +105,18 @@ export const productType = defineType({
 						.filter(Boolean);
 					const hasDuplicate = names.some((name, index) => names.indexOf(name) !== index);
 
-					return hasDuplicate ? 'Cada grupo de opciones debe tener un nombre distinto.' : true;
+					if (hasDuplicate) {
+						return 'Cada grupo de opciones debe tener un nombre distinto.';
+					}
+
+					const setModeGroups = groups.filter(
+						(group) => (group as { pricingMode?: unknown })?.pricingMode === 'set'
+					);
+					if (setModeGroups.length > 1) {
+						return 'Solo un grupo de opciones puede fijar el precio del producto. Cambia los demás a "suma al precio".';
+					}
+
+					return true;
 				})
 		}),
 		defineField({ name: 'stripePriceId', title: 'Stripe Price ID', type: 'string' }),

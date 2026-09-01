@@ -6,6 +6,14 @@ type EditableText = {
 	value: string;
 };
 
+type EditableImage = {
+	key: string;
+	label: string;
+	/** URL de serie (apps/web/static). Se usa si la clienta no sube imagen en el CMS. */
+	defaultUrl: string;
+	description?: string;
+};
+
 type PageDefaults = {
 	key: PageKey;
 	title: string;
@@ -13,6 +21,7 @@ type PageDefaults = {
 	seoTitle: string;
 	seoDescription: string;
 	texts: EditableText[];
+	images?: EditableImage[];
 };
 
 export const PAGE_DEFAULTS = [
@@ -161,6 +170,20 @@ export const PAGE_DEFAULTS = [
 				label: 'Servicios / Vacío texto',
 				value: 'Muy pronto encontrarás aquí todos los servicios disponibles.'
 			}
+		],
+		images: [
+			{
+				key: 'media.heroPoster',
+				label: 'Imagen de portada (mientras carga el vídeo)',
+				defaultUrl: '/media/selvatic-images/bouquet-lazo-coral.webp',
+				description: 'Se muestra en la cabecera de inicio hasta que arranca el vídeo.'
+			},
+			{
+				key: 'media.promo',
+				label: 'Imagen del bloque "Materia natural"',
+				defaultUrl: '/media/selvatic-images/bouquet-lazo-coral.webp',
+				description: 'La imagen grande del bloque promocional de la página de inicio.'
+			}
 		]
 	},
 	{
@@ -293,22 +316,6 @@ export const PAGE_DEFAULTS = [
 				label: 'Materialidad / Texto 2',
 				value: 'Cada pieza se diseña de forma consciente, respetando la forma y el carácter del material vegetal para que la composición mantenga calma, equilibrio y verdad.'
 			},
-			{ key: 'presentation.kicker', label: 'Presentación / Antetítulo', value: 'Presentación' },
-			{
-				key: 'presentation.title',
-				label: 'Presentación / Título',
-				value: 'La cerámica forma parte de la composición, no solo del soporte.'
-			},
-			{
-				key: 'presentation.p1',
-				label: 'Presentación / Texto 1',
-				value: 'Todas las composiciones se presentan en cerámica decorativa, seleccionada con el mismo criterio natural y honesto que guía el diseño floral.'
-			},
-			{
-				key: 'presentation.p2',
-				label: 'Presentación / Texto 2',
-				value: 'Son piezas pensadas para integrarse en los espacios y acompañar el día a día con belleza serena, desde encargos personales hasta proyectos de interiorismo.'
-			},
 			{ key: 'list.label', label: 'Listado / Label', value: 'Servicios' },
 			{ key: 'list.featuredLabel', label: 'Listado / Texto destacado', value: 'Destacado' },
 			{ key: 'list.title', label: 'Listado / Título', value: 'Intervenciones, encargos y ramos a medida' },
@@ -322,6 +329,14 @@ export const PAGE_DEFAULTS = [
 				key: 'list.emptyDescription',
 				label: 'Listado / Vacío texto',
 				value: 'Muy pronto mostraremos aquí todas las propuestas y encargos disponibles.'
+			}
+		],
+		images: [
+			{
+				key: 'media.method',
+				label: 'Imagen del bloque de metodología',
+				defaultUrl: '/media/selvatic-images/atelier-setup.webp',
+				description: 'La imagen que acompaña al bloque "Proceso" en la página de servicios.'
 			}
 		]
 	},
@@ -348,32 +363,33 @@ export const PAGE_DEFAULTS = [
 			{ key: 'origin.title', label: 'Origen / Título', value: 'La historia de Selvatic empieza mucho antes del estudio actual.' },
 			{ key: 'origin.p1', label: 'Origen / Texto 1', value: 'Selvatic es un proyecto de diseño floral natural con raíces en una larga tradición familiar ligada al mundo de la planta y la flor.' },
 			{ key: 'origin.p2', label: 'Origen / Texto 2', value: 'Desde los años 70, cuando el abuelo Ananías recorría los mercados de Cuenca, Utiel, Requena y Ontinyent, hasta la continuidad del oficio en los años 90 de la mano de Vicente y Carmen, el conocimiento del sector y el respeto por el producto han marcado siempre nuestro camino.' },
-			{ key: 'director.kicker', label: 'Dirección / Antetítulo', value: 'Dirección actual' },
-			{ key: 'director.label', label: 'Dirección / Label', value: 'Noelia Pérez' },
-			{ key: 'director.title', label: 'Dirección / Título', value: 'Hoy, el estudio está liderado y gestionado de forma integral por Noelia Pérez.' },
-			{ key: 'director.p1', label: 'Dirección / Texto 1', value: 'A lo largo de su trayectoria ha trabajado junto a destacados profesionales del sector, desarrollando una manera de entender el diseño floral basada en la sencillez, el equilibrio y la naturalidad.' },
-			{ key: 'director.p2', label: 'Dirección / Texto 2', value: 'Cada encargo se aborda con una mirada consciente, dejando que el material vegetal conserve su forma, su ritmo y su carácter, y buscando siempre una estética atemporal.' },
 			{ key: 'work.kicker', label: 'Forma de trabajar / Antetítulo', value: 'Forma de trabajar' },
 			{ key: 'work.title', label: 'Forma de trabajar / Título', value: 'Servicio cercano, criterio claro y atención a cada detalle.' },
 			{ key: 'work.p1', label: 'Forma de trabajar / Texto 1', value: 'En Selvatic ofrecemos un servicio cercano y personalizado, cuidando cada detalle desde la selección del producto hasta la entrega final.' },
-			{ key: 'work.p2', label: 'Forma de trabajar / Texto 2', value: 'Trabajamos desde la experiencia, el criterio y el respeto por lo natural. Selvatic es diseño floral natural, hecho con tiempo, conocimiento y sensibilidad.' },
-			{ key: 'gallery.kicker', label: 'Galería / Antetítulo', value: 'Selección visual' },
-			{ key: 'gallery.label', label: 'Galería / Label', value: 'Imágenes' },
-			{ key: 'gallery.title', label: 'Galería / Título', value: 'Una muestra del gesto floral, la escala y la presencia material del estudio.' },
-			{ key: 'material.kicker', label: 'Materialidad / Antetítulo', value: 'Materialidad' },
-			{ key: 'material.label', label: 'Materialidad / Label', value: 'Especialidad' },
-			{ key: 'material.title', label: 'Materialidad / Título', value: 'Flor seca y preservada, combinadas con planta natural y una selección honesta de cerámica.' },
-			{ key: 'material.p1', label: 'Materialidad / Texto 1', value: 'Selvatic está especializado en creaciones florales con flor seca y preservada, que representan aproximadamente el 70% de nuestro trabajo, combinadas con una cuidada selección de planta natural.' },
-			{ key: 'material.p2', label: 'Materialidad / Texto 2', value: 'Todas las composiciones se presentan en cerámica decorativa, seleccionada con el mismo criterio natural y honesto que define nuestro trabajo.' },
-			{ key: 'presence.kicker', label: 'Presencia / Antetítulo', value: 'Presencia' },
-			{ key: 'presence.title', label: 'Presencia / Título', value: 'Piezas pensadas para integrarse en los espacios y acompañar el día a día con calma.' },
-			{ key: 'presence.p1', label: 'Presencia / Texto 1', value: 'Son composiciones concebidas para convivir con el espacio, aportar belleza serena y sostener una presencia natural y duradera.' },
-			{ key: 'presence.p2', label: 'Presencia / Texto 2', value: 'Esa misma lógica guía tanto los encargos personales como los trabajos florales a medida para interiorismo, eventos o proyectos de marca.' },
-			{ key: 'contact.kicker', label: 'Contacto / Antetítulo', value: 'Contacto' },
-			{ key: 'contact.label', label: 'Contacto / Label', value: 'Encargos a medida' },
-			{ key: 'contact.title', label: 'Contacto / Título', value: 'Tienes una idea o necesitas un trabajo floral personalizado?' },
-			{ key: 'contact.description', label: 'Contacto / Descripción', value: 'En Selvatic realizamos presupuestos personalizados y creaciones adaptadas a cada proyecto.' },
-			{ key: 'contact.cta', label: 'Contacto / Botón', value: 'Solicitar presupuesto' }
+			{ key: 'work.p2', label: 'Forma de trabajar / Texto 2', value: 'Trabajamos desde la experiencia, el criterio y el respeto por lo natural. Selvatic es diseño floral natural, hecho con tiempo, conocimiento y sensibilidad.' }
+		],
+		images: [
+			{
+				key: 'media.origin',
+				label: 'Imagen del bloque de origen',
+				defaultUrl: '/media/selvatic-images/ramo-color-studio.webp',
+				description: 'La imagen que acompaña a la historia del estudio.'
+			},
+			{
+				key: 'media.gallery1',
+				label: 'Galería / Imagen 1',
+				defaultUrl: '/media/selvatic-images/ramo-color-studio-alt.webp'
+			},
+			{
+				key: 'media.gallery2',
+				label: 'Galería / Imagen 2',
+				defaultUrl: '/media/selvatic-images/detalle-floral-pastel.webp'
+			},
+			{
+				key: 'media.gallery3',
+				label: 'Galería / Imagen 3',
+				defaultUrl: '/media/selvatic-images/bouquet-lazo-coral-alt.webp'
+			}
 		]
 	},
 	{
@@ -433,12 +449,26 @@ export const PAGE_DEFAULTS = [
 			{ key: 'summary.label', label: 'Resumen / Label', value: 'Total' },
 			{ key: 'summary.subtotal', label: 'Resumen / Subtotal', value: 'Subtotal' },
 			{ key: 'summary.shipping', label: 'Resumen / Envío', value: 'Envío fijo' },
+			{ key: 'shipping.postalCodeLabel', label: 'Envío / Etiqueta código postal', value: 'Código postal de entrega' },
+			{
+				key: 'shipping.postalCodeHelp',
+				label: 'Envío / Ayuda código postal',
+				value: 'Comprobamos que tu código postal esté dentro de nuestra zona de reparto antes del pago.'
+			},
 			{ key: 'summary.total', label: 'Resumen / Total', value: 'Total' },
 			{ key: 'summary.submit', label: 'Resumen / Botón pagar', value: 'Finalizar compra' },
 			{ key: 'summary.secureNote', label: 'Resumen / Nota pago seguro', value: 'Pago seguro. El carrito admite una sola moneda por pedido.' },
 			{ key: 'empty.kicker', label: 'Carrito vacío / Antetítulo', value: 'Carrito vacío' },
 			{ key: 'empty.title', label: 'Carrito vacío / Título', value: 'Todavía no has añadido productos.' },
 			{ key: 'empty.cta', label: 'Carrito vacío / Botón', value: 'Ir a tienda' }
+		],
+		images: [
+			{
+				key: 'media.checkout',
+				label: 'Imagen de la tienda pausada',
+				defaultUrl: '/media/selvatic-images/composicion-invernal.webp',
+				description: 'Solo se ve si la tienda online está pausada.'
+			}
 		]
 	},
 	{
@@ -467,6 +497,13 @@ export const DEFAULT_PAGE_CONTENT_MAP = PAGE_DEFAULTS.reduce((pages, page) => {
 				return entries;
 			},
 			{} as Record<string, string>
+		),
+		images: (page.images ?? []).reduce(
+			(entries, entry) => {
+				entries[entry.key] = entry.defaultUrl;
+				return entries;
+			},
+			{} as Record<string, string>
 		)
 	};
 	return pages;
@@ -489,10 +526,17 @@ export const mergePageContent = (
 		texts: {
 			...fallback.texts,
 			...content.texts
+		},
+		images: {
+			...fallback.images,
+			...content.images
 		}
 	};
 };
 
 export const textFor = (content: PageContent, key: string): string => content.texts[key] ?? key;
+
+export const imageFor = (content: PageContent, key: string): string | undefined =>
+	content.images[key] || undefined;
 
 export const pageDefaultsForSeed = () => PAGE_DEFAULTS;

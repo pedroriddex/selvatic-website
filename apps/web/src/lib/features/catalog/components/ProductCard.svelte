@@ -5,7 +5,6 @@
 	import { addProductToCartWithFeedback } from '$lib/features/catalog/client/product-cart';
 	import { getProductCardView, type ProductCardMode } from '$lib/features/catalog/model/product-card';
 	import type { ProductCardCopy } from '$lib/features/catalog/model/product-card-copy';
-	import { openProductLightbox } from '$lib/state/product-lightbox';
 	import type { Product } from '$lib/types';
 	import { formatCurrency } from '$lib/utils/currency';
 	import { onDestroy } from 'svelte';
@@ -40,9 +39,6 @@
 			? formatProductLabel(copy.addToCartAria ?? 'Añadir {product} al carrito', product.name)
 			: addButtonLabel
 	);
-	const viewImageAria = $derived(
-		formatProductLabel(copy.viewImageAria ?? 'Ver imagen completa de {product}', product.name)
-	);
 	const viewProductAria = $derived(
 		formatProductLabel(copy.viewProductAria ?? 'Ver {product}', product.name)
 	);
@@ -69,14 +65,6 @@
 		}
 	});
 
-	const openLightbox = () => {
-		if (!product.imageUrl) {
-			return;
-		}
-
-		openProductLightbox(product.imageUrl, product.name);
-	};
-
 	const addToCart = () => {
 		const result = addProductToCartWithFeedback(product);
 
@@ -88,24 +76,23 @@
 
 <article class={view.articleClass} style={`animation-delay:${delayMs}ms`}>
 	<div class={view.mediaWrapClass}>
-		<ProductImage
-			src={product.imageUrl}
-			alt={product.name}
-			mask="arched"
-			class={view.imageContainerClass}
-			imageClass={view.imageClass}
-		/>
+		<!-- La imagen entera enlaza a la ficha del producto (petición de cliente:
+		     el lightbox en el listado no era intuitivo). -->
+		<a href={`/tienda/${product.slug}`} aria-label={viewProductAria} class="block">
+			<ProductImage
+				src={product.imageUrl}
+				alt={product.name}
+				mask="arched"
+				class={view.imageContainerClass}
+				imageClass={view.imageClass}
+			/>
+		</a>
 		{#if product.imageUrl}
-			<button
-				type="button"
-				class="product-media-button"
-				aria-label={viewImageAria}
-				onclick={openLightbox}
-			>
+			<a href={`/tienda/${product.slug}`} class="product-media-button" aria-label={viewProductAria}>
 				<span class="product-media-icon">
-					<Icon name="eye-line" class="text-base" />
+					<Icon name="arrow-right-up-line" class="text-base" />
 				</span>
-			</button>
+			</a>
 		{/if}
 	</div>
 

@@ -33,7 +33,7 @@
 	const productCardCopy = $derived(getProductCardCopy(pageContent));
 	const featuredProducts = $derived(getFeaturedProducts(products));
 	const bestSellers = $derived(getBestSellerProducts(products));
-	const promoImage = $derived(getHomePromoImage(featuredProducts));
+	const promoImage = $derived(getHomePromoImage(featuredProducts, pageContent));
 	const commerceSignals = $derived(
 		HOME_COMMERCE_SIGNAL_ICONS.map((icon, index) => {
 			const position = index + 1;
@@ -55,7 +55,7 @@
 			loop
 			playsinline
 			preload="metadata"
-			poster={getHomeHeroVideoPosterUrl()}
+			poster={getHomeHeroVideoPosterUrl(pageContent)}
 		>
 			{#if getHomeHeroVideoUrl()}
 				<source src={getHomeHeroVideoUrl()} type={getHomeHeroVideoType()} />

@@ -5,8 +5,7 @@
 	import MediaPlaceholder from '$lib/components/ui/MediaPlaceholder.svelte';
 	import SectionHeader from '$lib/components/ui/SectionHeader.svelte';
 	import SectionIntro from '$lib/components/ui/SectionIntro.svelte';
-	import { SITE_MEDIA } from '$lib/config/site-media';
-	import { getDefaultPageContent, textFor } from '$lib/features/content/model/page-content';
+	import { getDefaultPageContent, imageFor, textFor } from '$lib/features/content/model/page-content';
 	import type { DataHealth, PageContent, Service } from '$lib/types';
 
 	type Props = {
@@ -48,8 +47,8 @@
 		</div>
 		<div class="grid-span-image">
 			<div class="image-panel image-panel-arched">
-				{#if SITE_MEDIA.servicesVisualImageUrl}
-					<img src={SITE_MEDIA.servicesVisualImageUrl} alt="Dirección floral Selvatic" loading="lazy" />
+				{#if imageFor(pageContent, 'media.method')}
+					<img src={imageFor(pageContent, 'media.method')} alt="Dirección floral Selvatic" loading="lazy" />
 				{:else}
 					<MediaPlaceholder class="h-full w-full" />
 				{/if}
@@ -71,18 +70,6 @@
 			</p>
 			<p class="section-note mt-4">
 				{textFor(pageContent, 'material.p2')}
-			</p>
-		</div>
-		<div class="grid-span-image grid-rail-left">
-			<p class="section-kicker text-[#222D22B8]">{textFor(pageContent, 'presentation.kicker')}</p>
-			<h3 class="section-subtitle mt-3 max-w-3xl">
-				{textFor(pageContent, 'presentation.title')}
-			</h3>
-			<p class="section-note mt-5">
-				{textFor(pageContent, 'presentation.p1')}
-			</p>
-			<p class="section-note mt-4">
-				{textFor(pageContent, 'presentation.p2')}
 			</p>
 		</div>
 	</div>

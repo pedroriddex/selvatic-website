@@ -64,13 +64,37 @@ describe('sanity mappers', () => {
 			{
 				name: 'Tamaño',
 				required: true,
+				// Sin pricingMode en el documento (datos antiguos) => modo 'add'.
+				pricingMode: 'add',
 				options: [
-					{ label: 'Pequeño', priceModifier: 0 },
-					{ label: 'Grande', priceModifier: 8 },
-					{ label: 'Sin nombre', priceModifier: 0 }
+					{ label: 'Pequeño', priceModifier: 0, imageUrl: undefined },
+					{ label: 'Grande', priceModifier: 8, imageUrl: undefined },
+					{ label: 'Sin nombre', priceModifier: 0, imageUrl: undefined }
 				]
 			}
 		]);
+	});
+
+	it('maps variant pricing mode and option image', () => {
+		const mapped = mapProduct({
+			_id: 'product-variants-set',
+			name: 'Producto con precio por opción',
+			slug: 'producto-precio-opcion',
+			price: 25,
+			currency: 'eur',
+			stock: 4,
+			variantGroups: [
+				{
+					name: 'Tamaño',
+					required: true,
+					pricingMode: 'set',
+					options: [{ label: 'Grande', priceModifier: 42, imageUrl: 'https://cdn.test/grande.webp' }]
+				}
+			]
+		});
+
+		expect(mapped?.variantGroups[0]?.pricingMode).toBe('set');
+		expect(mapped?.variantGroups[0]?.options[0]?.imageUrl).toBe('https://cdn.test/grande.webp');
 	});
 
 

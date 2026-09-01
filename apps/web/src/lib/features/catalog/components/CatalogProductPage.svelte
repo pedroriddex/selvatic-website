@@ -10,6 +10,8 @@
 	import StoreStatusNotice from '$lib/components/ui/StoreStatusNotice.svelte';
 	import { addProductToCartWithFeedback } from '$lib/features/catalog/client/product-cart';
 	import { getDefaultPageContent, textFor } from '$lib/features/content/model/page-content';
+	import { previewUnitPrice } from '$lib/domain/cart/variants';
+	import { openProductLightbox } from '$lib/state/product-lightbox';
 	import { getRelatedProductSpan } from '$lib/utils/product-grid';
 	import { formatCurrency } from '$lib/utils/currency';
 	import type { DataHealth, PageContent, Product } from '$lib/types';
@@ -33,6 +35,9 @@
 	let cartFeedback = $state<string | null>(null);
 	let feedbackTimer: ReturnType<typeof setTimeout> | undefined;
 	let selectedImageIndex = $state(0);
+	// Imagen propia de la opción elegida: al seleccionar una variación con foto,
+	// esta sustituye a la imagen mostrada hasta que se toque otra miniatura.
+	let variantImage = $state<{ url: string; alt: string } | null>(null);
 	const galleryImages = $derived(
 		product.gallery.length > 0
 			? product.gallery
@@ -41,8 +46,10 @@
 				: []
 	);
 	const selectedImage = $derived(galleryImages[selectedImageIndex] ?? galleryImages[0]);
+	const displayedImageUrl = $derived(variantImage?.url ?? selectedImage?.url ?? product.imageUrl);
+	const displayedImageAlt = $derived(variantImage?.alt ?? selectedImage?.alt ?? product.name);
 
-	// Variaciones (suplemento de precio): grupo -> opción elegida.
+	// Variaciones: grupo -> opción elegida.
 	let selectedOptions = $state<Record<string, string>>({});
 
 	const selections = $derived(
@@ -54,16 +61,7 @@
 			)
 	);
 
-	const effectivePrice = $derived.by(() => {
-		let total = product.price;
-		for (const group of product.variantGroups) {
-			const chosen = selectedOptions[group.name];
-			if (!chosen) continue;
-			const option = group.options.find((candidate) => candidate.label === chosen);
-			if (option) total += Math.max(0, option.priceModifier);
-		}
-		return total;
-	});
+	const effectivePrice = $derived(previewUnitPrice(product, selectedOptions));
 
 	const missingRequiredGroups = $derived(
 		product.variantGroups.filter((group) => group.required && !selectedOptions[group.name])
@@ -97,11 +95,22 @@
 			return;
 		}
 
-		const result = addProductToCartWithFeedback(product, { price: effectivePrice, selections });
+		const result = addProductToCartWithFeedback(
+			{ ...product, imageUrl: variantImage?.url ?? product.imageUrl },
+			{ price: effectivePrice, selections }
+		);
 
 		if (!result.ok && !result.locked) {
 			setFeedback(result.error);
 		}
+	};
+
+	const openLightbox = () => {
+		if (!displayedImageUrl) {
+			return;
+		}
+
+		openProductLightbox(displayedImageUrl, displayedImageAlt);
 	};
 </script>
 
@@ -121,17 +130,27 @@
 <section class="section-integrated reveal reveal-delay">
 	<div class="swiss-grid items-start gap-y-10">
 		<article class="grid-span-image">
-			<ProductImage src={selectedImage?.url ?? product.imageUrl} alt={selectedImage?.alt ?? product.name} mask="arched" class="h-[26rem] sm:h-[32rem] lg:h-[38rem]" />
+			<!-- En la ficha, el click sobre la imagen abre el lightbox (en el listado
+			     de tienda, en cambio, la imagen enlaza a la ficha). -->
+			<button
+				type="button"
+				class="block w-full cursor-zoom-in text-left"
+				aria-label={textFor(pageContent, 'productCard.viewImageAria').replace('{product}', product.name)}
+				onclick={openLightbox}
+			>
+				<ProductImage src={displayedImageUrl} alt={displayedImageAlt} mask="arched" class="h-[26rem] sm:h-[32rem] lg:h-[38rem]" />
+			</button>
 			{#if galleryImages.length > 1}
 				<div class="mt-4 grid grid-cols-4 gap-3 sm:grid-cols-5">
 					{#each galleryImages as image, index}
 						<button
 							type="button"
-							class={`relative h-20 overflow-hidden rounded-[0.38rem] border bg-[#FFFFFF73] ${index === selectedImageIndex ? 'border-[#222D22]' : 'border-[#222D2224]'}`}
+							class={`relative h-20 overflow-hidden rounded-[0.38rem] border bg-[#FFFFFF73] ${index === selectedImageIndex && !variantImage ? 'border-[#222D22]' : 'border-[#222D2224]'}`}
 							aria-label={textFor(pageContent, 'gallery.thumbnailAria').replace('{index}', String(index + 1)).replace('{product}', product.name)}
-							aria-current={index === selectedImageIndex ? 'true' : undefined}
+							aria-current={index === selectedImageIndex && !variantImage ? 'true' : undefined}
 							onclick={() => {
 								selectedImageIndex = index;
+								variantImage = null;
 							}}
 						>
 							<img src={image.url} alt={image.alt ?? product.name} class="absolute inset-0 h-full w-full object-cover" loading="lazy" />
@@ -181,9 +200,14 @@
 											checked={selectedOptions[group.name] === option.label}
 											onchange={() => {
 												selectedOptions = { ...selectedOptions, [group.name]: option.label };
+												if (option.imageUrl) {
+													variantImage = { url: option.imageUrl, alt: `${product.name} — ${option.label}` };
+												}
 											}}
 										/>
-										{option.label}{#if option.priceModifier > 0}
+										{option.label}{#if group.pricingMode === 'set'}
+											<span class="text-[#222D228F]"> {formatCurrency(option.priceModifier, product.currency)}</span>
+										{:else if option.priceModifier > 0}
 											<span class="text-[#222D228F]"> +{formatCurrency(option.priceModifier, product.currency)}</span>
 										{/if}
 									</label>

@@ -156,7 +156,7 @@ function pageFields(page) {
 
 function pageDoc(page) {
 	return {
-		_id: `page.${page.key}`,
+		_id: `page-${page.key}`,
 		_type: pageTypeName(page.key),
 		key: page.key,
 		seoTitle: page.seoTitle,
@@ -220,7 +220,7 @@ async function main() {
 	]);
 
 	const pageDefaults = pageDefaultsForSeed();
-	const pageIds = pageDefaults.map((page) => `"page.${page.key}"`).join(',');
+	const pageIds = pageDefaults.map((page) => `"page-${page.key}"`).join(',');
 	const existing = await sanityQuery(`
 		{
 			"pages": *[_id in [${pageIds}] && !(_id in path("drafts.**"))]{...},
@@ -240,7 +240,7 @@ async function main() {
 
 	let migratedPages = 0;
 	for (const page of pageDefaults) {
-		const id = `page.${page.key}`;
+		const id = `page-${page.key}`;
 		const existingPage = existingPages.get(id);
 
 		if (!existingPage) {
@@ -294,8 +294,8 @@ async function main() {
 	}
 	await sanityMutate(mutations);
 
-	const createdPages = pageDefaults.filter((page) => !existingPages.has(`page.${page.key}`)).length;
-	const updatedPages = mutations.filter((mutation) => mutation.patch?.id?.startsWith('page.')).length;
+	const createdPages = pageDefaults.filter((page) => !existingPages.has(`page-${page.key}`)).length;
+	const updatedPages = mutations.filter((mutation) => mutation.patch?.id?.startsWith('page-')).length;
 	const createdDesign = existing?.design?._id ? 0 : 1;
 
 	console.log(`Páginas creadas: ${createdPages}`);

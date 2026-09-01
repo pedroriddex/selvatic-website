@@ -1,9 +1,14 @@
 import { env as publicEnv } from '$env/dynamic/public';
 import { ONLINE_STORE_ENABLED, STORE_LOCK_TITLE } from '$lib/config/store';
 import { computeEffectiveUnitAmountCents, describeSelections } from '$lib/domain/cart/variants';
+import {
+	getShippingRestriction,
+	isPostalCodeAllowed,
+	normalizePostalCode
+} from '$lib/domain/shipping/postal-codes';
 import { toAppError } from '$lib/server/errors';
 import { createRequestId, logger } from '$lib/server/logger';
-import { getPageContentResult, getProductBySlug } from '$lib/server/sanity';
+import { getPageContentResult, getProductBySlug, getSiteSettingsResult } from '$lib/server/sanity';
 import { getStripeClient } from '$lib/server/stripe';
 import { fail, isRedirect, redirect } from '@sveltejs/kit';
 import type Stripe from 'stripe';
@@ -35,12 +40,20 @@ const checkoutSchema = z.object({
 });
 
 export async function loadCheckoutPage(url: URL, fetchFn: typeof fetch) {
-	const pageContentResult = await getPageContentResult(fetchFn, 'checkout');
+	const requestId = createRequestId();
+	const [pageContentResult, siteSettingsResult] = await Promise.all([
+		getPageContentResult(fetchFn, 'checkout', requestId),
+		getSiteSettingsResult(fetchFn, requestId)
+	]);
+	const shippingRestriction = getShippingRestriction(siteSettingsResult.settings);
 
 	return {
 		status: url.searchParams.get('status') ?? null,
 		sessionId: url.searchParams.get('session_id') ?? null,
-		pageContent: pageContentResult.page
+		pageContent: pageContentResult.page,
+		// Solo se expone si la restricción está activa; la lista de códigos se
+		// queda en el servidor (la validación real ocurre en la action).
+		shippingPostalCodeRequired: shippingRestriction.enabled
 	};
 }
 
@@ -63,6 +76,29 @@ export const checkoutPageActions = {
 		const requestId = createRequestId();
 		const formData = await request.formData();
 		const rawItems = formData.get('items');
+		const rawPostalCode = formData.get('postalCode');
+
+		// Restricción de zona de envío: si está activa en Ajustes del sitio, el
+		// código postal es obligatorio y debe estar en la lista permitida.
+		const siteSettingsResult = await getSiteSettingsResult(fetch, requestId);
+		const shippingRestriction = getShippingRestriction(siteSettingsResult.settings);
+		const postalCode =
+			typeof rawPostalCode === 'string' ? normalizePostalCode(rawPostalCode) : null;
+
+		if (shippingRestriction.enabled) {
+			if (!postalCode) {
+				return fail(400, {
+					error: 'Indica un código postal válido de 5 cifras para comprobar tu zona de envío.'
+				});
+			}
+
+			if (!isPostalCodeAllowed(shippingRestriction, postalCode)) {
+				return fail(400, {
+					error: shippingRestriction.outOfRangeMessage,
+					outOfShippingRange: true
+				});
+			}
+		}
 
 		let parsedItemsPayload: unknown;
 		if (typeof rawItems !== 'string' || rawItems.trim().length === 0) {
@@ -233,6 +269,9 @@ export const checkoutPageActions = {
 				mode: 'payment',
 				line_items: lineItems,
 				customer_creation: 'always',
+				shipping_address_collection: {
+					allowed_countries: ['ES']
+				},
 				shipping_options: [
 					{
 						shipping_rate_data: {
@@ -250,7 +289,8 @@ export const checkoutPageActions = {
 				metadata: {
 					cartItems: metadataItems,
 					itemCount: String(itemCount),
-					currency
+					currency,
+					...(postalCode ? { shippingPostalCode: postalCode } : {})
 				}
 			});
 

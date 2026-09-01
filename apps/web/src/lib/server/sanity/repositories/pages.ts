@@ -1,4 +1,5 @@
 import type { DataHealth, PageContent, PageContentMap, PageKey } from '$lib/types';
+import { PAGE_KEYS } from '$lib/domain/page-content/types';
 import { DATA_HEALTH_OK, dataHealthFromError } from '$lib/server/data-health';
 import { toAppError } from '$lib/server/errors';
 import { createRequestId, logger } from '$lib/server/logger';
@@ -29,7 +30,7 @@ export async function getPageContentResult(
 		const result = await sanityQuery<Record<string, unknown> | null>(
 			externalFetch,
 			pageByKeyQuery,
-			{ id: `page.${key}` },
+			{ id: `page-${key}` },
 			{ scope, requestId }
 		);
 		const page = result ? mapPageContent(result) : null;
@@ -72,7 +73,7 @@ export async function getPageContentMapResult(
 		const result = await sanityQuery<Record<string, unknown>[]>(
 			externalFetch,
 			pagesQuery,
-			{},
+			{ ids: PAGE_KEYS.map((key) => `page-${key}`) },
 			{ scope, requestId }
 		);
 		const pages = result.reduce((entries, entity) => {

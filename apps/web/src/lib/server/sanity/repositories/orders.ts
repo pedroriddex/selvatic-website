@@ -114,11 +114,14 @@ async function adjustInventoryForPaidOrder(
 	session: Stripe.Checkout.Session,
 	requestId: string
 ): Promise<void> {
+	// auth 'write': el _id del pedido lleva punto ("order.cs_..."), así que vive
+	// en una ruta de Sanity y NO es visible para consultas anónimas o de solo
+	// lectura pública. Sin token aquí, el stock nunca se descontaría.
 	const order = await sanityQuery<{ _rev: string; inventoryAdjusted?: boolean } | null>(
 		externalFetch,
 		`*[_id == $id][0]{ _rev, inventoryAdjusted }`,
 		{ id: orderId },
-		{ scope: SCOPE, requestId }
+		{ scope: SCOPE, requestId, auth: 'write' }
 	);
 
 	if (!order) {
@@ -148,7 +151,7 @@ async function adjustInventoryForPaidOrder(
 		externalFetch,
 		productIdsBySlugsQuery,
 		{ slugs },
-		{ scope: SCOPE, requestId }
+		{ scope: SCOPE, requestId, auth: 'write' }
 	);
 	const idBySlug = new Map(products.map((product) => [product.slug, product._id]));
 

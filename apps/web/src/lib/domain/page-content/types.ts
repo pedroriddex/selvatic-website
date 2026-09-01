@@ -25,6 +25,8 @@ export interface PageContent {
 	seoTitle?: string;
 	seoDescription?: string;
 	texts: Record<string, string>;
+	/** Imágenes editables de la página: clave punteada -> URL (Sanity o la de serie). */
+	images: Record<string, string>;
 }
 
 export type PageContentMap = Partial<Record<PageKey, PageContent>>;

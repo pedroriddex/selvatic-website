@@ -14,25 +14,36 @@ export const variantOptionType = defineType({
 		}),
 		defineField({
 			name: 'priceModifier',
-			title: 'Suplemento de precio (€)',
+			title: 'Precio de la opción (€)',
 			type: 'number',
 			initialValue: 0,
-			description: 'Cuánto suma esta opción al precio base del producto. Usa 0 si no cambia el precio.',
+			description:
+				'Según el modo del grupo: si el grupo "fija el precio", este es el precio final del producto con esta opción; si el grupo "suma al precio", esta cantidad se añade al precio base (0 = no cambia).',
 			validation: (rule) => rule.min(0)
+		}),
+		defineField({
+			name: 'image',
+			title: 'Imagen de la opción',
+			type: 'image',
+			options: { hotspot: true },
+			description:
+				'Opcional. Si la añades, la foto del producto cambiará a esta imagen cuando el cliente elija esta opción.'
 		})
 	],
 	preview: {
 		select: {
 			title: 'label',
-			priceModifier: 'priceModifier'
+			priceModifier: 'priceModifier',
+			media: 'image'
 		},
-		prepare(selection: { title?: string; priceModifier?: number }) {
+		prepare(selection: { title?: string; priceModifier?: number; media?: unknown }) {
 			const modifier =
 				typeof selection.priceModifier === 'number' && selection.priceModifier > 0
-					? ` · +${selection.priceModifier} €`
+					? ` · ${selection.priceModifier} €`
 					: '';
 			return {
-				title: `${selection.title || 'Opción'}${modifier}`
+				title: `${selection.title || 'Opción'}${modifier}`,
+				media: selection.media as never
 			};
 		}
 	}

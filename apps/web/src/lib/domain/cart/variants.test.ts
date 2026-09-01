@@ -11,6 +11,7 @@ const variantGroups: VariantGroup[] = [
 	{
 		name: 'Tamaño',
 		required: true,
+		pricingMode: 'add',
 		options: [
 			{ label: 'Pequeño', priceModifier: 0 },
 			{ label: 'Grande', priceModifier: 8 }
@@ -19,6 +20,7 @@ const variantGroups: VariantGroup[] = [
 	{
 		name: 'Jarrón',
 		required: false,
+		pricingMode: 'add',
 		options: [
 			{ label: 'Sin jarrón', priceModifier: 0 },
 			{ label: 'Con jarrón', priceModifier: 12 }
@@ -133,5 +135,104 @@ describe('computeEffectiveUnitAmountCents', () => {
 	it('rechaza precio base inválido', () => {
 		const result = computeEffectiveUnitAmountCents({ price: 0, variantGroups: [] }, []);
 		expect(result.ok).toBe(false);
+	});
+});
+
+describe('modo de precio "set" (la opción fija el precio)', () => {
+	const setGroups: VariantGroup[] = [
+		{
+			name: 'Tamaño',
+			required: true,
+			pricingMode: 'set',
+			options: [
+				{ label: 'Pequeño', priceModifier: 18 },
+				{ label: 'Grande', priceModifier: 42 }
+			]
+		},
+		{
+			name: 'Jarrón',
+			required: false,
+			pricingMode: 'add',
+			options: [{ label: 'Con jarrón', priceModifier: 12 }]
+		}
+	];
+	const setProduct = { price: 25, variantGroups: setGroups };
+
+	it('la opción sustituye al precio base', () => {
+		const result = computeEffectiveUnitAmountCents(setProduct, [
+			{ groupName: 'Tamaño', optionLabel: 'Grande' }
+		]);
+		expect(result.ok).toBe(true);
+		if (result.ok) {
+			expect(result.amountCents).toBe(4200);
+		}
+	});
+
+	it('los grupos "add" suman encima del precio fijado, sin importar el orden', () => {
+		const directOrder = computeEffectiveUnitAmountCents(setProduct, [
+			{ groupName: 'Tamaño', optionLabel: 'Pequeño' },
+			{ groupName: 'Jarrón', optionLabel: 'Con jarrón' }
+		]);
+		const reversedOrder = computeEffectiveUnitAmountCents(setProduct, [
+			{ groupName: 'Jarrón', optionLabel: 'Con jarrón' },
+			{ groupName: 'Tamaño', optionLabel: 'Pequeño' }
+		]);
+		expect(directOrder).toEqual(reversedOrder);
+		expect(directOrder.ok).toBe(true);
+		if (directOrder.ok) {
+			expect(directOrder.amountCents).toBe(1800 + 1200);
+		}
+	});
+
+	it('sin elegir el grupo "set" opcional, se usa el precio base', () => {
+		const optionalSet: VariantGroup[] = [
+			{ ...setGroups[0], required: false }
+		];
+		const result = computeEffectiveUnitAmountCents({ price: 25, variantGroups: optionalSet }, []);
+		expect(result).toEqual({ ok: true, amountCents: 2500, resolved: [] });
+	});
+
+	it('rechaza dos grupos "set" seleccionados (configuración inválida)', () => {
+		const doubleSet: VariantGroup[] = [
+			setGroups[0],
+			{ ...setGroups[1], name: 'Formato', pricingMode: 'set' }
+		];
+		const result = computeEffectiveUnitAmountCents({ price: 25, variantGroups: doubleSet }, [
+			{ groupName: 'Tamaño', optionLabel: 'Pequeño' },
+			{ groupName: 'Formato', optionLabel: 'Con jarrón' }
+		]);
+		expect(result.ok).toBe(false);
+	});
+
+	it('rechaza opción "set" de importe 0 (dejaría el producto gratis)', () => {
+		const freeSet: VariantGroup[] = [
+			{
+				name: 'Tamaño',
+				required: true,
+				pricingMode: 'set',
+				options: [{ label: 'Pequeño', priceModifier: 0 }]
+			}
+		];
+		const result = computeEffectiveUnitAmountCents({ price: 25, variantGroups: freeSet }, [
+			{ groupName: 'Tamaño', optionLabel: 'Pequeño' }
+		]);
+		expect(result.ok).toBe(false);
+	});
+
+	it('grupos sin pricingMode se comportan como "add" (datos antiguos)', () => {
+		const legacyGroups = [
+			{
+				name: 'Tamaño',
+				required: false,
+				options: [{ label: 'Grande', priceModifier: 8 }]
+			}
+		] as unknown as VariantGroup[];
+		const result = computeEffectiveUnitAmountCents({ price: 25, variantGroups: legacyGroups }, [
+			{ groupName: 'Tamaño', optionLabel: 'Grande' }
+		]);
+		expect(result.ok).toBe(true);
+		if (result.ok) {
+			expect(result.amountCents).toBe(3300);
+		}
 	});
 });

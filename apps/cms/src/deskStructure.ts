@@ -40,7 +40,9 @@ export const deskStructure = (S: StructureBuilder) =>
 									.title(page.title)
 									.icon(PAGE_ICONS[page.key] ?? PagesIcon)
 									.child(
-										S.document().schemaType(page.typeName).documentId(`page.${page.key}`)
+										// IDs sin punto: los IDs con punto (page.home) viven en una "ruta" de
+										// Sanity y no son legibles sin token, así que la web pública no los ve.
+										S.document().schemaType(page.typeName).documentId(`page-${page.key}`)
 									)
 							)
 						)

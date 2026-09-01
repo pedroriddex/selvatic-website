@@ -20,6 +20,21 @@ export const variantGroupType = defineType({
 			description: 'Si se activa, el cliente debe elegir una opción de este grupo antes de poder comprar.'
 		}),
 		defineField({
+			name: 'pricingMode',
+			title: '¿Cómo afecta al precio?',
+			type: 'string',
+			initialValue: 'set',
+			options: {
+				layout: 'radio',
+				list: [
+					{ title: 'La opción fija el precio del producto', value: 'set' },
+					{ title: 'La opción suma su importe al precio base', value: 'add' }
+				]
+			},
+			description:
+				'"Fija el precio": el precio de la opción sustituye al precio base del producto. "Suma al precio": el importe de la opción se añade al precio base. Los grupos creados antes de este cambio funcionan en modo "suma" aunque no tengan nada marcado.'
+		}),
+		defineField({
 			name: 'options',
 			title: 'Opciones',
 			type: 'array',
@@ -50,14 +65,21 @@ export const variantGroupType = defineType({
 		select: {
 			title: 'name',
 			required: 'required',
+			pricingMode: 'pricingMode',
 			options: 'options'
 		},
-		prepare(selection: { title?: string; required?: boolean; options?: unknown[] }) {
+		prepare(selection: {
+			title?: string;
+			required?: boolean;
+			pricingMode?: string;
+			options?: unknown[];
+		}) {
 			const count = Array.isArray(selection.options) ? selection.options.length : 0;
 			const requiredLabel = selection.required ? 'Obligatorio' : 'Opcional';
+			const modeLabel = selection.pricingMode === 'set' ? 'Fija el precio' : 'Suma al precio';
 			return {
 				title: selection.title || 'Grupo de opciones',
-				subtitle: `${requiredLabel} · ${count} opción(es)`
+				subtitle: `${requiredLabel} · ${modeLabel} · ${count} opción(es)`
 			};
 		}
 	}

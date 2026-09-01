@@ -6,8 +6,10 @@ export type PageFieldSpec = {
 	field: string;
 	label: string;
 	group: string;
+	kind: 'text' | 'image';
 	multiline: boolean;
 	initialValue: string;
+	description?: string;
 };
 
 export type PageSpec = {
@@ -42,6 +44,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "brand__name",
 				"label": "Marca / Nombre",
 				"group": "brand",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "SELVATIC"
 			},
@@ -50,6 +53,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "nav__home",
 				"label": "Navegación / Inicio",
 				"group": "nav",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Inicio"
 			},
@@ -58,6 +62,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "nav__shop",
 				"label": "Navegación / Tienda",
 				"group": "nav",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Tienda"
 			},
@@ -66,6 +71,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "nav__about",
 				"label": "Navegación / Sobre nosotros",
 				"group": "nav",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Sobre nosotros"
 			},
@@ -74,6 +80,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "nav__services",
 				"label": "Navegación / Servicios",
 				"group": "nav",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Servicios"
 			},
@@ -82,6 +89,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "nav__contact",
 				"label": "Navegación / Contacto",
 				"group": "nav",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Contacto"
 			},
@@ -90,6 +98,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "cta__orderBouquet",
 				"label": "CTA global / Encargar ramo",
 				"group": "cta",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Encargar ramo"
 			},
@@ -98,6 +107,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "cart__label",
 				"label": "Carrito / Label móvil",
 				"group": "cart",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Carrito"
 			},
@@ -106,6 +116,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "cart__comingSoon",
 				"label": "Carrito / Tienda próximamente",
 				"group": "cart",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Tienda online próximamente"
 			},
@@ -114,6 +125,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "footer__description",
 				"label": "Footer / Descripción",
 				"group": "footer",
+				"kind": "text",
 				"multiline": true,
 				"initialValue": "Proyecto de diseño floral natural con raíces familiares, hecho con tiempo, conocimiento y sensibilidad."
 			}
@@ -133,7 +145,8 @@ export const PAGE_SPECS: PageSpec[] = [
 			"collections",
 			"bestSellers",
 			"promo",
-			"services"
+			"services",
+			"media"
 		],
 		"fields": [
 			{
@@ -141,6 +154,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "hero__kicker",
 				"label": "Hero / Antetítulo",
 				"group": "hero",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Selvatic / Diseño floral natural"
 			},
@@ -149,6 +163,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "hero__title",
 				"label": "Hero / Título",
 				"group": "hero",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Diseño floral natural con memoria, tiempo y sensibilidad."
 			},
@@ -157,6 +172,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "hero__description",
 				"label": "Hero / Descripción",
 				"group": "hero",
+				"kind": "text",
 				"multiline": true,
 				"initialValue": "Proyecto floral liderado por Noelia Pérez, especializado en flor seca y preservada, con una mirada serena, honesta y atemporal para hogares, espacios y encargos a medida."
 			},
@@ -165,6 +181,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "hero__primaryCta",
 				"label": "Hero / Botón principal",
 				"group": "hero",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Ver tienda"
 			},
@@ -173,6 +190,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "hero__secondaryCta",
 				"label": "Hero / Botón secundario",
 				"group": "hero",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Conocer el estudio"
 			},
@@ -181,6 +199,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "productCard__addToCartLabel",
 				"label": "Tarjeta producto / Botón añadir",
 				"group": "productCard",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Añadir"
 			},
@@ -189,6 +208,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "productCard__addToCartAria",
 				"label": "Tarjeta producto / Accesibilidad añadir",
 				"group": "productCard",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Añadir {product} al carrito"
 			},
@@ -197,6 +217,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "productCard__comingSoonLabel",
 				"label": "Tarjeta producto / Botón próximamente",
 				"group": "productCard",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Próximamente"
 			},
@@ -205,6 +226,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "productCard__viewImageAria",
 				"label": "Tarjeta producto / Accesibilidad imagen",
 				"group": "productCard",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Ver imagen completa de {product}"
 			},
@@ -213,6 +235,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "productCard__viewProductAria",
 				"label": "Tarjeta producto / Accesibilidad enlace",
 				"group": "productCard",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Ver {product}"
 			},
@@ -221,6 +244,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "hero__railKicker",
 				"label": "Hero / Rail título",
 				"group": "hero",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Oficio"
 			},
@@ -229,6 +253,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "hero__stat1__label",
 				"label": "Hero / Dato 1 label",
 				"group": "hero",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Origen"
 			},
@@ -237,6 +262,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "hero__stat1__value",
 				"label": "Hero / Dato 1 valor",
 				"group": "hero",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Desde los 70"
 			},
@@ -245,6 +271,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "hero__stat2__label",
 				"label": "Hero / Dato 2 label",
 				"group": "hero",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Especialidad"
 			},
@@ -253,6 +280,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "hero__stat2__value",
 				"label": "Hero / Dato 2 valor",
 				"group": "hero",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Flor seca"
 			},
@@ -261,6 +289,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "hero__stat3__label",
 				"label": "Hero / Dato 3 label",
 				"group": "hero",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Servicio"
 			},
@@ -269,6 +298,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "hero__stat3__value",
 				"label": "Hero / Dato 3 valor",
 				"group": "hero",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "A medida"
 			},
@@ -277,6 +307,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "signal__1__title",
 				"label": "Franja iconos / 1 título",
 				"group": "signal",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Selección cuidada"
 			},
@@ -285,6 +316,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "signal__1__description",
 				"label": "Franja iconos / 1 texto",
 				"group": "signal",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Piezas elegidas con criterio natural, sereno y atemporal."
 			},
@@ -293,6 +325,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "signal__2__title",
 				"label": "Franja iconos / 2 título",
 				"group": "signal",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Encargos a medida"
 			},
@@ -301,6 +334,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "signal__2__description",
 				"label": "Franja iconos / 2 texto",
 				"group": "signal",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Propuestas adaptadas a regalo, hogar, evento o proyecto."
 			},
@@ -309,6 +343,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "signal__3__title",
 				"label": "Franja iconos / 3 título",
 				"group": "signal",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Atención cercana"
 			},
@@ -317,6 +352,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "signal__3__description",
 				"label": "Franja iconos / 3 texto",
 				"group": "signal",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Acompañamiento directo desde la idea hasta la entrega."
 			},
@@ -325,6 +361,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "signal__4__title",
 				"label": "Franja iconos / 4 título",
 				"group": "signal",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Composición honesta"
 			},
@@ -333,6 +370,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "signal__4__description",
 				"label": "Franja iconos / 4 texto",
 				"group": "signal",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Flor seca, preservada y cerámica en equilibrio visual."
 			},
@@ -341,6 +379,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "collections__kicker",
 				"label": "Colecciones / Antetítulo",
 				"group": "collections",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Colecciones"
 			},
@@ -349,6 +388,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "collections__label",
 				"label": "Colecciones / Label",
 				"group": "collections",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Catálogo"
 			},
@@ -357,6 +397,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "collections__title",
 				"label": "Colecciones / Título",
 				"group": "collections",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Selección botánica"
 			},
@@ -365,6 +406,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "collections__description",
 				"label": "Colecciones / Descripción",
 				"group": "collections",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Piezas para regalo, interiorismo residencial y producciones de marca."
 			},
@@ -373,6 +415,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "collections__action",
 				"label": "Colecciones / Botón",
 				"group": "collections",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Ver todo"
 			},
@@ -381,6 +424,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "collections__emptyTitle",
 				"label": "Colecciones / Vacío título",
 				"group": "collections",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "No hay productos publicados todavía"
 			},
@@ -389,6 +433,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "collections__emptyDescription",
 				"label": "Colecciones / Vacío texto",
 				"group": "collections",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "La colección se irá completando con nuevas piezas muy pronto."
 			},
@@ -397,6 +442,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "bestSellers__kicker",
 				"label": "Best sellers / Antetítulo",
 				"group": "bestSellers",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Best sellers"
 			},
@@ -405,6 +451,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "bestSellers__label",
 				"label": "Best sellers / Label",
 				"group": "bestSellers",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Selección"
 			},
@@ -413,6 +460,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "bestSellers__title",
 				"label": "Best sellers / Título",
 				"group": "bestSellers",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Piezas con mayor salida esta temporada"
 			},
@@ -421,6 +469,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "bestSellers__emptyTitle",
 				"label": "Best sellers / Vacío título",
 				"group": "bestSellers",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Aún no hay selección destacada"
 			},
@@ -429,6 +478,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "bestSellers__emptyDescription",
 				"label": "Best sellers / Vacío texto",
 				"group": "bestSellers",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Pronto mostraremos aquí una selección de piezas destacadas."
 			},
@@ -437,6 +487,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "promo__kicker",
 				"label": "Promo / Antetítulo",
 				"group": "promo",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Materia natural"
 			},
@@ -445,6 +496,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "promo__label",
 				"label": "Promo / Label",
 				"group": "promo",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Especialidad"
 			},
@@ -453,6 +505,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "promo__title",
 				"label": "Promo / Título",
 				"group": "promo",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Flor seca, preservada y cerámica escogida con el mismo criterio."
 			},
@@ -461,6 +514,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "promo__description",
 				"label": "Promo / Descripción",
 				"group": "promo",
+				"kind": "text",
 				"multiline": true,
 				"initialValue": "Selvatic está especializado en creaciones con flor seca y preservada, combinadas con una cuidada selección de planta natural y presentadas en cerámica decorativa."
 			},
@@ -469,6 +523,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "promo__primaryCta",
 				"label": "Promo / Botón principal",
 				"group": "promo",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Solicitar propuesta"
 			},
@@ -477,6 +532,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "promo__secondaryCta",
 				"label": "Promo / Botón secundario",
 				"group": "promo",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Más sobre el estudio"
 			},
@@ -485,6 +541,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "services__kicker",
 				"label": "Servicios / Antetítulo",
 				"group": "services",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Servicios"
 			},
@@ -493,6 +550,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "services__label",
 				"label": "Servicios / Label",
 				"group": "services",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Atelier"
 			},
@@ -501,6 +559,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "services__title",
 				"label": "Servicios / Título",
 				"group": "services",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Servicio cercano y diseño floral a medida"
 			},
@@ -509,6 +568,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "services__description",
 				"label": "Servicios / Descripción",
 				"group": "services",
+				"kind": "text",
 				"multiline": true,
 				"initialValue": "Cuidamos cada detalle desde la selección del producto hasta la entrega final."
 			},
@@ -517,6 +577,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "services__action",
 				"label": "Servicios / Botón",
 				"group": "services",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Todos los servicios"
 			},
@@ -525,6 +586,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "services__emptyTitle",
 				"label": "Servicios / Vacío título",
 				"group": "services",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "No hay servicios publicados todavía"
 			},
@@ -533,8 +595,29 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "services__emptyDescription",
 				"label": "Servicios / Vacío texto",
 				"group": "services",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Muy pronto encontrarás aquí todos los servicios disponibles."
+			},
+			{
+				"key": "media.heroPoster",
+				"field": "media__heroPoster",
+				"label": "Imagen de portada (mientras carga el vídeo)",
+				"group": "media",
+				"kind": "image",
+				"multiline": false,
+				"initialValue": "",
+				"description": "Se muestra en la cabecera de inicio hasta que arranca el vídeo."
+			},
+			{
+				"key": "media.promo",
+				"field": "media__promo",
+				"label": "Imagen del bloque \"Materia natural\"",
+				"group": "media",
+				"kind": "image",
+				"multiline": false,
+				"initialValue": "",
+				"description": "La imagen grande del bloque promocional de la página de inicio."
 			}
 		]
 	},
@@ -558,6 +641,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "intro__kicker",
 				"label": "Intro / Antetítulo",
 				"group": "intro",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Tienda"
 			},
@@ -566,6 +650,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "intro__title",
 				"label": "Intro / Título",
 				"group": "intro",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Flores secas y piezas florales para regalar, habitar y conservar."
 			},
@@ -574,6 +659,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "intro__description",
 				"label": "Intro / Descripción",
 				"group": "intro",
+				"kind": "text",
 				"multiline": true,
 				"initialValue": "Colecciones de unidades limitadas con edición continua: textura, volumen y paleta neutra en equilibrio."
 			},
@@ -582,6 +668,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "productCard__addToCartLabel",
 				"label": "Tarjeta producto / Botón añadir",
 				"group": "productCard",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Añadir"
 			},
@@ -590,6 +677,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "productCard__addToCartAria",
 				"label": "Tarjeta producto / Accesibilidad añadir",
 				"group": "productCard",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Añadir {product} al carrito"
 			},
@@ -598,6 +686,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "productCard__comingSoonLabel",
 				"label": "Tarjeta producto / Botón próximamente",
 				"group": "productCard",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Próximamente"
 			},
@@ -606,6 +695,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "productCard__viewImageAria",
 				"label": "Tarjeta producto / Accesibilidad imagen",
 				"group": "productCard",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Ver imagen completa de {product}"
 			},
@@ -614,6 +704,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "productCard__viewProductAria",
 				"label": "Tarjeta producto / Accesibilidad enlace",
 				"group": "productCard",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Ver {product}"
 			},
@@ -622,6 +713,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "collection__kicker",
 				"label": "Colección / Antetítulo",
 				"group": "collection",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Colección completa"
 			},
@@ -630,6 +722,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "collection__label",
 				"label": "Colección / Label",
 				"group": "collection",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Productos"
 			},
@@ -638,6 +731,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "collection__title",
 				"label": "Colección / Título",
 				"group": "collection",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Piezas disponibles"
 			},
@@ -646,6 +740,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "collection__disabledDescription",
 				"label": "Colección / Tienda pausada",
 				"group": "collection",
+				"kind": "text",
 				"multiline": true,
 				"initialValue": "Explora la colección mientras terminamos la apertura de la tienda online."
 			},
@@ -654,6 +749,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "collection__emptyDescription",
 				"label": "Colección / Sin productos",
 				"group": "collection",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Aún no hay piezas disponibles en la colección."
 			},
@@ -662,6 +758,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "collection__noResultsTemplate",
 				"label": "Colección / Sin resultados",
 				"group": "collection",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "No hay productos activos en {category}."
 			},
@@ -670,6 +767,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "collection__filteredTemplate",
 				"label": "Colección / Filtro activo",
 				"group": "collection",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "{count} piezas en {category}. Precio y disponibilidad actualizados."
 			},
@@ -678,6 +776,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "collection__allTemplate",
 				"label": "Colección / Todos los productos",
 				"group": "collection",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "{count} piezas disponibles. Precio y disponibilidad actualizados."
 			},
@@ -686,6 +785,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "filter__allCategoriesLabel",
 				"label": "Filtro / Todas las categorías",
 				"group": "filter",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Todas las categorías"
 			},
@@ -694,6 +794,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "filter__all",
 				"label": "Filtro / Todas",
 				"group": "filter",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Todas"
 			},
@@ -702,6 +803,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "empty__noProductsTitle",
 				"label": "Vacío / Sin productos título",
 				"group": "empty",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "No hay productos publicados"
 			},
@@ -710,6 +812,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "empty__noProductsDescription",
 				"label": "Vacío / Sin productos texto",
 				"group": "empty",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "La tienda irá incorporando nuevas piezas próximamente."
 			},
@@ -718,6 +821,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "empty__noResultsPrefix",
 				"label": "Vacío / Sin resultados prefijo",
 				"group": "empty",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Sin resultados en"
 			},
@@ -726,6 +830,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "empty__noResultsDescription",
 				"label": "Vacío / Sin resultados texto",
 				"group": "empty",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Prueba otra categoría o vuelve a ver toda la colección."
 			},
@@ -734,6 +839,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "empty__showAll",
 				"label": "Vacío / Botón ver todo",
 				"group": "empty",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Ver toda la colección"
 			}
@@ -760,6 +866,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "intro__kicker",
 				"label": "Intro / Antetítulo",
 				"group": "intro",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Producto"
 			},
@@ -768,6 +875,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "intro__descriptionEnabled",
 				"label": "Intro / Descripción tienda activa",
 				"group": "intro",
+				"kind": "text",
 				"multiline": true,
 				"initialValue": "Detalle de producto con imagen principal y compra directa desde la web."
 			},
@@ -776,6 +884,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "intro__descriptionDisabled",
 				"label": "Intro / Descripción tienda pausada",
 				"group": "intro",
+				"kind": "text",
 				"multiline": true,
 				"initialValue": "La pieza sigue visible a modo de catálogo mientras terminamos la apertura de la tienda online."
 			},
@@ -784,6 +893,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "productCard__addToCartLabel",
 				"label": "Tarjeta producto / Botón añadir",
 				"group": "productCard",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Añadir"
 			},
@@ -792,6 +902,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "productCard__addToCartAria",
 				"label": "Tarjeta producto / Accesibilidad añadir",
 				"group": "productCard",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Añadir {product} al carrito"
 			},
@@ -800,6 +911,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "productCard__comingSoonLabel",
 				"label": "Tarjeta producto / Botón próximamente",
 				"group": "productCard",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Próximamente"
 			},
@@ -808,6 +920,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "productCard__viewImageAria",
 				"label": "Tarjeta producto / Accesibilidad imagen",
 				"group": "productCard",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Ver imagen completa de {product}"
 			},
@@ -816,6 +929,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "productCard__viewProductAria",
 				"label": "Tarjeta producto / Accesibilidad enlace",
 				"group": "productCard",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Ver {product}"
 			},
@@ -824,6 +938,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "gallery__thumbnailAria",
 				"label": "Galería / Accesibilidad miniatura",
 				"group": "gallery",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Ver imagen {index} de {product}"
 			},
@@ -832,6 +947,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "summary__kicker",
 				"label": "Resumen / Antetítulo",
 				"group": "summary",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Resumen"
 			},
@@ -840,6 +956,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "summary__price",
 				"label": "Resumen / Precio",
 				"group": "summary",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Precio"
 			},
@@ -848,6 +965,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "summary__stock",
 				"label": "Resumen / Stock",
 				"group": "summary",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Stock"
 			},
@@ -856,6 +974,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "action__addToCart",
 				"label": "Acción / Añadir",
 				"group": "action",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Añadir al carrito"
 			},
@@ -864,6 +983,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "action__goToCart",
 				"label": "Acción / Ir al carrito",
 				"group": "action",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Ir al carrito"
 			},
@@ -872,6 +992,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "action__backToShop",
 				"label": "Acción / Volver",
 				"group": "action",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Volver a tienda"
 			},
@@ -880,6 +1001,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "action__storeComingSoon",
 				"label": "Acción / Próximamente",
 				"group": "action",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Tienda online próximamente"
 			},
@@ -888,6 +1010,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "related__kicker",
 				"label": "Relacionados / Antetítulo",
 				"group": "related",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Relacionados"
 			},
@@ -896,6 +1019,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "related__label",
 				"label": "Relacionados / Label",
 				"group": "related",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Más productos"
 			}
@@ -912,8 +1036,8 @@ export const PAGE_SPECS: PageSpec[] = [
 			"intro",
 			"method",
 			"material",
-			"presentation",
-			"list"
+			"list",
+			"media"
 		],
 		"fields": [
 			{
@@ -921,6 +1045,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "intro__kicker",
 				"label": "Intro / Antetítulo",
 				"group": "intro",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Servicios"
 			},
@@ -929,6 +1054,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "intro__title",
 				"label": "Intro / Título",
 				"group": "intro",
+				"kind": "text",
 				"multiline": true,
 				"initialValue": "Diseño floral natural para espacios, encargos y proyectos con identidad."
 			},
@@ -937,6 +1063,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "intro__description",
 				"label": "Intro / Descripción",
 				"group": "intro",
+				"kind": "text",
 				"multiline": true,
 				"initialValue": "Trabajamos desde la experiencia, el criterio y el respeto por lo natural. Cada propuesta se construye con sencillez, equilibrio y una escucha cercana."
 			},
@@ -945,6 +1072,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "method__kicker",
 				"label": "Metodología / Antetítulo",
 				"group": "method",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Metodología"
 			},
@@ -953,6 +1081,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "method__label",
 				"label": "Metodología / Label",
 				"group": "method",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Proceso"
 			},
@@ -961,6 +1090,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "method__title",
 				"label": "Metodología / Título",
 				"group": "method",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Servicio cercano, criterio claro y una producción pensada con calma."
 			},
@@ -969,6 +1099,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "method__step1",
 				"label": "Metodología / Paso 1",
 				"group": "method",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "1. Escuchamos la necesidad, el espacio y el tono del proyecto."
 			},
@@ -977,6 +1108,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "method__step2",
 				"label": "Metodología / Paso 2",
 				"group": "method",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "2. Definimos una propuesta floral y un presupuesto personalizado."
 			},
@@ -985,6 +1117,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "method__step3",
 				"label": "Metodología / Paso 3",
 				"group": "method",
+				"kind": "text",
 				"multiline": true,
 				"initialValue": "3. Seleccionamos material, producimos y acompañamos hasta la entrega final."
 			},
@@ -993,6 +1126,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "method__cta",
 				"label": "Metodología / Botón",
 				"group": "method",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Pedir propuesta"
 			},
@@ -1001,6 +1135,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "material__kicker",
 				"label": "Materialidad / Antetítulo",
 				"group": "material",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Materia y criterio"
 			},
@@ -1009,6 +1144,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "material__label",
 				"label": "Materialidad / Label",
 				"group": "material",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Materialidad"
 			},
@@ -1017,6 +1153,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "material__title",
 				"label": "Materialidad / Título",
 				"group": "material",
+				"kind": "text",
 				"multiline": true,
 				"initialValue": "Flor seca, preservada y planta natural trabajadas con una estética atemporal."
 			},
@@ -1025,6 +1162,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "material__p1",
 				"label": "Materialidad / Texto 1",
 				"group": "material",
+				"kind": "text",
 				"multiline": true,
 				"initialValue": "Aproximadamente el 70% de nuestro trabajo se centra en creaciones con flor seca y preservada, combinadas con una cuidada selección de planta natural."
 			},
@@ -1033,46 +1171,16 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "material__p2",
 				"label": "Materialidad / Texto 2",
 				"group": "material",
+				"kind": "text",
 				"multiline": true,
 				"initialValue": "Cada pieza se diseña de forma consciente, respetando la forma y el carácter del material vegetal para que la composición mantenga calma, equilibrio y verdad."
-			},
-			{
-				"key": "presentation.kicker",
-				"field": "presentation__kicker",
-				"label": "Presentación / Antetítulo",
-				"group": "presentation",
-				"multiline": false,
-				"initialValue": "Presentación"
-			},
-			{
-				"key": "presentation.title",
-				"field": "presentation__title",
-				"label": "Presentación / Título",
-				"group": "presentation",
-				"multiline": false,
-				"initialValue": "La cerámica forma parte de la composición, no solo del soporte."
-			},
-			{
-				"key": "presentation.p1",
-				"field": "presentation__p1",
-				"label": "Presentación / Texto 1",
-				"group": "presentation",
-				"multiline": true,
-				"initialValue": "Todas las composiciones se presentan en cerámica decorativa, seleccionada con el mismo criterio natural y honesto que guía el diseño floral."
-			},
-			{
-				"key": "presentation.p2",
-				"field": "presentation__p2",
-				"label": "Presentación / Texto 2",
-				"group": "presentation",
-				"multiline": true,
-				"initialValue": "Son piezas pensadas para integrarse en los espacios y acompañar el día a día con belleza serena, desde encargos personales hasta proyectos de interiorismo."
 			},
 			{
 				"key": "list.label",
 				"field": "list__label",
 				"label": "Listado / Label",
 				"group": "list",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Servicios"
 			},
@@ -1081,6 +1189,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "list__featuredLabel",
 				"label": "Listado / Texto destacado",
 				"group": "list",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Destacado"
 			},
@@ -1089,6 +1198,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "list__title",
 				"label": "Listado / Título",
 				"group": "list",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Intervenciones, encargos y ramos a medida"
 			},
@@ -1097,6 +1207,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "list__description",
 				"label": "Listado / Descripción",
 				"group": "list",
+				"kind": "text",
 				"multiline": true,
 				"initialValue": "Propuestas personalizadas adaptadas a cada proyecto, con acompañamiento desde la idea hasta la entrega."
 			},
@@ -1105,6 +1216,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "list__emptyTitle",
 				"label": "Listado / Vacío título",
 				"group": "list",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "No hay servicios publicados"
 			},
@@ -1113,8 +1225,19 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "list__emptyDescription",
 				"label": "Listado / Vacío texto",
 				"group": "list",
+				"kind": "text",
 				"multiline": true,
 				"initialValue": "Muy pronto mostraremos aquí todas las propuestas y encargos disponibles."
+			},
+			{
+				"key": "media.method",
+				"field": "media__method",
+				"label": "Imagen del bloque de metodología",
+				"group": "media",
+				"kind": "image",
+				"multiline": false,
+				"initialValue": "",
+				"description": "La imagen que acompaña al bloque \"Proceso\" en la página de servicios."
 			}
 		]
 	},
@@ -1128,12 +1251,8 @@ export const PAGE_SPECS: PageSpec[] = [
 		"groups": [
 			"intro",
 			"origin",
-			"director",
 			"work",
-			"gallery",
-			"material",
-			"presence",
-			"contact"
+			"media"
 		],
 		"fields": [
 			{
@@ -1141,6 +1260,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "intro__kicker",
 				"label": "Intro / Antetítulo",
 				"group": "intro",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Sobre nosotros"
 			},
@@ -1149,6 +1269,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "intro__title",
 				"label": "Intro / Título",
 				"group": "intro",
+				"kind": "text",
 				"multiline": true,
 				"initialValue": "Selvatic es diseño floral natural con raíces familiares y una mirada serena."
 			},
@@ -1157,6 +1278,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "intro__description",
 				"label": "Intro / Descripción",
 				"group": "intro",
+				"kind": "text",
 				"multiline": true,
 				"initialValue": "Un proyecto construido desde la experiencia, el respeto por el producto y una forma de trabajar basada en la sencillez, el equilibrio y la naturalidad."
 			},
@@ -1165,6 +1287,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "origin__kicker",
 				"label": "Origen / Antetítulo",
 				"group": "origin",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Origen"
 			},
@@ -1173,6 +1296,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "origin__label",
 				"label": "Origen / Label",
 				"group": "origin",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Legado familiar"
 			},
@@ -1181,6 +1305,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "origin__title",
 				"label": "Origen / Título",
 				"group": "origin",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "La historia de Selvatic empieza mucho antes del estudio actual."
 			},
@@ -1189,6 +1314,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "origin__p1",
 				"label": "Origen / Texto 1",
 				"group": "origin",
+				"kind": "text",
 				"multiline": true,
 				"initialValue": "Selvatic es un proyecto de diseño floral natural con raíces en una larga tradición familiar ligada al mundo de la planta y la flor."
 			},
@@ -1197,54 +1323,16 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "origin__p2",
 				"label": "Origen / Texto 2",
 				"group": "origin",
+				"kind": "text",
 				"multiline": true,
 				"initialValue": "Desde los años 70, cuando el abuelo Ananías recorría los mercados de Cuenca, Utiel, Requena y Ontinyent, hasta la continuidad del oficio en los años 90 de la mano de Vicente y Carmen, el conocimiento del sector y el respeto por el producto han marcado siempre nuestro camino."
-			},
-			{
-				"key": "director.kicker",
-				"field": "director__kicker",
-				"label": "Dirección / Antetítulo",
-				"group": "director",
-				"multiline": false,
-				"initialValue": "Dirección actual"
-			},
-			{
-				"key": "director.label",
-				"field": "director__label",
-				"label": "Dirección / Label",
-				"group": "director",
-				"multiline": false,
-				"initialValue": "Noelia Pérez"
-			},
-			{
-				"key": "director.title",
-				"field": "director__title",
-				"label": "Dirección / Título",
-				"group": "director",
-				"multiline": true,
-				"initialValue": "Hoy, el estudio está liderado y gestionado de forma integral por Noelia Pérez."
-			},
-			{
-				"key": "director.p1",
-				"field": "director__p1",
-				"label": "Dirección / Texto 1",
-				"group": "director",
-				"multiline": true,
-				"initialValue": "A lo largo de su trayectoria ha trabajado junto a destacados profesionales del sector, desarrollando una manera de entender el diseño floral basada en la sencillez, el equilibrio y la naturalidad."
-			},
-			{
-				"key": "director.p2",
-				"field": "director__p2",
-				"label": "Dirección / Texto 2",
-				"group": "director",
-				"multiline": true,
-				"initialValue": "Cada encargo se aborda con una mirada consciente, dejando que el material vegetal conserve su forma, su ritmo y su carácter, y buscando siempre una estética atemporal."
 			},
 			{
 				"key": "work.kicker",
 				"field": "work__kicker",
 				"label": "Forma de trabajar / Antetítulo",
 				"group": "work",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Forma de trabajar"
 			},
@@ -1253,6 +1341,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "work__title",
 				"label": "Forma de trabajar / Título",
 				"group": "work",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Servicio cercano, criterio claro y atención a cada detalle."
 			},
@@ -1261,6 +1350,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "work__p1",
 				"label": "Forma de trabajar / Texto 1",
 				"group": "work",
+				"kind": "text",
 				"multiline": true,
 				"initialValue": "En Selvatic ofrecemos un servicio cercano y personalizado, cuidando cada detalle desde la selección del producto hasta la entrega final."
 			},
@@ -1269,144 +1359,49 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "work__p2",
 				"label": "Forma de trabajar / Texto 2",
 				"group": "work",
+				"kind": "text",
 				"multiline": true,
 				"initialValue": "Trabajamos desde la experiencia, el criterio y el respeto por lo natural. Selvatic es diseño floral natural, hecho con tiempo, conocimiento y sensibilidad."
 			},
 			{
-				"key": "gallery.kicker",
-				"field": "gallery__kicker",
-				"label": "Galería / Antetítulo",
-				"group": "gallery",
+				"key": "media.origin",
+				"field": "media__origin",
+				"label": "Imagen del bloque de origen",
+				"group": "media",
+				"kind": "image",
 				"multiline": false,
-				"initialValue": "Selección visual"
+				"initialValue": "",
+				"description": "La imagen que acompaña a la historia del estudio."
 			},
 			{
-				"key": "gallery.label",
-				"field": "gallery__label",
-				"label": "Galería / Label",
-				"group": "gallery",
+				"key": "media.gallery1",
+				"field": "media__gallery1",
+				"label": "Galería / Imagen 1",
+				"group": "media",
+				"kind": "image",
 				"multiline": false,
-				"initialValue": "Imágenes"
+				"initialValue": "",
+				"description": ""
 			},
 			{
-				"key": "gallery.title",
-				"field": "gallery__title",
-				"label": "Galería / Título",
-				"group": "gallery",
-				"multiline": true,
-				"initialValue": "Una muestra del gesto floral, la escala y la presencia material del estudio."
-			},
-			{
-				"key": "material.kicker",
-				"field": "material__kicker",
-				"label": "Materialidad / Antetítulo",
-				"group": "material",
+				"key": "media.gallery2",
+				"field": "media__gallery2",
+				"label": "Galería / Imagen 2",
+				"group": "media",
+				"kind": "image",
 				"multiline": false,
-				"initialValue": "Materialidad"
+				"initialValue": "",
+				"description": ""
 			},
 			{
-				"key": "material.label",
-				"field": "material__label",
-				"label": "Materialidad / Label",
-				"group": "material",
+				"key": "media.gallery3",
+				"field": "media__gallery3",
+				"label": "Galería / Imagen 3",
+				"group": "media",
+				"kind": "image",
 				"multiline": false,
-				"initialValue": "Especialidad"
-			},
-			{
-				"key": "material.title",
-				"field": "material__title",
-				"label": "Materialidad / Título",
-				"group": "material",
-				"multiline": true,
-				"initialValue": "Flor seca y preservada, combinadas con planta natural y una selección honesta de cerámica."
-			},
-			{
-				"key": "material.p1",
-				"field": "material__p1",
-				"label": "Materialidad / Texto 1",
-				"group": "material",
-				"multiline": true,
-				"initialValue": "Selvatic está especializado en creaciones florales con flor seca y preservada, que representan aproximadamente el 70% de nuestro trabajo, combinadas con una cuidada selección de planta natural."
-			},
-			{
-				"key": "material.p2",
-				"field": "material__p2",
-				"label": "Materialidad / Texto 2",
-				"group": "material",
-				"multiline": true,
-				"initialValue": "Todas las composiciones se presentan en cerámica decorativa, seleccionada con el mismo criterio natural y honesto que define nuestro trabajo."
-			},
-			{
-				"key": "presence.kicker",
-				"field": "presence__kicker",
-				"label": "Presencia / Antetítulo",
-				"group": "presence",
-				"multiline": false,
-				"initialValue": "Presencia"
-			},
-			{
-				"key": "presence.title",
-				"field": "presence__title",
-				"label": "Presencia / Título",
-				"group": "presence",
-				"multiline": true,
-				"initialValue": "Piezas pensadas para integrarse en los espacios y acompañar el día a día con calma."
-			},
-			{
-				"key": "presence.p1",
-				"field": "presence__p1",
-				"label": "Presencia / Texto 1",
-				"group": "presence",
-				"multiline": true,
-				"initialValue": "Son composiciones concebidas para convivir con el espacio, aportar belleza serena y sostener una presencia natural y duradera."
-			},
-			{
-				"key": "presence.p2",
-				"field": "presence__p2",
-				"label": "Presencia / Texto 2",
-				"group": "presence",
-				"multiline": true,
-				"initialValue": "Esa misma lógica guía tanto los encargos personales como los trabajos florales a medida para interiorismo, eventos o proyectos de marca."
-			},
-			{
-				"key": "contact.kicker",
-				"field": "contact__kicker",
-				"label": "Contacto / Antetítulo",
-				"group": "contact",
-				"multiline": false,
-				"initialValue": "Contacto"
-			},
-			{
-				"key": "contact.label",
-				"field": "contact__label",
-				"label": "Contacto / Label",
-				"group": "contact",
-				"multiline": false,
-				"initialValue": "Encargos a medida"
-			},
-			{
-				"key": "contact.title",
-				"field": "contact__title",
-				"label": "Contacto / Título",
-				"group": "contact",
-				"multiline": false,
-				"initialValue": "Tienes una idea o necesitas un trabajo floral personalizado?"
-			},
-			{
-				"key": "contact.description",
-				"field": "contact__description",
-				"label": "Contacto / Descripción",
-				"group": "contact",
-				"multiline": true,
-				"initialValue": "En Selvatic realizamos presupuestos personalizados y creaciones adaptadas a cada proyecto."
-			},
-			{
-				"key": "contact.cta",
-				"field": "contact__cta",
-				"label": "Contacto / Botón",
-				"group": "contact",
-				"multiline": false,
-				"initialValue": "Solicitar presupuesto"
+				"initialValue": "",
+				"description": ""
 			}
 		]
 	},
@@ -1429,6 +1424,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "intro__kicker",
 				"label": "Intro / Antetítulo",
 				"group": "intro",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Contacto"
 			},
@@ -1437,6 +1433,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "intro__title",
 				"label": "Intro / Título",
 				"group": "intro",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Tienes una idea o necesitas un trabajo floral a medida?"
 			},
@@ -1445,6 +1442,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "intro__description",
 				"label": "Intro / Descripción",
 				"group": "intro",
+				"kind": "text",
 				"multiline": true,
 				"initialValue": "En Selvatic realizo presupuestos personalizados y creaciones adaptadas a cada proyecto. Cuéntame qué necesitas y te responderé con una propuesta clara, sensible y realista."
 			},
@@ -1453,6 +1451,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "process__kicker",
 				"label": "Proceso / Antetítulo",
 				"group": "process",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Servicio cercano"
 			},
@@ -1461,6 +1460,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "process__label",
 				"label": "Proceso / Label",
 				"group": "process",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Proceso"
 			},
@@ -1469,6 +1469,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "process__title",
 				"label": "Proceso / Título",
 				"group": "process",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Cada encargo se acompaña de principio a fin."
 			},
@@ -1477,6 +1478,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "process__step1",
 				"label": "Proceso / Paso 1",
 				"group": "process",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "1. Escuchamos la idea, el uso del espacio y el timing del proyecto."
 			},
@@ -1485,6 +1487,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "process__step2",
 				"label": "Proceso / Paso 2",
 				"group": "process",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "2. Preparamos una propuesta floral y un presupuesto personalizado."
 			},
@@ -1493,6 +1496,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "process__step3",
 				"label": "Proceso / Paso 3",
 				"group": "process",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "3. Cuidamos la preparación, entrega y acompañamiento final."
 			},
@@ -1501,6 +1505,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "process__note",
 				"label": "Proceso / Nota",
 				"group": "process",
+				"kind": "text",
 				"multiline": true,
 				"initialValue": "Trabajamos desde la experiencia, el criterio y el respeto por lo natural, cuidando cada detalle desde la selección del producto hasta la entrega final."
 			},
@@ -1509,6 +1514,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "emptyServices__title",
 				"label": "Sin servicios / Título",
 				"group": "emptyServices",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Todavía no hay servicios publicados"
 			},
@@ -1517,6 +1523,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "emptyServices__description",
 				"label": "Sin servicios / Descripción",
 				"group": "emptyServices",
+				"kind": "text",
 				"multiline": true,
 				"initialValue": "Puedes enviarnos tu solicitud igualmente y te ayudaremos a definir el servicio ideal."
 			},
@@ -1525,6 +1532,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "form__name",
 				"label": "Formulario / Nombre",
 				"group": "form",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Nombre"
 			},
@@ -1533,6 +1541,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "form__email",
 				"label": "Formulario / Email",
 				"group": "form",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Email"
 			},
@@ -1541,6 +1550,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "form__phone",
 				"label": "Formulario / Teléfono",
 				"group": "form",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Teléfono (opcional)"
 			},
@@ -1549,6 +1559,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "form__service",
 				"label": "Formulario / Servicio",
 				"group": "form",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Servicio"
 			},
@@ -1557,6 +1568,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "form__select",
 				"label": "Formulario / Seleccionar",
 				"group": "form",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Seleccionar"
 			},
@@ -1565,6 +1577,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "form__noServices",
 				"label": "Formulario / Sin servicios",
 				"group": "form",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Sin servicios publicados"
 			},
@@ -1573,6 +1586,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "form__noServicesHelp",
 				"label": "Formulario / Ayuda sin servicios",
 				"group": "form",
+				"kind": "text",
 				"multiline": true,
 				"initialValue": "Si aún no ves opciones, cuéntanos tu idea en el mensaje y te orientaremos personalmente."
 			},
@@ -1581,6 +1595,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "form__message",
 				"label": "Formulario / Mensaje",
 				"group": "form",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Mensaje"
 			},
@@ -1589,6 +1604,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "form__submit",
 				"label": "Formulario / Botón enviar",
 				"group": "form",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Solicitar presupuesto"
 			}
@@ -1608,7 +1624,9 @@ export const PAGE_SPECS: PageSpec[] = [
 			"cancel",
 			"cart",
 			"summary",
-			"empty"
+			"shipping",
+			"empty",
+			"media"
 		],
 		"fields": [
 			{
@@ -1616,6 +1634,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "intro__kickerEnabled",
 				"label": "Intro / Antetítulo tienda activa",
 				"group": "intro",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Checkout"
 			},
@@ -1624,6 +1643,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "intro__kickerDisabled",
 				"label": "Intro / Antetítulo tienda pausada",
 				"group": "intro",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Tienda online"
 			},
@@ -1632,6 +1652,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "intro__titleEnabled",
 				"label": "Intro / Título tienda activa",
 				"group": "intro",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Carrito de compra"
 			},
@@ -1640,6 +1661,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "intro__descriptionEnabled",
 				"label": "Intro / Descripción tienda activa",
 				"group": "intro",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Revisa tus productos y finaliza tu compra de forma segura."
 			},
@@ -1648,6 +1670,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "disabled__note",
 				"label": "Tienda pausada / Nota",
 				"group": "disabled",
+				"kind": "text",
 				"multiline": true,
 				"initialValue": "Si necesitas una pieza o un encargo floral, podemos ayudarte por vía directa mientras terminamos la apertura de la tienda."
 			},
@@ -1656,6 +1679,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "disabled__contactCta",
 				"label": "Tienda pausada / Botón contacto",
 				"group": "disabled",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Solicitar presupuesto"
 			},
@@ -1664,6 +1688,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "disabled__shopCta",
 				"label": "Tienda pausada / Botón tienda",
 				"group": "disabled",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Seguir viendo piezas"
 			},
@@ -1672,6 +1697,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "success__kicker",
 				"label": "Pago correcto / Antetítulo",
 				"group": "success",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Pago confirmado"
 			},
@@ -1680,6 +1706,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "success__title",
 				"label": "Pago correcto / Título",
 				"group": "success",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Pago completado correctamente."
 			},
@@ -1688,6 +1715,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "success__description",
 				"label": "Pago correcto / Descripción",
 				"group": "success",
+				"kind": "text",
 				"multiline": true,
 				"initialValue": "Hemos recibido tu pedido y comenzaremos su preparación. Si necesitamos más datos, te escribiremos por email."
 			},
@@ -1696,6 +1724,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "cancel__kicker",
 				"label": "Pago cancelado / Antetítulo",
 				"group": "cancel",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Pago cancelado"
 			},
@@ -1704,6 +1733,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "cancel__title",
 				"label": "Pago cancelado / Texto",
 				"group": "cancel",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "No se realizó ningún cobro. Tu carrito sigue disponible."
 			},
@@ -1712,6 +1742,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "cart__kicker",
 				"label": "Carrito / Antetítulo",
 				"group": "cart",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Productos"
 			},
@@ -1720,6 +1751,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "cart__label",
 				"label": "Carrito / Label",
 				"group": "cart",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Carrito"
 			},
@@ -1728,6 +1760,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "cart__title",
 				"label": "Carrito / Título",
 				"group": "cart",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Revisión antes de pagar"
 			},
@@ -1736,6 +1769,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "cart__stock",
 				"label": "Carrito / Stock",
 				"group": "cart",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Stock disponible:"
 			},
@@ -1744,6 +1778,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "summary__kicker",
 				"label": "Resumen / Antetítulo",
 				"group": "summary",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Resumen"
 			},
@@ -1752,6 +1787,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "summary__label",
 				"label": "Resumen / Label",
 				"group": "summary",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Total"
 			},
@@ -1760,6 +1796,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "summary__subtotal",
 				"label": "Resumen / Subtotal",
 				"group": "summary",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Subtotal"
 			},
@@ -1768,14 +1805,34 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "summary__shipping",
 				"label": "Resumen / Envío",
 				"group": "summary",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Envío fijo"
+			},
+			{
+				"key": "shipping.postalCodeLabel",
+				"field": "shipping__postalCodeLabel",
+				"label": "Envío / Etiqueta código postal",
+				"group": "shipping",
+				"kind": "text",
+				"multiline": false,
+				"initialValue": "Código postal de entrega"
+			},
+			{
+				"key": "shipping.postalCodeHelp",
+				"field": "shipping__postalCodeHelp",
+				"label": "Envío / Ayuda código postal",
+				"group": "shipping",
+				"kind": "text",
+				"multiline": true,
+				"initialValue": "Comprobamos que tu código postal esté dentro de nuestra zona de reparto antes del pago."
 			},
 			{
 				"key": "summary.total",
 				"field": "summary__total",
 				"label": "Resumen / Total",
 				"group": "summary",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Total"
 			},
@@ -1784,6 +1841,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "summary__submit",
 				"label": "Resumen / Botón pagar",
 				"group": "summary",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Finalizar compra"
 			},
@@ -1792,6 +1850,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "summary__secureNote",
 				"label": "Resumen / Nota pago seguro",
 				"group": "summary",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Pago seguro. El carrito admite una sola moneda por pedido."
 			},
@@ -1800,6 +1859,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "empty__kicker",
 				"label": "Carrito vacío / Antetítulo",
 				"group": "empty",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Carrito vacío"
 			},
@@ -1808,6 +1868,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "empty__title",
 				"label": "Carrito vacío / Título",
 				"group": "empty",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Todavía no has añadido productos."
 			},
@@ -1816,8 +1877,19 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "empty__cta",
 				"label": "Carrito vacío / Botón",
 				"group": "empty",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Ir a tienda"
+			},
+			{
+				"key": "media.checkout",
+				"field": "media__checkout",
+				"label": "Imagen de la tienda pausada",
+				"group": "media",
+				"kind": "image",
+				"multiline": false,
+				"initialValue": "",
+				"description": "Solo se ve si la tienda online está pausada."
 			}
 		]
 	},
@@ -1837,6 +1909,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "kicker",
 				"label": "Pantalla / Antetítulo",
 				"group": "general",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Mantenimiento"
 			},
@@ -1845,6 +1918,7 @@ export const PAGE_SPECS: PageSpec[] = [
 				"field": "meta",
 				"label": "Pantalla / Cierre",
 				"group": "general",
+				"kind": "text",
 				"multiline": false,
 				"initialValue": "Volvemos muy pronto"
 			}

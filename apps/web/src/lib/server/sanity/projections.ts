@@ -1,3 +1,5 @@
+import { PAGE_DEFAULTS } from '$lib/features/content/model/page-content';
+
 export const productProjection = `
 	_id,
 	name,
@@ -10,9 +12,11 @@ export const productProjection = `
 	"variantGroups": variantGroups[]{
 		name,
 		"required": coalesce(required, false),
+		"pricingMode": coalesce(pricingMode, "add"),
 		"options": options[]{
 			label,
-			"priceModifier": coalesce(priceModifier, 0)
+			"priceModifier": coalesce(priceModifier, 0),
+			"imageUrl": image.asset->url
 		}
 	},
 	stripePriceId,
@@ -38,12 +42,30 @@ export const serviceProjection = `
 export const siteSettingsProjection = `
 	maintenanceMode,
 	maintenanceTitle,
-	maintenanceMessage
+	maintenanceMessage,
+	shippingPostalCodesEnabled,
+	shippingPostalCodes,
+	shippingOutOfRangeMessage
 `;
 
 // Cada página es un documento con campos con nombre (a__b). Se proyectan todos
 // los atributos; el mapper reconstruye el diccionario de textos (a__b -> a.b).
-export const pageProjection = `...`;
+// Las imágenes editables se proyectan aparte como "img__<campo>" con su URL
+// resuelta, porque el spread `...` solo devuelve la referencia al asset.
+const pageImageProjections = [
+	...new Set(
+		PAGE_DEFAULTS.flatMap((page) =>
+			(page.images ?? []).map((image) => image.key.replace(/\./g, '__'))
+		)
+	)
+]
+	.map((field) => `"img__${field}": ${field}.asset->url`)
+	.join(',\n\t');
+
+export const pageProjection = `
+	...,
+	${pageImageProjections}
+`;
 
 export const designSettingsProjection = `
 	"light": light.hex,

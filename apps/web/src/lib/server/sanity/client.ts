@@ -15,6 +15,12 @@ type SanityMutationPayload = {
 type RequestContext = {
 	scope: string;
 	requestId?: string;
+	/**
+	 * 'write' fuerza el token de escritura también para consultas. Necesario para
+	 * leer documentos con ID en ruta (con punto, como "order.cs_..."), que son
+	 * invisibles para peticiones anónimas o con un token sin acceso a esa ruta.
+	 */
+	auth?: 'read' | 'write';
 };
 
 const config = {
@@ -161,12 +167,13 @@ export async function sanityQuery<T>(
 		url.searchParams.set(`$${key}`, JSON.stringify(value));
 	}
 
+	const queryToken = context.auth === 'write' ? writeToken || readToken : readToken;
 	const response = await requestWithRetry(
 		fetchFn,
 		url.toString(),
 		{
 			method: 'GET',
-			headers: withHeaders(readToken)
+			headers: withHeaders(queryToken)
 		},
 		context,
 		'Sanity query error',

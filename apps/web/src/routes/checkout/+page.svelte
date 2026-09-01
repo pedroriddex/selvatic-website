@@ -5,4 +5,9 @@
 	let { data, form } = $props() as { data: PageData; form?: ActionData };
 </script>
 
-<CheckoutPage status={data.status} pageContent={data.pageContent} form={form ?? undefined} />
+<CheckoutPage
+	status={data.status}
+	pageContent={data.pageContent}
+	shippingPostalCodeRequired={data.shippingPostalCodeRequired}
+	form={form ?? undefined}
+/>

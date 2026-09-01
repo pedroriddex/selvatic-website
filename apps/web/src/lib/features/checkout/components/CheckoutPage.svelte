@@ -4,9 +4,8 @@
 	import MediaPlaceholder from '$lib/components/ui/MediaPlaceholder.svelte';
 	import SectionIntro from '$lib/components/ui/SectionIntro.svelte';
 	import StoreStatusNotice from '$lib/components/ui/StoreStatusNotice.svelte';
-	import { SITE_MEDIA } from '$lib/config/site-media';
 	import { ONLINE_STORE_ENABLED, STORE_LOCK_DESCRIPTION, STORE_LOCK_TITLE } from '$lib/config/store';
-	import { getDefaultPageContent, textFor } from '$lib/features/content/model/page-content';
+	import { getDefaultPageContent, imageFor, textFor } from '$lib/features/content/model/page-content';
 	import {
 		CART_SHIPPING_AMOUNT,
 		cartStore,
@@ -22,15 +21,22 @@
 	type CheckoutStatus = 'success' | 'cancel' | null | string;
 	type CheckoutFormState = {
 		error?: string;
+		outOfShippingRange?: boolean;
 	};
 
 	type Props = {
 		status: CheckoutStatus;
 		pageContent?: PageContent;
+		shippingPostalCodeRequired?: boolean;
 		form?: CheckoutFormState;
 	};
 
-	let { status, pageContent = getDefaultPageContent('checkout'), form }: Props = $props();
+	let {
+		status,
+		pageContent = getDefaultPageContent('checkout'),
+		shippingPostalCodeRequired = false,
+		form
+	}: Props = $props();
 
 	let cart = $state<CartSnapshot>({
 		items: [],
@@ -52,7 +58,7 @@
 	);
 	const hasItems = $derived(cart.items.length > 0);
 	const displayCurrency = $derived(cart.currency ?? 'EUR');
-	const checkoutVisual = $derived(cart.items[0]?.imageUrl ?? SITE_MEDIA.checkoutVisualImageUrl);
+	const checkoutVisual = $derived(cart.items[0]?.imageUrl ?? imageFor(pageContent, 'media.checkout'));
 	const pageKicker = $derived(
 		ONLINE_STORE_ENABLED ? textFor(pageContent, 'intro.kickerEnabled') : textFor(pageContent, 'intro.kickerDisabled')
 	);
@@ -228,6 +234,29 @@
 								<span>{formatCurrency(cart.total, displayCurrency)}</span>
 							</div>
 						</div>
+
+						{#if shippingPostalCodeRequired}
+							<div class="mt-5">
+								<label for="checkout-postal-code" class="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#222D22C7]">
+									{textFor(pageContent, 'shipping.postalCodeLabel')}
+								</label>
+								<input
+									id="checkout-postal-code"
+									name="postalCode"
+									type="text"
+									inputmode="numeric"
+									autocomplete="postal-code"
+									pattern={'[0-9]{5}'}
+									maxlength="5"
+									required
+									placeholder="46001"
+									class="mt-2 w-full rounded-[0.36rem] border border-[#222D2233] bg-[#FFFFFFB8] px-3 py-2 text-sm text-[#222D22] focus:border-[#222D22] focus:outline-none sm:max-w-48"
+								/>
+								<p class="mt-2 max-w-sm text-xs leading-relaxed text-[#222D229E]">
+									{textFor(pageContent, 'shipping.postalCodeHelp')}
+								</p>
+							</div>
+						{/if}
 
 						{#if form?.error}
 							<p class="mt-4 rounded-[0.36rem] border border-[#B7636366] bg-[#B7636314] px-3 py-2 text-sm text-[#7F3838]">{form.error}</p>

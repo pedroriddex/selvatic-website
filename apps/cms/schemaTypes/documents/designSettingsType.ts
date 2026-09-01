@@ -1,4 +1,5 @@
 import { defineField, defineType } from 'sanity';
+import { ColorHexInput } from '../../src/studio/ColorHexInput';
 import { DesignIcon } from '../shared/icons';
 
 const colorField = (name: string, title: string, description: string, initialHex: string) =>
@@ -10,6 +11,9 @@ const colorField = (name: string, title: string, description: string, initialHex
 		initialValue: { _type: 'color', hex: initialHex },
 		options: {
 			disableAlpha: true
+		},
+		components: {
+			input: ColorHexInput
 		}
 	});
 
@@ -19,21 +23,66 @@ export const designSettingsType = defineType({
 	icon: DesignIcon,
 	type: 'document',
 	fields: [
-		colorField('light', 'Color claro principal', 'Fondos claros y zonas de aire de la web.', '#EBF1E5'),
-		colorField('dark', 'Color oscuro principal', 'Texto principal, líneas y botones oscuros.', '#222D22'),
-		colorField('accent', 'Color de acento', 'Botones destacados, estados activos y detalles de interacción.', '#222D22'),
-		colorField('accentHover', 'Color de acento al pasar el ratón', 'Variante para hover/focus de botones destacados.', '#344034'),
-		colorField('accentInk', 'Texto sobre acento', 'Color del texto cuando aparece sobre botones o fondos de acento.', '#EBF1E5'),
-		colorField('surface', 'Superficie clara', 'Tarjetas, campos y bloques sobre el fondo principal.', '#FFFFFF'),
-		colorField('success', 'Estado correcto', 'Mensajes de confirmación o estado positivo.', '#222D22'),
-		colorField('warning', 'Estado aviso', 'Mensajes de aviso o información degradada.', '#B08B38'),
-		colorField('error', 'Estado error', 'Errores de formularios y validaciones.', '#9B4B4B')
+		colorField(
+			'light',
+			'Fondo de la web',
+			'El color de fondo general. Se ve en toda la web, detrás de textos e imágenes.',
+			'#EBF1E5'
+		),
+		colorField(
+			'dark',
+			'Color de los textos',
+			'El color principal de letras, líneas y botones oscuros en toda la web.',
+			'#222D22'
+		),
+		colorField(
+			'accent',
+			'Botones principales',
+			'El color de los botones importantes, como "Encargar ramo" o "Finalizar compra".',
+			'#222D22'
+		),
+		colorField(
+			'accentHover',
+			'Botones al pasar el ratón',
+			'El color que toman esos botones cuando se pasa el cursor por encima.',
+			'#344034'
+		),
+		colorField(
+			'accentInk',
+			'Texto dentro de los botones',
+			'El color de la letra dentro de los botones principales.',
+			'#EBF1E5'
+		),
+		colorField(
+			'surface',
+			'Fondo de tarjetas y formularios',
+			'El color de las tarjetas de producto, campos de formulario y bloques sobre el fondo.',
+			'#FFFFFF'
+		),
+		colorField(
+			'success',
+			'Mensajes de confirmación',
+			'El color de los avisos positivos, por ejemplo al completar una compra.',
+			'#222D22'
+		),
+		colorField(
+			'warning',
+			'Mensajes de aviso',
+			'El color de los avisos informativos, por ejemplo si falta algún dato.',
+			'#B08B38'
+		),
+		colorField(
+			'error',
+			'Mensajes de error',
+			'El color de los errores, por ejemplo en un formulario mal rellenado.',
+			'#9B4B4B'
+		)
 	],
 	preview: {
 		prepare() {
 			return {
 				title: 'Diseño',
-				subtitle: 'Paleta global de la web'
+				subtitle: 'Colores de la web'
 			};
 		}
 	}

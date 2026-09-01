@@ -57,21 +57,37 @@ const pages = pageDefaultsForSeed();
 const specs = pages.map((page) => {
 	const groups = [];
 	const seenGroups = new Set();
-	const fields = page.texts.map((entry) => {
-		const group = groupOf(entry.key);
+	const registerGroup = (key) => {
+		const group = groupOf(key);
 		if (!seenGroups.has(group)) {
 			seenGroups.add(group);
 			groups.push(group);
 		}
-		return {
+		return group;
+	};
+
+	const fields = page.texts.map((entry) => ({
+		key: entry.key,
+		field: fieldName(entry.key),
+		label: entry.label,
+		group: registerGroup(entry.key),
+		kind: 'text',
+		multiline: typeof entry.value === 'string' && entry.value.length > 70,
+		initialValue: entry.value
+	}));
+
+	for (const entry of page.images ?? []) {
+		fields.push({
 			key: entry.key,
 			field: fieldName(entry.key),
 			label: entry.label,
-			group,
-			multiline: typeof entry.value === 'string' && entry.value.length > 70,
-			initialValue: entry.value
-		};
-	});
+			group: registerGroup(entry.key),
+			kind: 'image',
+			multiline: false,
+			initialValue: '',
+			description: entry.description ?? ''
+		});
+	}
 
 	return {
 		key: page.key,
@@ -94,8 +110,10 @@ const body = `export type PageFieldSpec = {
 	field: string;
 	label: string;
 	group: string;
+	kind: 'text' | 'image';
 	multiline: boolean;
 	initialValue: string;
+	description?: string;
 };
 
 export type PageSpec = {

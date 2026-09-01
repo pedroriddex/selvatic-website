@@ -2,11 +2,16 @@ import type { CartSelection } from './types';
 import type { Product } from '$lib/domain/product/types';
 
 /**
- * Núcleo de seguridad de precio para productos con variantes (suplemento de precio).
+ * Núcleo de seguridad de precio para productos con variantes.
  *
  * Reglas:
  * - El precio efectivo SIEMPRE se calcula en el servidor, en céntimos enteros, a
  *   partir del producto de Sanity. El cliente nunca envía importes ni modifiers.
+ * - Cada grupo tiene un modo de precio: 'add' (la opción suma su importe al
+ *   precio base; comportamiento histórico y valor por defecto si falta el campo)
+ *   o 'set' (el importe de la opción ES el precio del producto). Como máximo un
+ *   grupo puede ser 'set' (lo valida el CMS); si llegan dos selecciones 'set' se
+ *   rechaza la compra en vez de arriesgar un cobro incorrecto.
  * - El stock es único del producto (las variantes no tienen stock propio).
  */
 
@@ -81,6 +86,41 @@ export const describeSelections = (selections: readonly ResolvedSelection[]): st
 	selections.map((selection) => `${selection.groupName}: ${selection.optionLabel}`).join(', ');
 
 /**
+ * Precio orientativo (en euros) para la ficha de producto mientras el usuario
+ * elige opciones. Tolerante a selecciones incompletas; el importe definitivo lo
+ * calcula siempre el servidor con computeEffectiveUnitAmountCents.
+ */
+export const previewUnitPrice = (
+	product: PricingProduct,
+	selectedByGroupName: Record<string, string>
+): number => {
+	const groups = Array.isArray(product.variantGroups) ? product.variantGroups : [];
+	let base = product.price;
+	let supplements = 0;
+
+	for (const group of groups) {
+		const chosenLabel = selectedByGroupName[group.name];
+		if (!chosenLabel) {
+			continue;
+		}
+
+		const option = group.options.find((candidate) => candidate.label === chosenLabel);
+		if (!option) {
+			continue;
+		}
+
+		const amount = Math.max(0, option.priceModifier);
+		if ((group.pricingMode ?? 'add') === 'set') {
+			base = amount;
+		} else {
+			supplements += amount;
+		}
+	}
+
+	return base + supplements;
+};
+
+/**
  * Calcula el precio efectivo (céntimos enteros) validando las selecciones contra
  * el producto real. Rechaza: grupos duplicados, opciones/grupos inexistentes y
  * grupos obligatorios sin elegir. Nunca lee importes del cliente.
@@ -107,7 +147,9 @@ export const computeEffectiveUnitAmountCents = (
 		chosenByGroup.set(groupKey, optionLabel);
 	}
 
-	let amountCents = Math.round(product.price * 100);
+	// Primera pasada: valida las selecciones y sepáralas por modo de precio.
+	let setPriceCents: number | null = null;
+	let addPriceCents = 0;
 	const resolved: ResolvedSelection[] = [];
 
 	for (const [groupKey, optionLabel] of chosenByGroup) {
@@ -122,13 +164,31 @@ export const computeEffectiveUnitAmountCents = (
 			return { ok: false, error: `La opción "${optionLabel}" no existe en "${group.name}".` };
 		}
 
-		amountCents += Math.max(0, Math.round(option.priceModifier * 100));
+		const optionAmountCents = Math.max(0, Math.round(option.priceModifier * 100));
+		if ((group.pricingMode ?? 'add') === 'set') {
+			if (setPriceCents !== null) {
+				return {
+					ok: false,
+					error: 'La configuración de precios de este producto no es válida. Contacta con nosotros.'
+				};
+			}
+
+			setPriceCents = optionAmountCents;
+		} else {
+			addPriceCents += optionAmountCents;
+		}
+
 		resolved.push({
 			groupName: group.name,
 			optionLabel: option.label,
 			priceModifier: Math.max(0, option.priceModifier)
 		});
 	}
+
+	// Segunda pasada: la base la fija el grupo 'set' (si lo hay); los 'add' suman
+	// SIEMPRE encima, sin importar en qué orden llegaran las selecciones.
+	const baseCents = setPriceCents ?? Math.round(product.price * 100);
+	const amountCents = baseCents + addPriceCents;
 
 	for (const group of groups) {
 		if (group.required && !chosenByGroup.has(group.name.trim().toLowerCase())) {

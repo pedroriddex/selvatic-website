@@ -77,7 +77,8 @@ export const mapProduct = (entity: Record<string, unknown>): Product | null => {
 
 									return {
 										label,
-										priceModifier: Math.max(0, toFiniteNumber(optionEntity.priceModifier, 0))
+										priceModifier: Math.max(0, toFiniteNumber(optionEntity.priceModifier, 0)),
+										imageUrl: toText(optionEntity.imageUrl)
 									};
 								})
 								.filter((option): option is NonNullable<typeof option> => option !== null)
@@ -90,6 +91,9 @@ export const mapProduct = (entity: Record<string, unknown>): Product | null => {
 					return {
 						name,
 						required: groupEntity.required === true,
+						// Los grupos creados antes del selector de modo no traen pricingMode:
+						// se tratan como "add" para no alterar los precios ya publicados.
+						pricingMode: groupEntity.pricingMode === 'set' ? ('set' as const) : ('add' as const),
 						options
 					};
 				})
@@ -118,25 +122,39 @@ const isPageKey = (value: unknown): value is PageKey =>
 	typeof value === 'string' && (PAGE_KEYS as readonly string[]).includes(value);
 
 export const mapPageContent = (entity: Record<string, unknown>): PageContent | null => {
-	const key = entity.key;
+	// La clave viene en el campo `key`; si faltara, se deriva del _id
+	// ("page-home" -> "home", con tolerancia al formato antiguo "page.home").
+	const idDerivedKey =
+		typeof entity._id === 'string' ? entity._id.replace(/^page[.-]/, '') : undefined;
+	const key = isPageKey(entity.key) ? entity.key : idDerivedKey;
 	if (!isPageKey(key)) {
 		return null;
 	}
 
 	// Los textos editables son campos con nombre "a__b" en el documento de página.
-	// Se reconstruye el diccionario con claves punteadas ("a.b").
+	// Se reconstruye el diccionario con claves punteadas ("a.b"). Las imágenes
+	// llegan proyectadas como "img__a__b" con la URL ya resuelta.
 	const texts: Record<string, string> = {};
+	const images: Record<string, string> = {};
 	for (const [field, rawValue] of Object.entries(entity)) {
 		if (!field.includes('__')) {
 			continue;
 		}
+
 		const value = toText(rawValue);
-		if (value) {
-			texts[field.replace(/__/g, '.')] = value;
+		if (!value) {
+			continue;
 		}
+
+		if (field.startsWith('img__')) {
+			images[field.slice('img__'.length).replace(/__/g, '.')] = value;
+			continue;
+		}
+
+		texts[field.replace(/__/g, '.')] = value;
 	}
 
-	const content: PageContent = { key, texts };
+	const content: PageContent = { key, texts, images };
 
 	const seoTitle = toText(entity.seoTitle);
 	if (seoTitle) {
@@ -197,9 +215,18 @@ export const mapSiteSettings = (entity: Record<string, unknown> | null | undefin
 		return null;
 	}
 
+	const shippingPostalCodes = Array.isArray(entity.shippingPostalCodes)
+		? entity.shippingPostalCodes
+				.map((value) => toText(value))
+				.filter((value): value is string => Boolean(value))
+		: [];
+
 	return {
 		maintenanceMode: entity.maintenanceMode === true,
 		maintenanceTitle: toText(entity.maintenanceTitle),
-		maintenanceMessage: toText(entity.maintenanceMessage)
+		maintenanceMessage: toText(entity.maintenanceMessage),
+		shippingPostalCodesEnabled: entity.shippingPostalCodesEnabled === true,
+		shippingPostalCodes,
+		shippingOutOfRangeMessage: toText(entity.shippingOutOfRangeMessage)
 	};
 };
