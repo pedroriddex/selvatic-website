@@ -68,10 +68,10 @@
 		width: 100%;
 		min-height: calc(100vh - 8rem);
 		overflow: hidden;
-		border: 1px solid rgba(34, 45, 34, 0.16);
+		border: 1px solid rgb(var(--design-dark-rgb) / 0.16);
 		border-radius: 0.7rem;
-		background: #ebf1e5;
-		box-shadow: 0 24px 56px -36px rgba(34, 45, 34, 0.22);
+		background: var(--design-light);
+		box-shadow: 0 24px 56px -36px rgb(var(--design-dark-rgb) / 0.22);
 	}
 
 	.maintenance-stage-media {
@@ -87,13 +87,13 @@
 		position: absolute;
 		inset: 0;
 		background:
-			linear-gradient(108deg, rgba(235, 241, 229, 0.9) 0%, rgba(235, 241, 229, 0.76) 45%, rgba(235, 241, 229, 0.6) 100%);
+			linear-gradient(108deg, rgb(var(--design-light-rgb) / 0.9) 0%, rgb(var(--design-light-rgb) / 0.76) 45%, rgb(var(--design-light-rgb) / 0.6) 100%);
 	}
 
 	.maintenance-stage-glow {
 		position: absolute;
 		inset: 0;
-		background: radial-gradient(circle at 84% 14%, rgba(34, 45, 34, 0.12), transparent 36%);
+		background: radial-gradient(circle at 84% 14%, rgb(var(--design-dark-rgb) / 0.12), transparent 36%);
 	}
 
 	.maintenance-stage-content {
@@ -124,14 +124,14 @@
 	}
 
 	.maintenance-stage-copy {
-		color: rgba(34, 45, 34, 0.8);
+		color: rgb(var(--design-dark-rgb) / 0.8);
 		font-size: clamp(1rem, 1.9vw, 1.15rem);
 		line-height: 1.72;
 		max-width: 56rem;
 	}
 
 	.maintenance-stage-meta {
-		color: rgba(34, 45, 34, 0.56);
+		color: rgb(var(--design-dark-rgb) / 0.56);
 		font-size: 11px;
 		font-weight: 600;
 		letter-spacing: 0.14em;

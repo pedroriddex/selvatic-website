@@ -60,5 +60,9 @@ export const mergeDesignSettings = (
 export const toDesignCssVariables = (settings: DesignSettings): string => {
 	const design = mergeDesignSettings(settings);
 
-	return `:root{--design-light:${design.light};--design-light-rgb:${cssRgb(design.light)};--design-dark:${design.dark};--design-dark-rgb:${cssRgb(design.dark)};--design-accent:${design.accent};--design-accent-rgb:${cssRgb(design.accent)};--design-accent-hover:${design.accentHover};--design-accent-hover-rgb:${cssRgb(design.accentHover)};--design-accent-ink:${design.accentInk};--design-accent-ink-rgb:${cssRgb(design.accentInk)};--design-surface:${design.surface};--design-surface-rgb:${cssRgb(design.surface)};--design-success:${design.success};--design-success-rgb:${cssRgb(design.success)};--design-warning:${design.warning};--design-warning-rgb:${cssRgb(design.warning)};--design-error:${design.error};--design-error-rgb:${cssRgb(design.error)};}`;
+	// :root:root (doble especificidad): este <style> se inyecta en <head> ANTES
+	// de los stylesheets compilados, y tokens.css también define --design-* en
+	// :root. Con la misma especificidad ganaría el CSS compilado (va después) y
+	// los colores publicados en Sanity no se aplicarían nunca.
+	return `:root:root{--design-light:${design.light};--design-light-rgb:${cssRgb(design.light)};--design-dark:${design.dark};--design-dark-rgb:${cssRgb(design.dark)};--design-accent:${design.accent};--design-accent-rgb:${cssRgb(design.accent)};--design-accent-hover:${design.accentHover};--design-accent-hover-rgb:${cssRgb(design.accentHover)};--design-accent-ink:${design.accentInk};--design-accent-ink-rgb:${cssRgb(design.accentInk)};--design-surface:${design.surface};--design-surface-rgb:${cssRgb(design.surface)};--design-success:${design.success};--design-success-rgb:${cssRgb(design.success)};--design-warning:${design.warning};--design-warning-rgb:${cssRgb(design.warning)};--design-error:${design.error};--design-error-rgb:${cssRgb(design.error)};}`;
 };

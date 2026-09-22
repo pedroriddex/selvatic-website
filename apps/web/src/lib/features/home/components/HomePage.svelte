@@ -62,8 +62,8 @@
 			{/if}
 		</video>
 
-		<div class="absolute inset-0 bg-[linear-gradient(108deg,rgba(235,241,229,0.92)_0%,rgba(235,241,229,0.7)_52%,rgba(235,241,229,0.5)_100%)]"></div>
-		<div class="absolute inset-0 bg-[radial-gradient(circle_at_82%_16%,rgba(34,45,34,0.12),transparent_42%)]"></div>
+		<div class="absolute inset-0 bg-[linear-gradient(108deg,rgb(var(--design-light-rgb)/0.92)_0%,rgb(var(--design-light-rgb)/0.7)_52%,rgb(var(--design-light-rgb)/0.5)_100%)]"></div>
+		<div class="absolute inset-0 bg-[radial-gradient(circle_at_82%_16%,rgb(var(--design-dark-rgb)/0.12),transparent_42%)]"></div>
 	</article>
 
 	<div class="hero-stage-content">
