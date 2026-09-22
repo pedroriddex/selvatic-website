@@ -1,7 +1,7 @@
 import type { Product } from '$lib/domain/product/types';
 import type { Service } from '$lib/domain/service/types';
 import type { SiteSettings } from '$lib/domain/site-settings/types';
-import type { DesignSettings, PageContent, PageKey } from '$lib/types';
+import type { DesignSettings, PageContent, PageGalleryImage, PageKey } from '$lib/types';
 import { isProductCategory } from '$lib/domain/product/categories';
 import { PAGE_KEYS } from '$lib/domain/page-content/types';
 import { mergeDesignSettings } from '$lib/features/design/model/design-settings';
@@ -133,11 +133,38 @@ export const mapPageContent = (entity: Record<string, unknown>): PageContent | n
 
 	// Los textos editables son campos con nombre "a__b" en el documento de página.
 	// Se reconstruye el diccionario con claves punteadas ("a.b"). Las imágenes
-	// llegan proyectadas como "img__a__b" con la URL ya resuelta.
+	// llegan proyectadas como "img__a__b" con la URL ya resuelta, y las galerías
+	// como "gal__a__b" (lista de {url, alt}).
 	const texts: Record<string, string> = {};
 	const images: Record<string, string> = {};
+	const galleries: Record<string, PageGalleryImage[]> = {};
 	for (const [field, rawValue] of Object.entries(entity)) {
 		if (!field.includes('__')) {
+			continue;
+		}
+
+		if (field.startsWith('gal__')) {
+			if (!Array.isArray(rawValue)) {
+				continue;
+			}
+
+			const items = rawValue
+				.map((item): PageGalleryImage | null => {
+					if (!item || typeof item !== 'object') {
+						return null;
+					}
+
+					const image = item as Record<string, unknown>;
+					const url = toText(image.url);
+					return url ? { url, alt: toText(image.alt) } : null;
+				})
+				.filter((item): item is PageGalleryImage => item !== null);
+
+			// Una galería vacía en el CMS no pisa la de serie: solo se toma el
+			// control cuando la clienta ha añadido al menos una imagen.
+			if (items.length > 0) {
+				galleries[field.slice('gal__'.length).replace(/__/g, '.')] = items;
+			}
 			continue;
 		}
 
@@ -154,7 +181,7 @@ export const mapPageContent = (entity: Record<string, unknown>): PageContent | n
 		texts[field.replace(/__/g, '.')] = value;
 	}
 
-	const content: PageContent = { key, texts, images };
+	const content: PageContent = { key, texts, images, galleries };
 
 	const seoTitle = toText(entity.seoTitle);
 	if (seoTitle) {

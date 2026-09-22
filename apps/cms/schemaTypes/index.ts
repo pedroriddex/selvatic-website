@@ -4,6 +4,7 @@ import { orderType } from './documents/orderType';
 import { productType } from './documents/productType';
 import { serviceType } from './documents/serviceType';
 import { siteSettingsType } from './documents/siteSettingsType';
+import { galleryImageType } from './objects/galleryImageType';
 import { orderItemType } from './objects/orderItemType';
 import { productImageType } from './objects/productImageType';
 import { variantGroupType } from './objects/variantGroupType';
@@ -19,6 +20,7 @@ export const schemaTypes = [
 	...pageTypes,
 	productType,
 	productImageType,
+	galleryImageType,
 	variantGroupType,
 	variantOptionType,
 	serviceType,

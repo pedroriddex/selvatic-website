@@ -1,15 +1,20 @@
-import { imageFor } from '$lib/features/content/model/page-content';
+import { galleryFor } from '$lib/features/content/model/page-content';
 import type { PageContent } from '$lib/types';
 
-const GALLERY_ALTS: string[] = [
-	'Ramo floral de color en estudio',
-	'Detalle floral en tonos suaves',
-	'Bouquet coral de Selvatic'
+/** Galería de "Sobre nosotros": lista gestionada desde el CMS (o la de serie). */
+export const getAboutGalleryItems = (content: PageContent) =>
+	galleryFor(content, 'media.gallery').map((image, index) => ({
+		src: image.url,
+		alt: image.alt || `Imagen ${index + 1} de la galería de Selvatic`
+	}));
+
+// El mosaico editorial cicla en grupos de tres (ancha, estrecha, media) para
+// que la galería funcione con cualquier número de imágenes.
+const GALLERY_SPANS = [
+	'col-span-4 md:col-span-4 xl:col-span-5',
+	'col-span-4 md:col-span-4 xl:col-span-3',
+	'col-span-4 md:col-span-8 xl:col-span-4'
 ];
 
-/** Galería de "Sobre nosotros": imágenes editables desde el CMS con alt fijo. */
-export const getAboutGalleryItems = (content: PageContent) =>
-	GALLERY_ALTS.map((alt, index) => ({
-		src: imageFor(content, `media.gallery${index + 1}`),
-		alt
-	})).filter((item): item is { src: string; alt: string } => Boolean(item.src));
+export const getAboutGallerySpan = (index: number): string =>
+	GALLERY_SPANS[index % GALLERY_SPANS.length];

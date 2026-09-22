@@ -89,6 +89,19 @@ const specs = pages.map((page) => {
 		});
 	}
 
+	for (const entry of page.galleries ?? []) {
+		fields.push({
+			key: entry.key,
+			field: fieldName(entry.key),
+			label: entry.label,
+			group: registerGroup(entry.key),
+			kind: 'gallery',
+			multiline: false,
+			initialValue: '',
+			description: entry.description ?? ''
+		});
+	}
+
 	return {
 		key: page.key,
 		typeName: `page${pascal(page.key)}`,
@@ -110,7 +123,7 @@ const body = `export type PageFieldSpec = {
 	field: string;
 	label: string;
 	group: string;
-	kind: 'text' | 'image';
+	kind: 'text' | 'image' | 'gallery';
 	multiline: boolean;
 	initialValue: string;
 	description?: string;

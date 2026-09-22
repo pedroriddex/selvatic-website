@@ -2,7 +2,7 @@
 	import MediaPlaceholder from '$lib/components/ui/MediaPlaceholder.svelte';
 	import SectionIntro from '$lib/components/ui/SectionIntro.svelte';
 	import { getDefaultPageContent, imageFor, textFor } from '$lib/features/content/model/page-content';
-	import { getAboutGalleryItems } from '$lib/features/about/model/about-page';
+	import { getAboutGalleryItems, getAboutGallerySpan } from '$lib/features/about/model/about-page';
 	import type { PageContent } from '$lib/types';
 
 	type Props = {
@@ -64,15 +64,17 @@
 	</div>
 </section>
 
-<!-- Galería sin textos: solo las imágenes (petición de cliente). -->
-<section class="section-integrated mt-14 reveal">
-	<div class="swiss-grid editorial-mosaic gap-y-8">
-		{#each galleryItems as image, index}
-			<div class={index === 0 ? 'col-span-4 md:col-span-4 xl:col-span-5' : index === 1 ? 'col-span-4 md:col-span-4 xl:col-span-3' : 'col-span-4 md:col-span-8 xl:col-span-4'}>
-				<div class="image-panel image-panel-arched min-h-[18rem] sm:min-h-[22rem]">
-					<img src={image.src} alt={image.alt} loading="lazy" />
+<!-- Galería sin textos: solo las imágenes, gestionadas desde el CMS. -->
+{#if galleryItems.length > 0}
+	<section class="section-integrated mt-14 reveal">
+		<div class="swiss-grid editorial-mosaic gap-y-8">
+			{#each galleryItems as image, index}
+				<div class={getAboutGallerySpan(index)}>
+					<div class="image-panel image-panel-arched min-h-[18rem] sm:min-h-[22rem]">
+						<img src={image.src} alt={image.alt} loading="lazy" />
+					</div>
 				</div>
-			</div>
-		{/each}
-	</div>
-</section>
+			{/each}
+		</div>
+	</section>
+{/if}

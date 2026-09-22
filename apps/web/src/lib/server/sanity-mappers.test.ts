@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { mapProduct, mapService } from './sanity-mappers';
+import { mapPageContent, mapProduct, mapService } from './sanity-mappers';
 
 describe('sanity mappers', () => {
 	it('maps a product entity', () => {
@@ -73,6 +73,33 @@ describe('sanity mappers', () => {
 				]
 			}
 		]);
+	});
+
+	it('maps page galleries and skips empty ones (fallback a las de serie)', () => {
+		const mapped = mapPageContent({
+			_id: 'page-about',
+			key: 'about',
+			intro__title: 'Título',
+			gal__media__gallery: [
+				{ url: 'https://cdn.test/uno.webp', alt: 'Uno' },
+				{ url: 'https://cdn.test/dos.webp' },
+				{ alt: 'sin url: se descarta' }
+			]
+		});
+
+		expect(mapped?.galleries['media.gallery']).toEqual([
+			{ url: 'https://cdn.test/uno.webp', alt: 'Uno' },
+			{ url: 'https://cdn.test/dos.webp', alt: undefined }
+		]);
+		expect(mapped?.texts['intro.title']).toBe('Título');
+
+		const empty = mapPageContent({
+			_id: 'page-about',
+			key: 'about',
+			gal__media__gallery: []
+		});
+		// Vacía => la clave no se emite y el merge conserva la galería de serie.
+		expect(empty?.galleries['media.gallery']).toBeUndefined();
 	});
 
 	it('maps variant pricing mode and option image', () => {

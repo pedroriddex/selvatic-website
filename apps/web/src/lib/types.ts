@@ -3,7 +3,13 @@ export type { DataHealth, DataHealthStatus } from '$lib/domain/app/data-health';
 export type { CartItem, CartSelection, CartSnapshot, CartTotals } from '$lib/domain/cart/types';
 export type { ContactRequestInput } from '$lib/domain/contact-request/types';
 export type { DesignSettings } from '$lib/domain/design-settings/types';
-export type { PageContent, PageContentMap, PageKey, PageTextEntry } from '$lib/domain/page-content/types';
+export type {
+	PageContent,
+	PageContentMap,
+	PageGalleryImage,
+	PageKey,
+	PageTextEntry
+} from '$lib/domain/page-content/types';
 export type {
 	ProductCategory,
 	ProductCategoryFilter,

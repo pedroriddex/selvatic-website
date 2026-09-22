@@ -71,27 +71,42 @@ export const definePageDocument = (spec: PageSpec) =>
 				hidden: true,
 				initialValue: spec.key
 			}),
-			...spec.fields.map((field) =>
-				field.kind === 'image'
-					? defineField({
-							name: field.field,
-							title: field.label,
-							type: 'image',
-							options: { hotspot: true },
-							group: field.group,
-							description:
-								field.description ||
-								'Si no subes ninguna imagen, la web usa la imagen de serie.'
-						})
-					: defineField({
-							name: field.field,
-							title: field.label,
-							type: field.multiline ? 'text' : 'string',
-							rows: field.multiline ? 3 : undefined,
-							group: field.group,
-							initialValue: field.initialValue
-						})
-			),
+			...spec.fields.map((field) => {
+				if (field.kind === 'gallery') {
+					return defineField({
+						name: field.field,
+						title: field.label,
+						type: 'array',
+						of: [{ type: 'galleryImage' }],
+						options: { layout: 'grid' },
+						group: field.group,
+						description:
+							field.description ||
+							'Añade, quita o arrastra para reordenar. Vacía = imágenes de serie.'
+					});
+				}
+
+				if (field.kind === 'image') {
+					return defineField({
+						name: field.field,
+						title: field.label,
+						type: 'image',
+						options: { hotspot: true },
+						group: field.group,
+						description:
+							field.description || 'Si no subes ninguna imagen, la web usa la imagen de serie.'
+					});
+				}
+
+				return defineField({
+					name: field.field,
+					title: field.label,
+					type: field.multiline ? 'text' : 'string',
+					rows: field.multiline ? 3 : undefined,
+					group: field.group,
+					initialValue: field.initialValue
+				});
+			}),
 			defineField({
 				name: 'seoTitle',
 				title: 'Título SEO',

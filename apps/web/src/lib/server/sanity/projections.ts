@@ -51,7 +51,8 @@ export const siteSettingsProjection = `
 // Cada página es un documento con campos con nombre (a__b). Se proyectan todos
 // los atributos; el mapper reconstruye el diccionario de textos (a__b -> a.b).
 // Las imágenes editables se proyectan aparte como "img__<campo>" con su URL
-// resuelta, porque el spread `...` solo devuelve la referencia al asset.
+// resuelta (el spread `...` solo devuelve la referencia al asset), y las
+// galerías como "gal__<campo>" con url + alt por elemento.
 const pageImageProjections = [
 	...new Set(
 		PAGE_DEFAULTS.flatMap((page) =>
@@ -62,9 +63,20 @@ const pageImageProjections = [
 	.map((field) => `"img__${field}": ${field}.asset->url`)
 	.join(',\n\t');
 
+const pageGalleryProjections = [
+	...new Set(
+		PAGE_DEFAULTS.flatMap((page) =>
+			(page.galleries ?? []).map((gallery) => gallery.key.replace(/\./g, '__'))
+		)
+	)
+]
+	.map((field) => `"gal__${field}": ${field}[]{ "url": image.asset->url, alt }`)
+	.join(',\n\t');
+
 export const pageProjection = `
 	...,
-	${pageImageProjections}
+	${pageImageProjections},
+	${pageGalleryProjections}
 `;
 
 export const designSettingsProjection = `

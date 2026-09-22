@@ -6,7 +6,7 @@ export type PageFieldSpec = {
 	field: string;
 	label: string;
 	group: string;
-	kind: 'text' | 'image';
+	kind: 'text' | 'image' | 'gallery';
 	multiline: boolean;
 	initialValue: string;
 	description?: string;
@@ -1374,34 +1374,14 @@ export const PAGE_SPECS: PageSpec[] = [
 				"description": "La imagen que acompaña a la historia del estudio."
 			},
 			{
-				"key": "media.gallery1",
-				"field": "media__gallery1",
-				"label": "Galería / Imagen 1",
+				"key": "media.gallery",
+				"field": "media__gallery",
+				"label": "Galería de imágenes",
 				"group": "media",
-				"kind": "image",
+				"kind": "gallery",
 				"multiline": false,
 				"initialValue": "",
-				"description": ""
-			},
-			{
-				"key": "media.gallery2",
-				"field": "media__gallery2",
-				"label": "Galería / Imagen 2",
-				"group": "media",
-				"kind": "image",
-				"multiline": false,
-				"initialValue": "",
-				"description": ""
-			},
-			{
-				"key": "media.gallery3",
-				"field": "media__gallery3",
-				"label": "Galería / Imagen 3",
-				"group": "media",
-				"kind": "image",
-				"multiline": false,
-				"initialValue": "",
-				"description": ""
+				"description": "Añade, quita o arrastra para reordenar. Mientras la lista esté vacía, la web muestra las tres imágenes de serie."
 			}
 		]
 	},

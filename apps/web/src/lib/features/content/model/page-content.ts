@@ -1,4 +1,4 @@
-import type { PageContent, PageContentMap, PageKey } from '$lib/types';
+import type { PageContent, PageContentMap, PageGalleryImage, PageKey } from '$lib/types';
 
 type EditableText = {
 	key: string;
@@ -14,6 +14,14 @@ type EditableImage = {
 	description?: string;
 };
 
+type EditableGallery = {
+	key: string;
+	label: string;
+	description?: string;
+	/** Imágenes de serie: se muestran mientras la galería del CMS esté vacía. */
+	defaults: PageGalleryImage[];
+};
+
 type PageDefaults = {
 	key: PageKey;
 	title: string;
@@ -22,6 +30,7 @@ type PageDefaults = {
 	seoDescription: string;
 	texts: EditableText[];
 	images?: EditableImage[];
+	galleries?: EditableGallery[];
 };
 
 export const PAGE_DEFAULTS = [
@@ -374,21 +383,28 @@ export const PAGE_DEFAULTS = [
 				label: 'Imagen del bloque de origen',
 				defaultUrl: '/media/selvatic-images/ramo-color-studio.webp',
 				description: 'La imagen que acompaña a la historia del estudio.'
-			},
+			}
+		],
+		galleries: [
 			{
-				key: 'media.gallery1',
-				label: 'Galería / Imagen 1',
-				defaultUrl: '/media/selvatic-images/ramo-color-studio-alt.webp'
-			},
-			{
-				key: 'media.gallery2',
-				label: 'Galería / Imagen 2',
-				defaultUrl: '/media/selvatic-images/detalle-floral-pastel.webp'
-			},
-			{
-				key: 'media.gallery3',
-				label: 'Galería / Imagen 3',
-				defaultUrl: '/media/selvatic-images/bouquet-lazo-coral-alt.webp'
+				key: 'media.gallery',
+				label: 'Galería de imágenes',
+				description:
+					'Añade, quita o arrastra para reordenar. Mientras la lista esté vacía, la web muestra las tres imágenes de serie.',
+				defaults: [
+					{
+						url: '/media/selvatic-images/ramo-color-studio-alt.webp',
+						alt: 'Ramo floral de color en estudio'
+					},
+					{
+						url: '/media/selvatic-images/detalle-floral-pastel.webp',
+						alt: 'Detalle floral en tonos suaves'
+					},
+					{
+						url: '/media/selvatic-images/bouquet-lazo-coral-alt.webp',
+						alt: 'Bouquet coral de Selvatic'
+					}
+				]
 			}
 		]
 	},
@@ -504,6 +520,13 @@ export const DEFAULT_PAGE_CONTENT_MAP = PAGE_DEFAULTS.reduce((pages, page) => {
 				return entries;
 			},
 			{} as Record<string, string>
+		),
+		galleries: (page.galleries ?? []).reduce(
+			(entries, entry) => {
+				entries[entry.key] = entry.defaults;
+				return entries;
+			},
+			{} as Record<string, PageGalleryImage[]>
 		)
 	};
 	return pages;
@@ -530,6 +553,12 @@ export const mergePageContent = (
 		images: {
 			...fallback.images,
 			...content.images
+		},
+		// Una galería del CMS con imágenes sustituye a la de serie ENTERA (es una
+		// lista gestionada, no tiene sentido mezclar por posición).
+		galleries: {
+			...fallback.galleries,
+			...content.galleries
 		}
 	};
 };
@@ -538,5 +567,8 @@ export const textFor = (content: PageContent, key: string): string => content.te
 
 export const imageFor = (content: PageContent, key: string): string | undefined =>
 	content.images[key] || undefined;
+
+export const galleryFor = (content: PageContent, key: string): PageGalleryImage[] =>
+	content.galleries[key] ?? [];
 
 export const pageDefaultsForSeed = () => PAGE_DEFAULTS;
