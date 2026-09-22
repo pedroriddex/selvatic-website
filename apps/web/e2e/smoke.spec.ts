@@ -42,6 +42,9 @@ test('checkout renders cart summary from localStorage', async ({ page }) => {
 
 test('contact form rejects invalid input server-side', async ({ page }) => {
 	await page.goto('/contacto');
+	// Espera a que Svelte hidrate: si se rellena antes, la hidratación resetea
+	// los inputs a su valor SSR ('') y el required del navegador bloquea el envío.
+	await page.waitForLoadState('networkidle');
 	// "P" supera el required de HTML5 pero falla la validación de servidor (min 2),
 	// ejercitando el camino de error sin persistir nada en Sanity.
 	await page.locator('input[name="name"]').fill('P');
