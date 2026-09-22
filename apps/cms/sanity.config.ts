@@ -44,7 +44,13 @@ export default defineConfig({
 				: prev,
 		actions: (prev, context) =>
 			SINGLETON_TYPES.has(context.schemaType)
-				? prev.filter(({ action }) => action !== 'duplicate' && action !== 'delete')
+				? prev.filter(
+						({ action }) =>
+							// Sin unpublish: despublicar un singleton vacía la web y, al
+							// volver a editar, el formulario arranca de plantilla y se
+							// pierde el contenido real.
+							action !== 'duplicate' && action !== 'delete' && action !== 'unpublish'
+					)
 				: prev
 	},
 	studio: {

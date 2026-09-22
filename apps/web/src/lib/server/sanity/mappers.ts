@@ -168,17 +168,19 @@ export const mapPageContent = (entity: Record<string, unknown>): PageContent | n
 			continue;
 		}
 
-		const value = toText(rawValue);
-		if (!value) {
-			continue;
-		}
-
 		if (field.startsWith('img__')) {
-			images[field.slice('img__'.length).replace(/__/g, '.')] = value;
+			const url = toText(rawValue);
+			if (url) {
+				images[field.slice('img__'.length).replace(/__/g, '.')] = url;
+			}
 			continue;
 		}
 
-		texts[field.replace(/__/g, '.')] = value;
+		// Textos: un '' guardado es un borrado editorial (la clienta vació el
+		// campo) y debe respetarse; solo un campo AUSENTE cae al texto de serie.
+		if (typeof rawValue === 'string') {
+			texts[field.replace(/__/g, '.')] = rawValue.trim();
+		}
 	}
 
 	const content: PageContent = { key, texts, images, galleries };

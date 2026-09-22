@@ -563,7 +563,9 @@ export const mergePageContent = (
 	};
 };
 
-export const textFor = (content: PageContent, key: string): string => content.texts[key] ?? key;
+// Un texto ausente devuelve '' (nunca la clave cruda): puede ser un campo aún
+// no sembrado o un borrado editorial; en ambos casos no se muestra nada.
+export const textFor = (content: PageContent, key: string): string => content.texts[key] ?? '';
 
 export const imageFor = (content: PageContent, key: string): string | undefined =>
 	content.images[key] || undefined;

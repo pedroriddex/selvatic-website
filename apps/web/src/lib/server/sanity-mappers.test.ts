@@ -75,6 +75,20 @@ describe('sanity mappers', () => {
 		]);
 	});
 
+	it('conserva los textos vaciados como cadena vacía (borrado editorial)', () => {
+		const mapped = mapPageContent({
+			_id: 'page-about',
+			key: 'about',
+			intro__title: 'Título propio',
+			origin__p2: '',
+			work__p1: '   '
+		});
+
+		expect(mapped?.texts['intro.title']).toBe('Título propio');
+		expect(mapped?.texts['origin.p2']).toBe('');
+		expect(mapped?.texts['work.p1']).toBe('');
+	});
+
 	it('maps page galleries and skips empty ones (fallback a las de serie)', () => {
 		const mapped = mapPageContent({
 			_id: 'page-about',

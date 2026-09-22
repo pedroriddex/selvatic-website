@@ -20,7 +20,7 @@
 		textFor(pageContent, 'process.step1'),
 		textFor(pageContent, 'process.step2'),
 		textFor(pageContent, 'process.step3')
-	]);
+	].filter(Boolean));
 </script>
 
 <section class="section-intro mb-14 reveal">

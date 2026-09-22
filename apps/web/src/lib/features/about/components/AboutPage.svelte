@@ -28,12 +28,16 @@
 			<h3 class="section-subtitle mt-3">
 				{textFor(pageContent, 'origin.title')}
 			</h3>
-			<p class="section-note mt-5">
-				{textFor(pageContent, 'origin.p1')}
-			</p>
-			<p class="section-note mt-4">
-				{textFor(pageContent, 'origin.p2')}
-			</p>
+			{#if textFor(pageContent, 'origin.p1')}
+				<p class="section-note mt-5">
+					{textFor(pageContent, 'origin.p1')}
+				</p>
+			{/if}
+			{#if textFor(pageContent, 'origin.p2')}
+				<p class="section-note mt-4">
+					{textFor(pageContent, 'origin.p2')}
+				</p>
+			{/if}
 		</div>
 		<div class="grid-span-image">
 			<div class="image-panel image-panel-arched min-h-[18rem] sm:min-h-[22rem]">
@@ -54,12 +58,16 @@
 			<h3 class="section-subtitle mt-3 max-w-3xl">
 				{textFor(pageContent, 'work.title')}
 			</h3>
-			<p class="section-note mt-5">
-				{textFor(pageContent, 'work.p1')}
-			</p>
-			<p class="section-note mt-4">
-				{textFor(pageContent, 'work.p2')}
-			</p>
+			{#if textFor(pageContent, 'work.p1')}
+				<p class="section-note mt-5">
+					{textFor(pageContent, 'work.p1')}
+				</p>
+			{/if}
+			{#if textFor(pageContent, 'work.p2')}
+				<p class="section-note mt-4">
+					{textFor(pageContent, 'work.p2')}
+				</p>
+			{/if}
 		</div>
 	</div>
 </section>

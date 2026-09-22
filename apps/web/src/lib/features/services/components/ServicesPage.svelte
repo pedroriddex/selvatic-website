@@ -15,11 +15,13 @@
 	};
 
 	let { services, dataHealth, pageContent = getDefaultPageContent('services') }: Props = $props();
-	const methodSteps = $derived([
-		textFor(pageContent, 'method.step1'),
-		textFor(pageContent, 'method.step2'),
-		textFor(pageContent, 'method.step3')
-	]);
+	const methodSteps = $derived(
+		[
+			textFor(pageContent, 'method.step1'),
+			textFor(pageContent, 'method.step2'),
+			textFor(pageContent, 'method.step3')
+		].filter(Boolean)
+	);
 </script>
 
 <SectionIntro
@@ -65,12 +67,16 @@
 			<h3 class="section-subtitle mt-3 max-w-3xl">
 				{textFor(pageContent, 'material.title')}
 			</h3>
-			<p class="section-note mt-5">
-				{textFor(pageContent, 'material.p1')}
-			</p>
-			<p class="section-note mt-4">
-				{textFor(pageContent, 'material.p2')}
-			</p>
+			{#if textFor(pageContent, 'material.p1')}
+				<p class="section-note mt-5">
+					{textFor(pageContent, 'material.p1')}
+				</p>
+			{/if}
+			{#if textFor(pageContent, 'material.p2')}
+				<p class="section-note mt-4">
+					{textFor(pageContent, 'material.p2')}
+				</p>
+			{/if}
 		</div>
 	</div>
 </section>
