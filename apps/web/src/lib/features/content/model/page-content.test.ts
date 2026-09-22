@@ -2,16 +2,24 @@ import { describe, expect, it } from 'vitest';
 import { getDefaultPageContent, mergePageContent, textFor } from './page-content';
 
 describe('borrado editorial de textos', () => {
-	it("un '' guardado en el CMS gana al texto de serie (campo vaciado a propósito)", () => {
+	it('si el documento existe, SUS textos mandan: un campo ausente o vacío se oculta', () => {
 		const merged = mergePageContent('about', {
 			key: 'about',
-			texts: { 'origin.p2': '' },
+			texts: { 'intro.title': 'Título propio', 'origin.p2': '' },
 			images: {},
 			galleries: {}
 		});
 
+		expect(textFor(merged, 'intro.title')).toBe('Título propio');
+		// '' guardado = vacío intencionado.
 		expect(textFor(merged, 'origin.p2')).toBe('');
-		// Los campos ausentes siguen cayendo al texto de serie.
+		// Ausente en un documento existente = borrado con unset: también vacío
+		// (las claves nuevas de código se siembran con backfill-page-texts.mjs).
+		expect(textFor(merged, 'origin.p1')).toBe('');
+	});
+
+	it('sin documento (Sanity caído o página sin sembrar) se usan los textos de serie', () => {
+		const merged = mergePageContent('about', null);
 		expect(textFor(merged, 'origin.p1')).toBe(getDefaultPageContent('about').texts['origin.p1']);
 	});
 

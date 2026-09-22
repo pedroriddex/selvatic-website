@@ -1,5 +1,4 @@
 import { defineField, defineType } from 'sanity';
-import { KeepEmptyTextInput } from '../../src/studio/KeepEmptyTextInput';
 import { PagesIcon } from './icons';
 import type { PageSpec } from './pageContentSpec';
 
@@ -105,10 +104,7 @@ export const definePageDocument = (spec: PageSpec) =>
 					type: field.multiline ? 'text' : 'string',
 					rows: field.multiline ? 3 : undefined,
 					group: field.group,
-					initialValue: field.initialValue,
-					// Vaciar el campo guarda '' (y la web lo oculta) en vez de
-					// eliminarlo y resucitar el texto de serie al publicar.
-					components: { input: KeepEmptyTextInput }
+					initialValue: field.initialValue
 				});
 			}),
 			defineField({

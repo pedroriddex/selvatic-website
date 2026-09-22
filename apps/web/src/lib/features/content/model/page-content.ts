@@ -546,10 +546,13 @@ export const mergePageContent = (
 	return {
 		...fallback,
 		...content,
-		texts: {
-			...fallback.texts,
-			...content.texts
-		},
+		// El documento existe: SUS textos mandan por completo. Un campo ausente es
+		// un borrado editorial (el Studio hace unset al vaciar) y se oculta; los
+		// textos de serie solo aplican si el documento no existe o Sanity falla.
+		// IMPORTANTE: al añadir claves de texto nuevas en código hay que sembrarlas
+		// en los documentos existentes (scripts/backfill-page-texts.mjs), porque ya
+		// no hay respaldo clave a clave.
+		texts: content.texts,
 		images: {
 			...fallback.images,
 			...content.images
